@@ -50,4 +50,6 @@ return array(
     '_RECORD_HAS_UPDATE_'   =>  '记录已经更新',
     '_NOT_ALLOW_PHP_'       =>  '模板禁用PHP代码',
     '_PARAM_ERROR_'         =>  '参数错误或者未定义',
+    
+    'LOGIN_NULL_LOG_PWD'         =>  '用户名不存在或者密码错误!',
 );

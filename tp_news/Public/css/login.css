@@ -4,13 +4,15 @@
 }
 
 html {
-	background: #fbfbfb !important;
+	/* background: #fbfbfb !important; */
+	background: white !important;
 }
 
 body {
 	padding-top: 30px;
 	font-family: sans-serif;
 	font-size: 12px;
+	background-color: white;
 }
 
 form {
@@ -75,10 +77,11 @@ form p {
 
 h1 a {
 	/* background: url(../images/logo-login.png) no-repeat top center; */
-	background: url(../images/logo.jpg) no-repeat;
-	background-position: -230px -70px;
+	/* background: url(../images/logo.jpg) no-repeat;
+	background-position: -230px -70px; */
+	background: url(../images/logo.png) no-repeat top center;
 	width: 326px;
-	height: 70px;
+	height: 95px;
 	text-indent: -9999px;
 	overflow: hidden;
 	padding-bottom: 15px;
