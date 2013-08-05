@@ -1,0 +1,40 @@
+
+<div class="pageContent">
+	<form method="post" action="__APP__/Admin/Users/insert" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone);">
+		<input type="hidden" name="a_id" value="{$vo.a_id}"/>
+		<div class="pageFormContent" layoutH="58">
+			<p>
+				<label>用户名：</label>
+				<input type="text" name="username" size="30" maxlength="20" class="required" value="{$vo.username}"/>
+			</p>
+			<p>
+				<label><if condition="$update eq 'true'">旧密码： <else />密 码：</if></label>
+				<input type="password" name="password" size="30" class="required" value="{$vo.password}"/>
+			</p>
+			<p>
+				<label><if condition="$update eq 'true'">新密码： <else />确认密码：</if></label>
+				<input type="password" name="rpassword" size="30" class="required alphanumeric" value="{$vo.rpassword}" alt="请输入相同的密码"/>
+			</p>
+			<p>
+				<label>真实姓名：</label>
+				<input type="text" name="realname" size="30" class="required" value="{$vo.realname}"/>
+			</p>
+			<!-- <p>
+				<label>分配角色：</label>
+				<select name="a_roleid">
+					<volist name="list" id="li">
+					<option value="{$li.r_id}" <in name="li.r_id" value="$vo.a_roleid" >selected="selected"</in> >{$li.r_rolename}</option>
+					</volist>
+				</select>
+			</p> -->
+		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">保存</button></div></div></li>
+				<li>
+					<div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div>
+				</li>
+			</ul>
+		</div>
+	</form>
+</div>
