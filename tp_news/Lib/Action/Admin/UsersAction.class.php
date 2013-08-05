@@ -32,16 +32,41 @@ class UsersAction extends Action{
     	$this->display();
     }
     
+    public function edit() {
+    	
+    	$this->display();
+    }
+    
     public function delete() {
         
     }
     
-	public function edit() {
-		
-    }
+
     
     public function insert() {
+    	$Users = D('Users');
+    	$data['username'] =	'11';
+    	$data['password'] = '11';
+    	$data['realname'] = '11';
+//     	$data['createtime'] = '2013-08-01 23:34:56';
+//     	$data['lasttime'] = '2013-08-01 23:34:56';
+    	$data['email'] = '11';
+    	$data['locked'] = 0;
+    	$Users->add($data);
+
     	
+    	
+    	$MessageArray = array(
+    			'statusCode'=>300,
+    			'message'=>'操作失败!',
+    			'navTabId'=>"userList",
+    			'rel'=>"",
+    			'callbackType'=>"",
+    			'closeCurrent'=>"",
+    			'forwardUrl'=>"",
+    	);
+    	$json_string = json_encode($MessageArray);
+    	echo $json_string;
     }
 }
 ?>
