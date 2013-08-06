@@ -13,7 +13,7 @@ class IndexAction extends Action {
     		$Users = M('Users');
     		$map['username']  = $log;
     		$data = $Users -> where($map) -> find();
-    		if($data && strcmp($pwd,$data['password'])==0) {
+    		if($data && strcmp(md5($pwd),$data['password'])==0) {
     			Session::set('ADMINUSER',$data);
     			$this->display();
     			return;

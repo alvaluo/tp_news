@@ -1,32 +1,38 @@
 
 <div class="pageContent">
-	<form method="post" action="__APP__/Admin/Users/insert" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone);">
-		<input type="hidden" name="a_id" value="{$vo.a_id}"/>
+	<form method="post" action="__APP__/Admin/Users/update" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone);">
+		<input type="hidden" name="id" value="{$data.id}"/>
+		<empty name="data.id">
+			<assign name="validation_class" value="required" />
+		</empty>
+		
 		<div class="pageFormContent" layoutH="58">
 			<p>
 				<label>用户名：</label>
-				<input type="text" name="username" size="30" maxlength="20" class="required" value="{$vo.username}"/>
+				<input type="text" name="username" size="30" maxlength="20" class="{$validation_class}" value="{$data.username}"/>
 			</p>
 			<p>
-				<label><if condition="$update eq 'true'">旧密码： <else />密 码：</if></label>
-				<input type="password" name="password" size="30" class="required" value="{$vo.password}"/>
+				<label><empty name="data.id">密 码<else /> 新密 码</empty>：</label>
+				<input type="password" id="password" name="password" size="30" class="{$validation_class}"/>
 			</p>
 			<p>
-				<label><if condition="$update eq 'true'">新密码： <else />确认密码：</if></label>
-				<input type="password" name="rpassword" size="30" class="required alphanumeric" value="{$vo.rpassword}" alt="请输入相同的密码"/>
+				<label>确认密码：</label>
+				<input type="password" name="rpassword" size="30" class="{$validation_class} alphanumeric" equalto="#password"/>
 			</p>
 			<p>
 				<label>真实姓名：</label>
-				<input type="text" name="realname" size="30" class="required" value="{$vo.realname}"/>
+				<input type="text" name="realname" size="30" class="{$validation_class}" value="{$data.realname}"/>
 			</p>
-			<!-- <p>
-				<label>分配角色：</label>
-				<select name="a_roleid">
-					<volist name="list" id="li">
-					<option value="{$li.r_id}" <in name="li.r_id" value="$vo.a_roleid" >selected="selected"</in> >{$li.r_rolename}</option>
-					</volist>
-				</select>
-			</p> -->
+			<p>
+				<label>邮箱地址：</label>
+				<input type="text" name="email" size="30" class="{$validation_class}" value="{$data.email}"/>
+			</p>
+			<p>
+				<label>锁定：</label>
+				是<input type="radio" id="locked" name="locked" checked="checked" value="0" />
+				&nbsp;&nbsp;&nbsp;
+				否<input type="radio" id="locked" name="locked" value="1"/>
+			</p>
 		</div>
 		<div class="formBar">
 			<ul>
@@ -37,4 +43,7 @@
 			</ul>
 		</div>
 	</form>
+	<script type="text/javascript">
+	$("#locked[value='{$data.locked}']").attr("checked",true);
+	</script>
 </div>

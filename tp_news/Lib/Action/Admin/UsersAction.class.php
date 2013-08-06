@@ -16,7 +16,11 @@ class UsersAction extends Action{
     	$Users = M('Users');
     	$count = $Users->where($map) -> count();
     	
-    	$numPerPage = isset($_POST["numPerPage"])?$_POST["numPerPage"]:1;
+    	//import default page size
+    	import("@.ORG.Constant");
+    	$pageSize = Constant::$DEFAULT_PAGE_SIZE;
+    	
+    	$numPerPage = isset($_POST["numPerPage"])?$_POST["numPerPage"]:$pageSize;
     	$this->numPerPage = $numPerPage;
     	
     	import('ORG.Util.Page');
@@ -33,38 +37,85 @@ class UsersAction extends Action{
     }
     
     public function edit() {
-    	
+    	$id = $_GET['id'];
+    	if(!empty($id)){
+    		$Users = M('Users');
+    		$data =   $Users->find($id);
+    		if($data) {
+    			$this->data = $data;
+    		}else{
+    			$this->error('数据错误');
+    		}
+    	}
     	$this->display();
     }
     
     public function delete() {
-        
+    	//import result class
+    	import("@.ORG.Results");
+    	$MessageArray = Results::$MessageArray;
+    	
+    	$id = $_GET['id'];
+    	
+    	$Users = M('Users');
+    	$list = $Users->delete($id);
+    	if ($list !== false) {
+    		$MessageArray['statusCode'] = 200;
+    		$MessageArray['message'] = "操作成功!";
+    		$MessageArray['navTabId'] = "userList";
+    	}
+    	
+    	$json_string = json_encode($MessageArray);
+    	echo $json_string;
     }
     
 
     
-    public function insert() {
+    public function update() {
+    	//import result class
+    	import("@.ORG.Results");
+    	$MessageArray = Results::$MessageArray;
+    	$id = $_POST['id'];
+    	
     	$Users = D('Users');
-    	$data['username'] =	'11';
-    	$data['password'] = '11';
-    	$data['realname'] = '11';
-//     	$data['createtime'] = '2013-08-01 23:34:56';
-//     	$data['lasttime'] = '2013-08-01 23:34:56';
-    	$data['email'] = '11';
-    	$data['locked'] = 0;
-    	$Users->add($data);
-
+    	if(empty($id)){
+    		if ($vo = $Users->create()) {
+    			$list = $Users->add();
+    			if ($list !== false) {
+    				$MessageArray['statusCode'] = 200;
+    				$MessageArray['message'] = "操作成功!";
+    				$MessageArray['callbackType'] = "closeCurrent";
+    				$MessageArray['navTabId'] = "userList";
+    			}
+    		}
+    	}else{
+    		/* $data = $Users->create();
+    		if($data) {
+    			$result = $Users->save($data);
+    			if($result) {
+    				$MessageArray['statusCode'] = 200;
+    				$MessageArray['message'] = "操作成功!";
+    				$MessageArray['callbackType'] = "closeCurrent";
+    				$MessageArray['navTabId'] = "userList";
+    			}
+    		} */
+    		$data['id'] = $_POST["id"];
+    		$data['username'] = $_POST["username"];
+			if(!empty($_POST["password"])){
+				$data['password'] = md5($_POST["password"]);
+			}
+    		$data['realname'] = $_POST["realname"];
+    		$data['email'] = $_POST["email"];
+    		$data['locked'] = $_POST["locked"];
+    		$result = $Users -> save($data);
+    		if($result) {
+    			$MessageArray['statusCode'] = 200;
+    			$MessageArray['message'] = "操作成功!";
+    			$MessageArray['callbackType'] = "closeCurrent";
+    			$MessageArray['navTabId'] = "userList";
+    		}
+    	}
     	
-    	
-    	$MessageArray = array(
-    			'statusCode'=>300,
-    			'message'=>'操作失败!',
-    			'navTabId'=>"userList",
-    			'rel'=>"",
-    			'callbackType'=>"",
-    			'closeCurrent'=>"",
-    			'forwardUrl'=>"",
-    	);
     	$json_string = json_encode($MessageArray);
     	echo $json_string;
     }
