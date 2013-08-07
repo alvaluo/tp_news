@@ -14,6 +14,15 @@ class IndexAction extends Action {
     		$map['username']  = $log;
     		$data = $Users -> where($map) -> find();
     		if($data && strcmp(md5($pwd),$data['password'])==0) {
+    			//Save db logs
+    			$Logs = D('Logs');
+    			$data = $Logs->create();
+    			$data['username'] = $log;
+    			$data['ip'] = get_client_ip();
+    			$data['agent']= $_SERVER['HTTP_USER_AGENT'];
+    			$data['comment']= 'Login';
+    			$Logs->add($data);
+    			//Save to session
     			Session::set('ADMINUSER',$data);
     			$this->display();
     			return;
@@ -32,4 +41,6 @@ class IndexAction extends Action {
     	Session::clear ('ADMINUSER');
     	$this->redirect('login');
     }
+    
+
 }

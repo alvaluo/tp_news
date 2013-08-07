@@ -1,12 +1,10 @@
-<form id="pagerForm" method="post" action="__APP__/Admin/Users/lists">
-	<input type="hidden" name="username" value="{$username}">
-	<input type="hidden" name="createtime" value="{$createtime}" />
+<form id="pagerForm" method="post" action="__APP__/Admin/Logs/lists">
 	<input type="hidden" name="pageNum" value="1" />
 	<input type="hidden" name="numPerPage" value="{$numPerPage}" />
 </form>
 <div class="page">
 	<div class="pageHeader">
-		<form onsubmit="return navTabSearch(this);" action="__APP__/Admin/Users/lists" method="post">
+		<form onsubmit="return navTabSearch(this);" action="__APP__/Admin/Logs/lists" method="post">
 		<div class="searchBar">
 			<table class="searchContent">
 				<tr>
@@ -14,7 +12,7 @@
 						查找用户：<input type="text" id="username" name="username" value="{$username}"/>
 					</td>
 					<td>
-						注册时间：<input type="text" class="date" readonly="true" name="createtime" value="{$createtime}"/>
+						登录时间：<input type="text" class="date" readonly="true" name="createtime" value="{$createtime}"/>
 					</td>
 					<td>
 						<div class="buttonActive"><div class="buttonContent"><button type="submit">检索</button></div></div>
@@ -27,37 +25,31 @@
 	<div class="pageContent">
 		<div class="panelBar">
 			<ul class="toolBar">
-				<li><a class="add" href="__APP__/Admin/Users/edit" target="dialog" rel="dlg_Add" mask="true"><span>添加</span></a></li>
-				<li><a class="delete" href="__APP__/Admin/Users/delete/id/{sid_userid}" target="ajaxTodo" title="确定要删除吗?"><span>删除</span></a></li>
-				<li><a class="edit" href="__APP__/Admin/Users/edit/id/{sid_userid}" target="dialog"  rel="dlg_Add" mask="true"><span>修改</span></a></li>
-				<!-- <li class="line">line</li>
-				<li><a class="icon" href="javascript:void(0);"><span>导入EXCEL</span></a></li> -->
+				<li><a class="delete" href="__APP__/Admin/Logs/delete/id/{sid_logsid}" target="ajaxTodo" title="确定要删除吗?"><span>删除</span></a></li>
+				<li class="line">line</li>
+				<li><a class="icon" href="javascript:void(0);"><span>导入EXCEL</span></a></li>
 			</ul>
 		</div>
 		<table class="table" layouth="112">
 			<thead>
 				<tr>
-					<th width="80"></th>
-					<th width="120">用户名</th>
-					<th width="150">密码</th>
-					<th width="150">真实姓名</th>
-					<th width="150">注册时间</th>
-					<th width="150">最后在线时间</th>
-					<th width="150">邮件地址</th>
-					<th width="150">锁定</th>
+					<th width="50"></th>
+					<th width="120">用户</th>
+					<th width="150">登录时间</th>
+					<th width="130">IP地址</th>
+					<th width="120">操作</th>
+					<th width="210">头部信息</th>
 				</tr>
 			</thead>
 			<tbody>
 				<volist name="data" id="vo" mod="5">
-				<tr target="sid_userid" rel="{$vo.id}">
+				<tr target="sid_logsid" rel="{$vo.id}">
 					<td>{$i}</td>
 					<td>{$vo.username}</td>
-					<td>***********</td>
-					<td>{$vo.realname}</td>
 					<td>{$vo.createtime}</td>
-					<td>{$vo.lasttime}</td>
-					<td>{$vo.email}</td>
-					<td><if condition="($vo.locked eq 1)">否<else />是</if></td>
+					<td>{$vo.ip}</td>
+					<td>{$vo.comment}</td>
+					<td>{$vo.agent}</td>
 				</tr>
 				</volist>
 			</tbody>
