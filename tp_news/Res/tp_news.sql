@@ -16,6 +16,29 @@ CREATE DATABASE IF NOT EXISTS `tp_news` /*!40100 DEFAULT CHARACTER SET gb2312 */
 USE `tp_news`;
 
 
+-- Dumping structure for table tp_news.logs
+DROP TABLE IF EXISTS `logs`;
+CREATE TABLE IF NOT EXISTS `logs` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `username` varchar(50) NOT NULL,
+  `ip` varchar(50) NOT NULL,
+  `createtime` datetime NOT NULL,
+  `agent` varchar(100) NOT NULL,
+  `comment` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=gb2312;
+
+-- Dumping data for table tp_news.logs: ~8 rows (approximately)
+/*!40000 ALTER TABLE `logs` DISABLE KEYS */;
+INSERT INTO `logs` (`id`, `username`, `ip`, `createtime`, `agent`, `comment`) VALUES
+	(1, 'admin', '127.0.0.1', '2013-08-07 14:30:22', 'Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1500.95 Safari/537.3', 'Login'),
+	(2, 'admin', '127.0.0.1', '2013-08-07 14:55:38', 'Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1500.95 Safari/537.3', 'Login'),
+	(4, 'admin', '127.0.0.1', '2013-08-07 14:58:37', 'Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1500.95 Safari/537.3', 'Login'),
+	(6, 'alva', '127.0.0.1', '2013-08-07 15:02:44', 'Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1500.95 Safari/537.3', 'Login'),
+	(7, 'admin', '127.0.0.1', '2013-08-07 22:47:13', 'Mozilla/5.0 (Windows NT 6.2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1500.95 Safari/537.3', 'Login');
+/*!40000 ALTER TABLE `logs` ENABLE KEYS */;
+
+
 -- Dumping structure for table tp_news.users
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
@@ -30,12 +53,11 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=gb2312;
 
--- Dumping data for table tp_news.users: ~3 rows (approximately)
+-- Dumping data for table tp_news.users: ~2 rows (approximately)
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` (`id`, `username`, `password`, `realname`, `createtime`, `lasttime`, `email`, `locked`) VALUES
-	(1, 'alva', 'alva', 'alva', '2013-08-01 23:34:14', '2013-08-01 23:34:14', 'luowei6@qq.com', 0),
-	(2, 'admin', 'admin', 'admin', '2013-08-01 23:34:38', '2013-08-01 23:34:38', 'luowei6@qq.com', 1),
-	(3, 'chenpeiheng', 'chenpeiheng', 'chenpeiheng', '2013-08-01 23:34:56', '2013-08-01 23:34:56', 'luowei6@qq.com', 0);
+	(1, 'admin', '21232f297a57a5a743894a0e4a801fc3', 'admin', '2013-08-07 09:40:04', '2013-08-07 09:40:04', 'luowei6@qq.com', 1),
+	(3, 'alva', '08c9371ae005cdefed132f2606c7e7f3', 'alva', '2013-08-07 14:57:43', '2013-08-07 14:57:43', 'luowei6@qq.com', 1);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
