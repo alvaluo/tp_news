@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS `logs` (
   `agent` varchar(100) NOT NULL,
   `comment` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=gb2312;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 -- Dumping data for table tp_news.logs: ~8 rows (approximately)
 /*!40000 ALTER TABLE `logs` DISABLE KEYS */;
@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `email` varchar(50) DEFAULT NULL,
   `locked` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=gb2312;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- Dumping data for table tp_news.users: ~2 rows (approximately)
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
@@ -62,3 +62,23 @@ INSERT INTO `users` (`id`, `username`, `password`, `realname`, `createtime`, `la
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+
+DROP TABLE IF EXISTS `enterprise`;
+CREATE TABLE IF NOT EXISTS `enterprise` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `companyname` varchar(50) NOT NULL,
+  `englishname` varchar(50) NULL,
+  `companynature` varchar(50) NOT NULL,
+  `companytype` varchar(50)  NULL,
+  `address` varchar(100) NULL,
+  `regname` varchar(100) NULL,
+  `companyPic` varchar(150) NULL,
+  `logo` varchar(150) NULL,
+  `phone` varchar(30) NULL,
+  `fax` varchar(30) NULL,
+  `mobile` varchar(11) NULL,
+  `email` varchar(100) NULL,
+  `qq`  varchar(13)  NULL,
+  `insertDate`  datetime  NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;

@@ -1,136 +1,82 @@
-<div class="pageContent">
-	<form method="post" action="" class="pageForm required-validate" onsubmit="">
-		<div class="pageFormContent" layoutH="56">
-			<p>
-				<label>客 户 号：</label>
-				<input name="sn" type="text" size="30" value="100001" readonly="readonly"/>
-			</p>
-			<p>
-				<label>客户名称：</label>
-				<input name="name" class="required" type="text" size="30" value="张慧华" alt="请输入客户名称"/>
-			</p>
-			<p>
-				<label>部门名称：</label>
-				<input type="hidden" name="orgLookup.id" value="${orgLookup.id}"/>
-				<input type="text" class="required" name="orgLookup.orgName" value="" suggestFields="orgNum,orgName" suggestUrl="demo/database/db_lookupSuggest.html" lookupGroup="orgLookup" />
-				<a class="btnLook" href="demo/database/dwzOrgLookup.html" lookupGroup="orgLookup">查找带回</a>		
-			</p>
-			<p>
-				<label>部门编号：</label>
-				<input type="text" readonly="readonly" value="" name="dwz_orgLookup.orgNum" class="textInput">
-			</p>
-			<p>
-				<label>识 别 码：</label>
-				<input name="code" class="digits" type="text" size="30" alt="请输入数字"/>
-			</p>
-			<p>
-				<label>客户类型：</label>
-				<select name="type" class="required combox">
-					<option value="">请选择</option>
-					<option value="个人">个人</option>
-					<option value="公司" selected>公司</option>
-				</select>
-			</p>
-			<p>
-				<label>营业执照号：</label>
-				<input type="text" size="30" />
-			</p>
-			<p>
-				<label>执照签发日期：</label>
-				<input type="text" name="startDate" class="date" size="30" /><a class="inputDateButton" href="javascript:;">选择</a>
-			</p>
-			<p>
-				<label>执照到期日期：</label>
-				<input type="text" name="endDate" class="date" size="30" /><a class="inputDateButton" href="javascript:;">选择</a>
-			</p>
-			<p>
-				<label>注册资金：</label>
-				<select name="capital" class="required combox">
-					<option value="">请选择</option>
-					<option value="10">10</option>
-					<option value="50" selected>50</option>
-					<option value="100">100</option>
-				</select>
-				<span class="unit">万元</span>
-			</p>
-			<p>
-				<label>注册类型：</label>
-				<input type="text" size="30" />
-			</p>
-			<p>
-				<label>注册地址：</label>
-				<input type="text" size="30" />
-			</p>
-			<p>
-				<label>所属行业：</label>
-				<input type="text" size="30" />
-			</p>
-			<p>
-				<label>组织机构代码：</label>
-				<input type="text" size="30" />
-			</p>
-			<p>
-				<label>国税登记证号码：</label>
-				<input type="text" size="30" />
-			</p>
-			<p>
-				<label>地税登记证号码：</label>
-				<input type="text" size="30" />
-			</p>
-			<p>
-				<label>贷款卡编码：</label>
-				<input type="text" size="30" />
-			</p>
-			<p>
-				<label>法人姓名：</label>
-				<input type="text" size="30" />
-			</p>
-			<p>
-				<label>法人代表身份证号：</label>
-				<input type="text" size="30" />
-			</p>
-			<p>
-				<label>身份证到期日期：</label>
-				<input type="text" size="30" />
-			</p>
-			<p>
-				<label>其他证件及号码：</label>
-				<input type="text" size="30" />
-			</p>
-			<p>
-				<label>曾用名称：</label>
-				<input type="text" size="30" />
-			</p>
-			<p>
-				<label>首次贷款日期：</label>
-				<input readonly="readonly" type="text" size="30" />
-			</p>
-			<div class="divider"></div>
-			<p>
-				<label>建档日期：</label>
-				<input readonly="readonly" type="text" size="30" />
-			</p>
-			<p>
-				<label>管户经理：</label>
-				<input readonly="readonly" type="text" size="30" />
-			</p>
-			<p>
-				<label>最新修改时间：</label>
-				<input readonly="readonly" type="text" size="30" />
-			</p>
-			<p>
-				<label>最新修改人员：</label>
-				<input readonly="readonly" type="text" size="30" />
-			</p>
+<form id="pagerForm" method="post" action="__APP__/Admin/Users/lists">
+	<input type="hidden" name="username" value="{$username}">
+	<input type="hidden" name="createtime" value="{$createtime}" />
+	<input type="hidden" name="pageNum" value="1" />
+	<input type="hidden" name="numPerPage" value="{$numPerPage}" />
+</form>
+<div class="page">
+	<div class="pageHeader">
+		<form onsubmit="return navTabSearch(this);" action="__APP__/Admin/Users/lists" method="post">
+		<div class="searchBar">
+			<table class="searchContent">
+				<tr>
+					<td>
+						企业名称：<input type="text" id="username" name="username" value="{$username}"/>
+					</td>
+					<td>
+						<div class="buttonActive"><div class="buttonContent"><button type="submit">检索</button></div></div>
+					</td>
+				</tr>
+			</table>
 		</div>
-		<div class="formBar">
-			<ul>
-				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">保存</button></div></div></li>
-				<li>
-					<div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div>
-				</li>
+		</form>
+	</div>
+	<div class="pageContent">
+		<div class="panelBar">
+			<ul class="toolBar">
+				<li><a class="add" href="__APP__/Admin/Users/edit" target="dialog" rel="dlg_Add" mask="true"><span>添加</span></a></li>
+				<li><a class="delete" href="__APP__/Admin/Users/delete/id/{sid_userid}" target="ajaxTodo" title="确定要删除吗?"><span>删除</span></a></li>
+				<li><a class="edit" href="__APP__/Admin/Users/edit/id/{sid_userid}" target="dialog"  rel="dlg_Add" mask="true"><span>修改</span></a></li>
 			</ul>
 		</div>
-	</form>
-</div>
+		<table class="table" layouth="112">
+			<thead>
+				<tr>
+					<th width="80">序列</th>
+					<th width="120">企业名称</th>
+					<th width="150">英文名称</th>
+					<th width="150">企业性质</th>
+					<th width="150">企业类别</th>
+					<th width="150">通信地址</th>
+					<th width="150">法人代表</th>
+					<th width="150">联系电话</th>
+				</tr>
+			</thead>
+			<tbody>
+				<volist name="data" id="vo" mod="5">
+				<tr target="sid_userid" rel="{$vo.id}">
+					<td>{$i}</td>
+					<td>{$vo.username}</td>
+					<td>***********</td>
+					<td>{$vo.realname}</td>
+					<td>{$vo.createtime}</td>
+					<td>{$vo.lasttime}</td>
+					<td>{$vo.email}</td>
+					<td><if condition="($vo.locked eq 1)">否<else />是</if></td>
+				</tr>
+				</volist>
+			</tbody>
+		</table>
+		
+		
+		<div class="panelBar">
+			<div class="pages">
+				<span>显示</span>
+				<select class="combox" id="numPerPage" name="numPerPage" onchange="navTabPageBreak({numPerPage:this.value})">
+					<option value="5">5</option>
+					<option value="20">20</option>
+					<option value="50">50</option>
+					<option value="100">100</option>
+					<option value="200">200</option>
+				</select>
+				<span>条，共{$totalRows}条</span>
+			</div>
+			
+			<div class="pagination" targetType="navTab" totalCount="{$totalPages}" numPerPage="1" pageNumShown="10" currentPage="{$pageNum}"></div>
 
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+$("#numPerPage option[value='{$numPerPage}']").attr("selected",true);
+</script>

@@ -7,7 +7,7 @@ class LogsModel extends Model {
 	
 	//数据模型
 	protected $fields = array(
-			'id', 'username', 'ip', 'createtime','agent','comment', 
+			'id', 'companyname', 'englishname', 'companynature ','companytype','address','regname','phone'
 	);
 	
 	// 自动验证设置
