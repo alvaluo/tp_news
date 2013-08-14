@@ -1,6 +1,6 @@
 <?php
 
-class LogsModel extends Model {
+class  EnterpriseModel extends Model {
 
 	//模型命名
 	protected $trueTableName = 'enterprise';

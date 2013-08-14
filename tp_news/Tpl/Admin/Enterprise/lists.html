@@ -6,12 +6,12 @@
 </form>
 <div class="page">
 	<div class="pageHeader">
-		<form onsubmit="return navTabSearch(this);" action="__APP__/Admin/Users/lists" method="post">
+		<form onsubmit="return navTabSearch(this);" action="__APP__/Admin/Enterprise/lists" method="post">
 		<div class="searchBar">
 			<table class="searchContent">
 				<tr>
 					<td>
-						企业名称：<input type="text" id="username" name="username" value="{$username}"/>
+						企业名称：<input type="text" id="companyname" name="companyname" value="{$companyname}"/>
 					</td>
 					<td>
 						<div class="buttonActive"><div class="buttonContent"><button type="submit">检索</button></div></div>
@@ -29,7 +29,7 @@
 				<li><a class="edit" href="__APP__/Admin/Users/edit/id/{sid_userid}" target="dialog"  rel="dlg_Add" mask="true"><span>修改</span></a></li>
 			</ul>
 		</div>
-		<table class="table" layouth="112">
+		<table class="table" layouth="112" >
 			<thead>
 				<tr>
 					<th width="80">序列</th>
@@ -42,23 +42,21 @@
 					<th width="150">联系电话</th>
 				</tr>
 			</thead>
-			<tbody>
-				<volist name="data" id="vo" mod="5">
-				<tr target="sid_userid" rel="{$vo.id}">
+			<tbody style="text-align: center;">
+				<volist name="data" id="enterprise" mod="5">
+				<tr target="sid_userid" rel="{$enterprise.id}">
 					<td>{$i}</td>
-					<td>{$vo.username}</td>
-					<td>***********</td>
-					<td>{$vo.realname}</td>
-					<td>{$vo.createtime}</td>
-					<td>{$vo.lasttime}</td>
-					<td>{$vo.email}</td>
-					<td><if condition="($vo.locked eq 1)">否<else />是</if></td>
+					<td>{$enterprise.companyname}</td>
+					<td>{$enterprise.englishname}</td>
+					<td>{$enterprise.companynature}</td>
+					<td>{$enterprise.companytype}</td>
+					<td>{$enterprise.address}</td>
+					<td>{$enterprise.regname}</td>
+					<td>{$enterprise.phone}</td>
 				</tr>
 				</volist>
 			</tbody>
 		</table>
-		
-		
 		<div class="panelBar">
 			<div class="pages">
 				<span>显示</span>

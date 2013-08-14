@@ -70,6 +70,7 @@ CREATE TABLE IF NOT EXISTS `enterprise` (
   `englishname` varchar(50) NULL,
   `companynature` varchar(50) NOT NULL,
   `companytype` varchar(50)  NULL,
+  `introduction` varchar(5000)  NULL,
   `address` varchar(100) NULL,
   `regname` varchar(100) NULL,
   `companyPic` varchar(150) NULL,
