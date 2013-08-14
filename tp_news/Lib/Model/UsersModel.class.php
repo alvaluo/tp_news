@@ -7,7 +7,7 @@ class UsersModel extends Model {
 	
 	//数据模型
 	protected $fields = array(
-			'id', 'username', 'password', 'realname','createtime', 'lasttime', 'email', 'locked',
+			'id', 'username', 'password', 'realname','createtime', 'lasttime', 'email', 'locked', 'roleid',
 	);
 	
 	// 自动验证设置

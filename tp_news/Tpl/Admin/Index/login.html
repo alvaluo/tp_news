@@ -64,17 +64,17 @@ $().ready(function() {
 		<h1>
 			<a href="javascript:window.location.reload();" title="科研特科技">科研特科技</a>
 		</h1>
-		<notempty name="login_error">
-			<div id="login_error">{$Think.lang.LOGIN_NULL_LOG_PWD}<br /></div>
+		<notempty name="login_msg">
+			<div id="login_error">{$login_msg}<br /></div>
 		</notempty>
 		<div id="login_error" style="display: none;">用户名密码不能为空!</div>
 
 		<form name="loginform" id="loginform" action="__APP__/Admin/Index/index" method="post">
 			<p>
-				<label>用户名<br /> <input type="text" name="log" id="log" class="input" value="admin" size="20" tabindex="10"/></label>
+				<label>用户名<br /> <input type="text" name="log" id="log" class="input" value="" size="20" tabindex="10"/></label>
 			</p>
 			<p>
-				<label>密码<br /> <input type="password" name="pwd" id="pwd" class="input" value="admin" size="20" tabindex="20"/></label>
+				<label>密码<br /> <input type="password" name="pwd" id="pwd" class="input" value="" size="20" tabindex="20"/></label>
 			</p>
 			<p class="forgetmenot">
 				<label><input name="rememberme" type="checkbox" id="rememberme" value="forever" tabindex="90" /> 记住我的登录信息</label>

@@ -3,31 +3,49 @@ class IndexAction extends Action {
 	
     public function index(){
     	import('ORG.Util.Session');
-    	if(Session::is_set('ADMINUSER')){
+    	if(Session::is_set('CURRENT_USER')){
+    		$current_user = session('CURRENT_USER');
+			$mid = $current_user['mid'];
+    		$treeHtml = getIndexModules($mid);
+    		$this->treeHtml = $treeHtml;
     		$this->display();
     		return;
     	}
     	$log = $_POST['log'];
     	$pwd = $_POST['pwd'];
     	if(!empty($log) && !empty($pwd)){
+    		$msg = L('LOGIN_NULL_LOG_PWD');
     		$Users = M('Users');
     		$map['username']  = $log;
-    		$data = $Users -> where($map) -> find();
+    		$data = $Users ->field('u.*,r.rolename,r.mid')
+    			-> table('users u')->join('roles r on u.roleid = r.id')
+    			-> where($map) -> find();
     		if($data && strcmp(md5($pwd),$data['password'])==0) {
-    			//Save db logs
-    			$Logs = D('Logs');
-    			$data = $Logs->create();
-    			$data['username'] = $log;
-    			$data['ip'] = get_client_ip();
-    			$data['agent']= $_SERVER['HTTP_USER_AGENT'];
-    			$data['comment']= 'Login';
-    			$Logs->add($data);
-    			//Save to session
-    			Session::set('ADMINUSER',$data);
-    			$this->display();
-    			return;
+    			if($data['locked'] == 0){
+    				$this->login_msg = L('LOGIN_LOCKED_LOG_PWD');
+    			}else{
+    				//Save db logs
+    				$Logs = D('Logs');
+    				$dataLog = $Logs->create();
+    				$dataLog['username'] = $log;
+    				$dataLog['ip'] = get_client_ip();
+    				$dataLog['agent']= $_SERVER['HTTP_USER_AGENT'];
+    				$dataLog['comment']= 'Login';
+    				$Logs->add($dataLog);
+    				//Save to session
+    				Session::set('CURRENT_USER',$data);
+    				//Rule
+    				$mid = $data['mid'];
+    				$treeHtml = getIndexModules($mid);
+    				$this->treeHtml = $treeHtml;
+    				
+    				$this->display();
+    				return;
+    			}
+    		}else{
+    			$this->login_msg = $msg;
     		}
-    		$this->login_error = TRUE;
+    		
     	}
     	$this->display('login');
     }
@@ -38,7 +56,7 @@ class IndexAction extends Action {
     
     public function exits() {
     	import('ORG.Util.Session');
-    	Session::clear ('ADMINUSER');
+    	Session::clear ('CURRENT_USER');
     	$this->redirect('login');
     }
     

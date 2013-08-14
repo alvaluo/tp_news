@@ -28,7 +28,9 @@ class UsersAction extends Action{
     	$pageNum = isset($_POST['pageNum'])?$_POST['pageNum']:1;
     	$this->pageNum = $pageNum;
     	
-    	$data = $Users->where($map) -> order('createtime desc') -> page($pageNum.','.$Page->listRows) -> select();
+    	$data = $Users ->field('u.*,r.rolename')
+    			-> table('users u')->join('roles r on u.roleid = r.id')
+    			->where($map) -> order('createtime desc') -> page($pageNum.','.$Page->listRows) -> select();
 
     	$this->totalRows = $Page->totalRows;
     	$this->totalPages = $Page->totalPages;
@@ -43,10 +45,13 @@ class UsersAction extends Action{
     		$data =   $Users->find($id);
     		if($data) {
     			$this->data = $data;
-    		}else{
-    			$this->error('数据错误');
     		}
     	}
+    	
+    	$Roles = M('Roles');
+		$roleData = $Roles -> where() -> select();
+		$this->roleData = $roleData;
+		
     	$this->display();
     }
     
@@ -56,13 +61,13 @@ class UsersAction extends Action{
     	$MessageArray = Results::$MessageArray;
     	
     	$id = $_GET['id'];
+    	$navTabId = $_GET['navTabId'];
     	
     	$Users = M('Users');
     	$list = $Users->delete($id);
     	if ($list !== false) {
     		$MessageArray['statusCode'] = 200;
     		$MessageArray['message'] = "操作成功!";
-    		$MessageArray['navTabId'] = "userList";
     	}
     	
     	$json_string = json_encode($MessageArray);
@@ -85,7 +90,6 @@ class UsersAction extends Action{
     				$MessageArray['statusCode'] = 200;
     				$MessageArray['message'] = "操作成功!";
     				$MessageArray['callbackType'] = "closeCurrent";
-    				$MessageArray['navTabId'] = "userList";
     			}
     		}
     	}else{
@@ -107,12 +111,12 @@ class UsersAction extends Action{
     		$data['realname'] = $_POST["realname"];
     		$data['email'] = $_POST["email"];
     		$data['locked'] = $_POST["locked"];
+    		$data['roleid'] = $_POST["roleid"];
     		$result = $Users -> save($data);
     		if($result) {
     			$MessageArray['statusCode'] = 200;
     			$MessageArray['message'] = "操作成功!";
     			$MessageArray['callbackType'] = "closeCurrent";
-    			$MessageArray['navTabId'] = "userList";
     		}
     	}
     	

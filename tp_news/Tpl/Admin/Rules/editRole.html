@@ -1,0 +1,31 @@
+
+<div class="pageContent">
+	<form method="post" action="__APP__/Admin/Rules/updateRole" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone);">
+		<input type="hidden" name="id" value="{$data.id}"/>
+		<empty name="data.id">
+			<assign name="validation_class" value="required" />
+		</empty>
+		
+		<div class="pageFormContent" layoutH="58">
+			<p>
+				<label>角色名称：</label>
+				<input type="text" name="rolename" size="30" maxlength="20" class="{$validation_class}" value="{$data.rolename}"/>
+			</p>
+			<p>
+				<label>说明：</label>
+				<input type="text" name="comment" size="30" class="{$validation_class}" value="{$data.comment}"/>
+			</p>
+		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">保存</button></div></div></li>
+				<li>
+					<div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div>
+				</li>
+			</ul>
+		</div>
+	</form>
+	<script type="text/javascript">
+	$("#locked[value='{$data.locked}']").attr("checked",true);
+	</script>
+</div>

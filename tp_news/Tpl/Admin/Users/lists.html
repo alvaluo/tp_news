@@ -27,23 +27,22 @@
 	<div class="pageContent">
 		<div class="panelBar">
 			<ul class="toolBar">
-				<li><a class="add" href="__APP__/Admin/Users/edit" target="dialog" rel="dlg_Add" mask="true"><span>添加</span></a></li>
+				<li><a class="add" href="__APP__/Admin/Users/edit" target="dialog" rel="dlg_Add" mask="true" width="520" height="320"><span>添加</span></a></li>
 				<li><a class="delete" href="__APP__/Admin/Users/delete/id/{sid_userid}" target="ajaxTodo" title="确定要删除吗?"><span>删除</span></a></li>
-				<li><a class="edit" href="__APP__/Admin/Users/edit/id/{sid_userid}" target="dialog"  rel="dlg_Add" mask="true"><span>修改</span></a></li>
-				<!-- <li class="line">line</li>
-				<li><a class="icon" href="javascript:void(0);"><span>导入EXCEL</span></a></li> -->
+				<li><a class="edit" href="__APP__/Admin/Users/edit/id/{sid_userid}" target="dialog"  rel="dlg_Add" mask="true" width="520" height="320"><span>修改</span></a></li>
 			</ul>
 		</div>
 		<table class="table" layouth="112">
 			<thead>
 				<tr>
-					<th width="80"></th>
+					<th width="50"></th>
 					<th width="120">用户名</th>
-					<th width="150">密码</th>
-					<th width="150">真实姓名</th>
-					<th width="150">注册时间</th>
-					<th width="150">最后在线时间</th>
+					<th width="130">密码</th>
+					<th width="130">真实姓名</th>
+					<th width="160">注册时间</th>
+					<th width="160">最后在线时间</th>
 					<th width="150">邮件地址</th>
+					<th width="150">角色</th>
 					<th width="150">锁定</th>
 				</tr>
 			</thead>
@@ -57,6 +56,7 @@
 					<td>{$vo.createtime}</td>
 					<td>{$vo.lasttime}</td>
 					<td>{$vo.email}</td>
+					<td>{$vo.rolename}</td>
 					<td><if condition="($vo.locked eq 1)">否<else />是</if></td>
 				</tr>
 				</volist>

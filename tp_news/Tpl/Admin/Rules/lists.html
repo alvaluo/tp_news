@@ -1,0 +1,36 @@
+<div class="panelBar">
+	<ul class="toolBar">
+		<li><a class="add" href="__APP__/Admin/Rules/editRole" target="dialog" width="520" height="180" mixable="false" minable="false" resizable="false" mask="true"><span>添加角色</span></a></li>
+		<li><a class="delete" href="__APP__/Admin/Rules/deleteRole/id/{sid_roleid}" target="ajaxTodo" title="确定要删除吗?"><span>删除角色</span></a></li>
+		<li><a class="edit" href="__APP__/Admin/Rules/editRole/id/{sid_roleid}"  target="dialog" width="520" height="180" mixable="false" minable="false" resizable="false" mask="true"><span>修改角色</span></a></li>
+		<li class="line">line</li>
+		<li><a class="add" href="__APP__/Admin/Rules/editModule/id/{sid_roleid}" target="dialog" mixable="false" minable="false" resizable="false" mask="true"><span>分配权限</span></a></li>
+	</ul>
+</div>
+<div class="pageContent" selector="h1" layoutH="64">
+	<div class="panel">
+		<h1>角色列表</h1>
+		<div>
+			<table class="list" width="98%">
+				<thead>
+					<tr>
+						<th width="80">序号</th>
+						<th width="150">名称</th>
+						<th>说明</th>
+					</tr>
+				</thead>
+				<tbody>
+					<volist name="data" id="vo" mod="5">
+					<tr target="sid_roleid" rel="{$vo.id}">
+						<td>{$i}</td>
+						<td>{$vo.rolename}</td>
+						<td>{$vo.comment}</td>
+					</tr>
+					</volist>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+</div>
+

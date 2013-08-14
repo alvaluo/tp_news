@@ -52,4 +52,5 @@ return array(
     '_PARAM_ERROR_'         =>  '参数错误或者未定义',
     
     'LOGIN_NULL_LOG_PWD'         =>  '用户名不存在或者密码错误!',
+    'LOGIN_LOCKED_LOG_PWD'       =>  '该用户已锁定,请联系管理员!',
 );
