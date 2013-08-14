@@ -1,3 +1,6 @@
 eclipse.preferences.version=1
+encoding//Tpl/Admin/Enterprise/lists.html=utf-8
+encoding//Tpl/Admin/Logs/lists.html=utf-8
+encoding//Tpl/Admin/Users/edit.html=UTF-8
 encoding//Tpl/Admin/Users/lists.html=UTF-8
 encoding/<project>=UTF-8
