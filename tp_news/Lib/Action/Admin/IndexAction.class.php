@@ -32,7 +32,7 @@ class IndexAction extends Action {
     				$mid = $data['mid'];
     				$ruleTag = getIndexModules($mid);
     				//Save to session
-    				$current_user['data'] = $data;
+    				$current_user['user'] = $data;
     				$current_user['ruleTag'] = $ruleTag;
     				Session::set('CURRENT_USER',$current_user);
     				$this->display();
