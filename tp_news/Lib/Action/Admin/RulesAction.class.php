@@ -4,8 +4,17 @@ class RulesAction extends Action{
 	public function lists() {
 		// select list roles
 		$Roles = M('Roles');
-		$data = $Roles -> where($map) -> select();
-		$this->data = $data;
+		$dataRoles = $Roles -> where($map) -> select();
+		$this->dataRoles = $dataRoles;
+		
+		$Modules = M('Modules');
+// 		$dataModules = $Modules -> where($map) -> order('createtime desc') -> select();
+// 		$dataModules = $Modules -> query("select m1.*,m.modulename as mname from modules  m right join modules m1 on m1.mrid = m.id");
+		$dataModules = $Modules ->field('m1.*,m.modulename as mname')
+				-> table('modules m right join modules m1 on m1.mrid = m.id')
+				-> where($map) -> order('createtime desc') -> select();
+		$this->dataModules = $dataModules;
+		
     	$this->display();
 	}
 	
@@ -35,7 +44,6 @@ class RulesAction extends Action{
 					$MessageArray['statusCode'] = 200;
 					$MessageArray['message'] = "操作成功!";
 					$MessageArray['callbackType'] = "closeCurrent";
-					$MessageArray['navTabId'] = "rulesList";
 				}
 			}
 		}else{
@@ -46,7 +54,6 @@ class RulesAction extends Action{
 					$MessageArray['statusCode'] = 200;
 					$MessageArray['message'] = "操作成功!";
 					$MessageArray['callbackType'] = "closeCurrent";
-					$MessageArray['navTabId'] = "rulesList";
 				}
 			}
 		}
@@ -68,14 +75,86 @@ class RulesAction extends Action{
     	if ($list !== false) {
     		$MessageArray['statusCode'] = 200;
     		$MessageArray['message'] = "操作成功!";
-    		$MessageArray['navTabId'] = "rulesList";
     	}
     	
     	$json_string = json_encode($MessageArray);
     	echo $json_string;
 	}
 	
-	public function editModule() {
+	public function editModule(){
+		
+		$id = $_GET['id'];
+		if(!empty($id)){
+			$Modules = M('Modules');
+			$data =   $Modules->find($id);
+			if($data) {
+				$this->data = $data;
+			}
+		}
+		
+		
+		$map['mrid'] = 0;
+		$Modules = M('Modules');
+		$dataModules = $Modules -> where($map) -> order('mrid asc') -> select();
+		$this->dataModules = $dataModules;
+		
+		
+		
+		$this->display();
+	}
+	
+	
+	public function updateModule() {
+		//import result class
+		import("@.ORG.Results");
+		$MessageArray = Results::$MessageArray;
+		$id = $_POST['id'];
+			
+		$Modules = D('Modules');
+		if(empty($id)){
+			if ($vo = $Modules->create()) {
+				$list = $Modules->add();
+				if ($list !== false) {
+					$MessageArray['statusCode'] = 200;
+					$MessageArray['message'] = "操作成功!";
+					$MessageArray['callbackType'] = "closeCurrent";
+				}
+			}
+		}else{
+			$data = $Modules->create();
+			if($data) {
+				$result = $Modules->save($data);
+				if($result) {
+					$MessageArray['statusCode'] = 200;
+					$MessageArray['message'] = "操作成功!";
+					$MessageArray['callbackType'] = "closeCurrent";
+				}
+			}
+		}
+			
+		$json_string = json_encode($MessageArray);
+		echo $json_string;
+	}
+	
+	public function deleteModule() {
+		//import result class
+		import("@.ORG.Results");
+		$MessageArray = Results::$MessageArray;
+		 
+		$id = $_GET['id'];
+		 
+		$Modules = M('Modules');
+		$list = $Modules->delete($id);
+		if ($list !== false) {
+			$MessageArray['statusCode'] = 200;
+			$MessageArray['message'] = "操作成功!";
+		}
+		 
+		$json_string = json_encode($MessageArray);
+		echo $json_string;
+	}
+	
+	public function assignEditModule() {
 		
 		$id = $_GET['id'];
 		$this->id = $id;
@@ -119,7 +198,7 @@ class RulesAction extends Action{
 		$this->display();
 	}
 	
-	public function updateModule() {
+	public function assignUpdateModule() {
 		//import result class
 		import("@.ORG.Results");
 		$MessageArray = Results::$MessageArray;
@@ -139,7 +218,6 @@ class RulesAction extends Action{
 			if ($result !== false) {
 				$MessageArray['statusCode'] = 200;
 				$MessageArray['message'] = "操作成功!";
-				$MessageArray['navTabId'] = "rulesList";
 			}
 		}
 		

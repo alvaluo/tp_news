@@ -92,10 +92,10 @@ $(function(){
 			<div class="headerNav">
 				<a class="logo" style="padding-left: 10px;">标志</a>
 				<ul class="nav">
-					<li><font style="color: rgb(185, 204, 218);">当前在线用户( {$_SESSION['ADMINUSER'].username} )</font></li>
+					<li><font style="color: rgb(185, 204, 218);">当前在线用户( {$_SESSION['CURRENT_USER'].username} )</font></li>
 					<li><a href="changepwd.html">反馈</a></li>
 					<li><a href="changepwd.html">设置</a></li>
-					<li><a href="__APP__/Admin/Index/exits">退出</a></li>
+					<li><a href="__APP__/admin/index/exits">退出</a></li>
 				</ul>
 				<ul class="themeList" id="themeList">
 					<li theme="default"><div class="selected">蓝色</div></li>
@@ -118,38 +118,7 @@ $(function(){
 				<div class="toggleCollapse"><h2>主菜单</h2><div>收缩</div></div>
 
 				<div class="accordion" fillSpace="sidebar">
-					<!-- <div class="accordionHeader">
-						<h2><span>Folder</span>界面组件</h2>
-					</div>
-					<div class="accordionContent">
-						<ul class="tree treeFolder">
-							<li><a href="tabsPage.html" target="navTab">主框架面板</a>
-								<ul>
-									<li><a href="main.html" target="navTab" rel="main">我的主页</a></li>
-									<li><a href="http://www.baidu.com" target="navTab" rel="page1">页面一(外部页面)</a></li>
-								</ul>
-							</li>
-						</ul>
-					</div>
-					<div class="accordionHeader">
-						<h2><span>Folder</span>企业资料</h2>
-					</div>
-					<div class="accordionContent">
-						<ul class="tree treeFolder">
-							<li><a href="__APP__/Admin/Enterprise/lists" target="navTab" rel="enterprise">企业信息管理</a></li>
-						</ul>
-					</div>
-					<div class="accordionHeader">
-						<h2><span>Folder</span>系统管理</h2>
-					</div>
-					<div class="accordionContent">
-						<ul class="tree treeFolder">
-							<li><a href="__APP__/Admin/Users/lists" target="navTab" rel="userList">用户管理</a></li>
-							<li><a href="__APP__/Admin/Logs/lists" target="navTab" rel="logsList">日志管理</a></li>
-							<li><a href="__APP__/Admin/Rules/lists" target="navTab" rel="rulesList">权限管理</a></li>
-						</ul>
-					</div> -->
-					{$treeHtml}
+					{$Think.session.CURRENT_USER.ruleTag}
 				</div>
 			</div>
 		</div>

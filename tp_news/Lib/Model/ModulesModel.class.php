@@ -2,21 +2,21 @@
 
 class ModulesModel extends Model {
 
-	//模型命名
+	//妯″瀷鍛藉悕
 	protected $trueTableName = 'modules';
 	
-	//数据模型
+	//鏁版嵁妯″瀷
 	protected $fields = array(
-			'id', 'modulename', 'moduleurl', 'operatingtype', 'mrid', 
+			'id', 'modulename', 'moduleurl', 'createtime', 'sort' , 'mrid', 
 	);
 	
-	// 自动验证设置
+	// 鑷姩楠岃瘉璁剧疆
 	protected $_validate	 =	 array(
 	);
 	
-	// 自动填充设置
+	// 鑷姩濉厖璁剧疆
 	public $_auto = array (
-			array('id',null,self::MODEL_INSERT),
+		array('id',null,self::MODEL_INSERT),
 	);
 	
 

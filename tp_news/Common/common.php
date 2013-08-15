@@ -1,12 +1,16 @@
 <?php
-
+/**
+ * Admin section to generate
+ * @param unknown $mid
+ * @return string
+ */
 function getIndexModules($mid){
 	if(!empty($mid)){
 		$Modules = M('Modules');
 		//select * from modules where id in(1,2) or id in(select mrid from modules where id in(1,2))
 // 		$dataModules = $Modules -> where(array('id' => array('in', $mid))) -> select();
-// 		$dataModules = $Modules -> where($map) -> select();
-		$dataModules = $Modules -> where('id in('.$mid.') or id in(select mrid from modules where id in('.$mid.'))') -> select();
+		$dataModules = $Modules -> where('id in('.$mid.') or id in(select mrid from modules where id in('.$mid.'))')
+				-> order('sort,mrid asc') -> select();
 		
 		$dataParentModules = null;
 		$dataNodeModules = null;
@@ -17,7 +21,6 @@ function getIndexModules($mid){
 				$dataNodeModules[$dataNode['mrid']][$dataNode['id']] = $dataNode;
 			}
 		}
-		
 		foreach ($dataParentModules as $dataParentModules1){
 			$treeHtml .= "<div class='accordionHeader'><h2><span>Folder</span>".$dataParentModules1['modulename']."</h2></div>";
 			$node = $dataNodeModules[$dataParentModules1['id']];
@@ -27,8 +30,6 @@ function getIndexModules($mid){
 			}
 			$treeHtml .= "</ul>";
 			$treeHtml .= "</div>";
-			 
-			 
 		}
 	}
     return $treeHtml;

@@ -4,10 +4,6 @@ class IndexAction extends Action {
     public function index(){
     	import('ORG.Util.Session');
     	if(Session::is_set('CURRENT_USER')){
-    		$current_user = session('CURRENT_USER');
-			$mid = $current_user['mid'];
-    		$treeHtml = getIndexModules($mid);
-    		$this->treeHtml = $treeHtml;
     		$this->display();
     		return;
     	}
@@ -32,13 +28,13 @@ class IndexAction extends Action {
     				$dataLog['agent']= $_SERVER['HTTP_USER_AGENT'];
     				$dataLog['comment']= 'Login';
     				$Logs->add($dataLog);
-    				//Save to session
-    				Session::set('CURRENT_USER',$data);
     				//Rule
     				$mid = $data['mid'];
-    				$treeHtml = getIndexModules($mid);
-    				$this->treeHtml = $treeHtml;
-    				
+    				$ruleTag = getIndexModules($mid);
+    				//Save to session
+    				$current_user['data'] = $data;
+    				$current_user['ruleTag'] = $ruleTag;
+    				Session::set('CURRENT_USER',$current_user);
     				$this->display();
     				return;
     			}
