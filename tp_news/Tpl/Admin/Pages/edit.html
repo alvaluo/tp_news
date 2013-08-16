@@ -1,0 +1,54 @@
+
+
+<div class="pageContent">
+	<form method="post" action="__APP__/Admin/Pages/update" class="pageForm required-validate" onsubmit="return validateCallback(this, navTabAjaxDone);">
+		<input type="hidden" name="id" value="{$data.id}"/>
+		<input type="hidden" name="author" value="{$_SESSION['CURRENT_USER'].user.username}"/>
+		<div class="pageFormContent" layoutH="56">
+			<p style="width: 100%;">
+				<label>标 题：</label>
+				<input name="title" type="text" size="100" class="required" value=""/>
+				<span style="line-height: 21px;float: left;">&nbsp;&nbsp;</span>
+				<span for="title" class="error" style="display: none;position: static;"></span>
+			</p>
+			<p style="width: 100%;">
+				<label>链 接：</label>
+				<input name="url" type="text" size="100" class="required" value="http://localhost/index.php/home/page/page_id/=14" readonly="true"/>
+				<span style="line-height: 21px;float: left;">&nbsp;&nbsp;</span>
+				<span for="url" class="error" style="display: none;position: static;"></span>
+			</p>
+			<p>
+				<label>状 态：</label>
+				<select class="combox" name="status">
+					<option value="0">编辑</option>
+					<option value="1">发布</option>
+				</select>
+			</p>
+			<p>
+				<label>父 级：</label>
+				<select class="combox" name="parent">
+					<option value="0">无父级</option>
+					<volist name="parentDataPage" id="pdp" mod="5">
+						<option value="{$pdp.id }">{$pdp.title }</option>
+					</volist>
+				</select>
+			</p>
+			<p>
+				<label>排 序：</label>
+				<input name="sort" type="text" size="30" value="0"/>
+			</p>
+			<p style="width: 100%;height: 265px;">
+				<label>内 容：</label>
+				<textarea class="editor" name="content" rows="16" cols="100"></textarea>
+			</p>
+		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">保存</button></div></div></li>
+				<li>
+					<div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div>
+				</li>
+			</ul>
+		</div>
+	</form>
+</div>

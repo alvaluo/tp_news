@@ -53,9 +53,9 @@ CREATE TABLE IF NOT EXISTS `logs` (
   `agent` varchar(100) NOT NULL,
   `comment` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=145 DEFAULT CHARSET=gb2312;
+) ENGINE=InnoDB AUTO_INCREMENT=164 DEFAULT CHARSET=gb2312;
 
--- Dumping data for table tp_news.logs: ~39 rows (approximately)
+-- Dumping data for table tp_news.logs: ~58 rows (approximately)
 /*!40000 ALTER TABLE `logs` DISABLE KEYS */;
 INSERT INTO `logs` (`id`, `username`, `ip`, `createtime`, `agent`, `comment`) VALUES
 	(1, 'admin', '127.0.0.1', '2013-08-07 14:30:22', 'Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1500.95 Safari/537.3', 'Login'),
@@ -73,7 +73,7 @@ CREATE TABLE IF NOT EXISTS `modules` (
   `mrid` int(10) NOT NULL DEFAULT '0',
   `sort` int(10) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=gb2312 COMMENT='模块表';
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=gb2312 COMMENT='模块表';
 
 -- Dumping data for table tp_news.modules: ~6 rows (approximately)
 /*!40000 ALTER TABLE `modules` DISABLE KEYS */;
@@ -83,8 +83,33 @@ INSERT INTO `modules` (`id`, `modulename`, `moduleurl`, `createtime`, `mrid`, `s
 	(3, '权限管理', '__APP__/admin/rules/lists', '2013-08-15 11:13:54', 4, 3),
 	(4, '系统管理', NULL, '2013-08-15 11:13:55', 0, 2),
 	(5, '站点管理', NULL, '2013-08-15 11:13:57', 0, 1),
-	(6, '分类管理', 'http://www.baidu.com', '2013-08-15 11:14:00', 5, 1);
+	(6, '页面管理', '__APP__/admin/pages/lists', '2013-08-15 11:14:00', 5, 1);
 /*!40000 ALTER TABLE `modules` ENABLE KEYS */;
+
+
+-- Dumping structure for table tp_news.pages
+DROP TABLE IF EXISTS `pages`;
+CREATE TABLE IF NOT EXISTS `pages` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `title` varchar(300) NOT NULL,
+  `url` varchar(100) NOT NULL,
+  `content` text NOT NULL,
+  `author` varchar(50) NOT NULL,
+  `time` datetime NOT NULL,
+  `status` tinyint(4) NOT NULL,
+  `sort` tinyint(4) NOT NULL,
+  `parent` tinyint(4) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=gb2312;
+
+-- Dumping data for table tp_news.pages: ~3 rows (approximately)
+/*!40000 ALTER TABLE `pages` DISABLE KEYS */;
+INSERT INTO `pages` (`id`, `title`, `url`, `content`, `author`, `time`, `status`, `sort`, `parent`) VALUES
+	(1, '首页', 'http://localhost/index.php/home/page/page_id/=14', '111', 'admin', '2013-08-16 15:16:36', 1, 0, 0),
+	(2, '产品展示', 'http://localhost/index.php/home/page/page_id/=14', '111', 'admin', '2013-08-16 15:17:36', 1, 0, 0),
+	(3, '关于我们', 'http://localhost/index.php/home/page/page_id/=14', '111', 'admin', '2013-08-16 15:17:47', 0, 1, 0),
+	(11, '1', 'http://localhost/index.php/home/page/page_id/=14', '1', 'admin', '2013-08-16 16:39:00', 0, 0, 1);
+/*!40000 ALTER TABLE `pages` ENABLE KEYS */;
 
 
 -- Dumping structure for table tp_news.roles

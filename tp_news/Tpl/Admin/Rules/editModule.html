@@ -16,9 +16,9 @@
 				<input type="text" name="moduleurl" size="30" class="{$validation_class}" value="{$data.moduleurl}"/>
 			</p>
 			<p>
-				<label>级别：</label>
+				<label>父级：</label>
 				<select name="mrid">
-					<option value="0" >菜单</option>
+					<option value="0" >无父级</option>
 					<volist name="dataModules" id="dm">
 					<option value="{$dm.id}" <in name="dm.id" value="$data.mrid" >selected="selected"</in> >{$dm.modulename}</option>
 					</volist>

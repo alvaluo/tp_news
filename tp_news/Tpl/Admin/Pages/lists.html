@@ -1,0 +1,64 @@
+<form id="pagerForm" method="post" action="__APP__/Admin/Pages/lists">
+	<input type="hidden" name="pageNum" value="1" />
+	<input type="hidden" name="numPerPage" value="{$numPerPage}" />
+</form>
+<div class="page">
+	<div class="pageContent">
+		<div class="panelBar">
+			<ul class="toolBar">
+				<li><a class="add" href="__APP__/Admin/Pages/edit" target="navTab"><span>添加页面</span></a></li>
+				<li><a class="delete" href="__APP__/Admin/Pages/delete/id/{sid_pageid}" target="ajaxTodo" title="确定要删除吗?"><span>删除页面</span></a></li>
+				<li><a class="edit" href="__APP__/Admin/Pages/edit/id/{sid_pageid}" target="navTab"><span>修改页面</span></a></li>
+			</ul>
+		</div>
+		<table class="table" width="100%" layouth="75">
+			<thead>
+				<tr>
+					<th width="50"></th>
+					<th width="150">标题</th>
+					<th>链接</th>
+					<th width="90">作者</th>
+					<th width="150">日期</th>
+					<th width="50">评论</th>
+					<th width="80">状态</th>
+					<th width="50">排序</th>
+					<th width="80">父级</th>
+				</tr>
+			</thead>
+			<tbody>
+				<volist name="data" id="vo" mod="5">
+				<tr target="sid_pageid" rel="{$vo.id}">
+					<td>{$i}</td>
+					<td>{$vo.title}</td>
+					<td>{$vo.url}</td>
+					<td>{$vo.author}</td>
+					<td>{$vo.time}</td>
+					<td>1</td>
+					<td>发布</td>
+					<td>{$vo.sort}</td>
+					<td><if condition="($vo.parent eq 0)">无父级<else />{$vo.mtitle}</if></td>
+				</tr>
+				</volist>
+			</tbody>
+		</table>
+		<div class="panelBar">
+			<div class="pages">
+				<span>显示</span>
+				<select class="combox" id="numPerPage" name="numPerPage" onchange="navTabPageBreak({numPerPage:this.value})">
+					<option value="5">5</option>
+					<option value="20">20</option>
+					<option value="50">50</option>
+					<option value="100">100</option>
+					<option value="200">200</option>
+				</select>
+				<span>条，共{$totalRows}条</span>
+			</div>
+			
+			<div class="pagination" targetType="navTab" totalCount="{$totalPages}" numPerPage="1" pageNumShown="10" currentPage="{$pageNum}"></div>
+
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+$("#numPerPage option[value='{$numPerPage}']").attr("selected",true);
+</script>
