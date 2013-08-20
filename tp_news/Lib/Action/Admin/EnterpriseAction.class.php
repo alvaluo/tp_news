@@ -23,7 +23,7 @@ class EnterpriseAction extends Action{
     	$pageNum = isset($_POST['pageNum'])?$_POST['pageNum']:1;
     	$this->pageNum = $pageNum;
     	
-    	$data = $Enterprise->where($map) -> order('insertDate desc') -> page($pageNum.','.$Page->listRows) -> select();
+    	$data = $Enterprise->where($map) -> order('createtime desc') -> page($pageNum.','.$Page->listRows) -> select();
 
     	$this->totalRows = $Page->totalRows;
     	$this->totalPages = $Page->totalPages;

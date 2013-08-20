@@ -37,6 +37,14 @@ class PagesAction extends Action{
 		$parentDataPage = $Pages -> where(array("parent"=>"0")) -> select();
 		$this -> parentDataPage = $parentDataPage;
 		
+		$id = $_GET['id'];
+		if(!empty($id)){
+			$data =   $Pages->find($id);
+			if($data) {
+				$this->data = $data;
+			}
+		}
+		
 		$this->display();
 	}
 	

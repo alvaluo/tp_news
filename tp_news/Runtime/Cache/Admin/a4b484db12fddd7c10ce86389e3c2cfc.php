@@ -78,7 +78,7 @@ $(function(){
 		debug:false,	// 调试模式 【true|false】
 		callback:function(){
 			initEnv();
-			$("#themeList").theme({themeBase:"themes"}); // themeBase 相对于index页面的主题base路径
+			$("#themeList").theme({themeBase:"/Public/dwz/themes"});
 		}
 	});
 });
@@ -90,38 +90,22 @@ $(function(){
 	<div id="layout">
 		<div id="header">
 			<div class="headerNav">
-				<a class="logo" href="http://j-ui.com">标志</a>
+				<a class="logo" style="padding-left: 10px;">标志</a>
 				<ul class="nav">
-					<li id="switchEnvBox"><a href="javascript:">（<span>北京</span>）切换城市</a>
-						<ul>
-							<li><a href="sidebar_1.html">北京</a></li>
-							<li><a href="sidebar_2.html">上海</a></li>
-							<li><a href="sidebar_2.html">南京</a></li>
-							<li><a href="sidebar_2.html">深圳</a></li>
-							<li><a href="sidebar_2.html">广州</a></li>
-							<li><a href="sidebar_2.html">天津</a></li>
-							<li><a href="sidebar_2.html">杭州</a></li>
-						</ul>
-					</li>
-					<li><a href="https://me.alipay.com/dwzteam" target="_blank">捐赠</a></li>
-					<li><a href="changepwd.html" target="dialog" width="600">设置</a></li>
-					<li><a href="http://www.cnblogs.com/dwzjs" target="_blank">博客</a></li>
-					<li><a href="http://weibo.com/dwzui" target="_blank">微博</a></li>
-					<li><a href="http://bbs.dwzjs.com" target="_blank">论坛</a></li>
-					<li><a href="login.html">退出</a></li>
+					<li><font style="color: rgb(185, 204, 218);">当前在线用户( <?php echo ($_SESSION['CURRENT_USER']["user"]["username"]); ?> )</font></li>
+					<li><a href="changepwd.html">反馈</a></li>
+					<li><a href="changepwd.html">设置</a></li>
+					<li><a href="__APP__/admin/index/exits">退出</a></li>
 				</ul>
 				<ul class="themeList" id="themeList">
 					<li theme="default"><div class="selected">蓝色</div></li>
 					<li theme="green"><div>绿色</div></li>
-					<!--<li theme="red"><div>红色</div></li>-->
+					<li theme="red"><div>红色</div></li>
 					<li theme="purple"><div>紫色</div></li>
 					<li theme="silver"><div>银色</div></li>
 					<li theme="azure"><div>天蓝</div></li>
 				</ul>
 			</div>
-
-			<!-- navMenu -->
-			
 		</div>
 
 		<div id="leftside">
@@ -134,43 +118,7 @@ $(function(){
 				<div class="toggleCollapse"><h2>主菜单</h2><div>收缩</div></div>
 
 				<div class="accordion" fillSpace="sidebar">
-					<div class="accordionHeader">
-						<h2><span>Folder</span>界面组件</h2>
-					</div>
-					<div class="accordionContent">
-						<ul class="tree treeFolder">
-							<li><a href="tabsPage.html" target="navTab">主框架面板</a>
-								<ul>
-									<li><a href="main.html" target="navTab" rel="main">我的主页</a></li>
-									<li><a href="http://www.baidu.com" target="navTab" rel="page1">页面一(外部页面)</a></li>
-								</ul>
-							</li>
-						</ul>
-					</div>
-					<div class="accordionHeader">
-						<h2><span>Folder</span>典型页面</h2>
-					</div>
-					<div class="accordionContent">
-						<ul class="tree treeFolder treeCheck">
-							<li><a href="demo_page1.html" target="navTab" rel="demo_page1">查询我的客户</a></li>
-							<li><a href="javascript:;">有提示的表单输入页面</a>
-								<ul>
-									<li><a href="javascript:;">页面一</a></li>
-									<li><a href="javascript:;">页面二</a></li>
-								</ul>
-							</li>
-						</ul>
-					</div>
-					<div class="accordionHeader">
-						<h2><span>Folder</span>系统管理</h2>
-					</div>
-					<div class="accordionContent">
-						<ul class="tree treeFolder">
-							<li><a href="__APP__/Admin/Users/lists" target="navTab" rel="userList">用户管理</a></li>
-							<li><a href="__APP__/Admin/Logs/lists" target="navTab" rel="logsList">日志管理</a></li>
-							<li><a href="__APP__/Admin/Role/lists" target="navTab" rel="roleList" id="roleList">角色管理</a></li>
-						</ul>
-					</div>
+					<?php echo ($_SESSION['CURRENT_USER']['ruleTag']); ?>
 				</div>
 			</div>
 		</div>
@@ -211,7 +159,7 @@ $(function(){
 
 	</div>
 
-	<div id="footer">Copyright &copy; 2010 <a href="demo_page2.html" target="dialog">DWZ团队</a> 京ICP备05019125号-10</div>
+	<div id="footer">Copyright &copy; 2013 <a href="demo_page2.html" target="dialog">深圳展艺科技</a> 京ICP备05019125号-10</div>
 
 <!-- 注意此处js代码用于google站点统计，非DWZ代码，请删除 
 <script type="text/javascript">

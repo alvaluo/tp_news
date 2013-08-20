@@ -2,8 +2,9 @@
 class IndexAction extends Action {
 	
     public function index(){
-    	import('ORG.Util.Session');
-    	if(Session::is_set('CURRENT_USER')){
+//     	import('ORG.Util.Session');
+//     	if(Session::is_set('CURRENT_USER')){
+		if(session('?CURRENT_USER')){
     		$this->display();
     		return;
     	}
@@ -34,7 +35,8 @@ class IndexAction extends Action {
     				//Save to session
     				$current_user['user'] = $data;
     				$current_user['ruleTag'] = $ruleTag;
-    				Session::set('CURRENT_USER',$current_user);
+//     				Session::set('CURRENT_USER',$current_user);
+    				session('CURRENT_USER',$current_user);
     				$this->display();
     				return;
     			}

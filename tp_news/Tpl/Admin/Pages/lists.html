@@ -34,7 +34,7 @@
 					<td>{$vo.author}</td>
 					<td>{$vo.time}</td>
 					<td>1</td>
-					<td>发布</td>
+					<td><if condition="($vo.status eq 0)">编辑<else />发布</if></td>
 					<td>{$vo.sort}</td>
 					<td><if condition="($vo.parent eq 0)">无父级<else />{$vo.mtitle}</if></td>
 				</tr>

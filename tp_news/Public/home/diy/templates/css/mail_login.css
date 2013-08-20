@@ -1,0 +1,38 @@
+.mail{
+margin:20px 10px 5px 31px;
+position:relative;
+}
+.user{
+margin:0px;
+height:30px;
+color:#555;
+}
+.pass{
+margin:0px;
+height:28px;
+color:#555;
+}
+.mailinput{
+height:16px;
+margin-left:5px;
+font:12px/18px Verdana, Arial, Helvetica, sans-serif;
+border:1px #bcbcbc solid;
+background-color:#f8f8f8;
+}
+.mailname{
+height:16px;
+font:12px/18px Verdana, Arial, Helvetica, sans-serif;
+border:0px;
+}
+.button{
+margin:0px 10px 0px 38px;
+background:transparent;
+border:0px;
+}
+.msg{
+font:12px/14px Verdana, Arial, Helvetica, sans-serif;
+margin:0px;
+color:#ff0000;
+border:0px;
+height:20px;
+}
