@@ -30,6 +30,68 @@ class EnterpriseAction extends Action{
     	$this->data = $data;
     	$this->display();
     }
+    
+    public function edit() {
+    	$id = $_GET['id'];
+    	if(!empty($id)){
+    		$Enterprise = M('Enterprise');
+    		$data =   $Enterprise->find($id);
+    		if($data) {
+    			$this->data = $data;
+    		}
+    	}
+    	$this->display();
+    }
+    
+    public function update() {
+    	//import result class
+    	import("@.ORG.Results");
+    	$MessageArray = Results::$MessageArray;
+    	$id = $_POST['id'];
+    	 
+    	$Enterprise = D('Enterprise');
+    	if(empty($id)){
+    		if ($vo = $Enterprise->create()) {
+    			$list = $Enterprise->add();
+    			if ($list !== false) {
+    				$MessageArray['statusCode'] = 200;
+    				$MessageArray['message'] = "操作成功!";
+    				$MessageArray['callbackType'] = "closeCurrent";
+    			}
+    		}
+    	}else{
+    		$data = $Enterprise->create();
+			if($data) {
+				$result = $Enterprise->save($data);
+				if($result) {
+					$MessageArray['statusCode'] = 200;
+					$MessageArray['message'] = "操作成功!";
+					$MessageArray['callbackType'] = "closeCurrent";
+				}
+			}
+    	}
+    	 
+    	$json_string = json_encode($MessageArray);
+    	echo $json_string;
+    }
+    
+    public function delete() {
+    	//import result class
+    	import("@.ORG.Results");
+    	$MessageArray = Results::$MessageArray;
+    	 
+    	$id = $_GET['id'];
+    	 
+    	$Enterprise = M('Enterprise');
+    	$list = $Enterprise->delete($id);
+    	if ($list !== false) {
+    		$MessageArray['statusCode'] = 200;
+    		$MessageArray['message'] = "操作成功!";
+    	}
+    	 
+    	$json_string = json_encode($MessageArray);
+    	echo $json_string;
+    }
 	
 }
 ?>

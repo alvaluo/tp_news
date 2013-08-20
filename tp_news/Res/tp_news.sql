@@ -38,9 +38,9 @@ CREATE TABLE IF NOT EXISTS `enterprise` (
   `type` int(2) DEFAULT NULL,
   `copyright` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
--- Dumping data for table tp_news.enterprise: ~0 rows (approximately)
+-- Dumping data for table tp_news.enterprise: ~1 rows (approximately)
 /*!40000 ALTER TABLE `enterprise` DISABLE KEYS */;
 INSERT INTO `enterprise` (`id`, `companyname`, `englishname`, `companynature`, `companytype`, `introduction`, `address`, `regname`, `companypic`, `logo`, `phone`, `fax`, `mobile`, `email`, `qq`, `createtime`, `type`, `copyright`) VALUES
 	(1, '深圳科特研科技公司', 'Kent Tech', '科特研科技', '单片机', ' 杭州某某工程项目管理咨询有限公司是一家由建筑转型的专业性较强的工程项目管理咨询公司。公司注册资本2050 万元。下设市场部、咨询部、财务部、综合管理部、规划报建部、招标代理部、项目管理部、工程监理部等八个部门。为了顺应现代企业的发展，公司还专门设立了信息研发中心，从事信息数据集成管理及远程和现场的监控。 公司拥有注册造价工程师、注册咨询工程师、注册会计师、高级经济师、注册监理工程师、注册结构工程师78余人，配设有土建、安装、园林、水电、房地产经济、会计、技术经济、法律、统计等各专业人员。公司本着“诚信为本、顶天立地做人、客户至上、创造最大价值”的理念，以规范、专业的服务质量，以科学、高效、严谨的服务态度为客户提供专业优质的服务，更大限度地实现“客户利益最大化”。\r\n      下设市场部、咨询部、财务部、综合管理部、规划报建部、招标代理部、项目管理部、工程监理部等八个部门。为了顺应现代企业的发展，公司还专门设立了信息研发中心，从事信息数据集成管理及远程和现场的监控。 公司拥有注册造价工程师、注册咨询工程师、注册会计师、高级经济师、注册监理工程师、注册结构工程师78余人，配设有土建、安装、园林、水电、房地产经济、会计、技术经济、法律、统计等各专业人员。公司本着“诚信为本、顶天立地做人、客户至上、创造最大价值”的理念，以规范、专业的服务质量，以科学、高效、严谨的服务态度为客户提供专业优质的服务，更大限度地实现“客户利益最大化”。', '广东省深圳市', '何亚龙 ', NULL, NULL, '13510316030', NULL, NULL, NULL, NULL, '2013-08-19 15:25:20', 0, '版权所有 Copyright(C)2009-2010');
@@ -57,9 +57,9 @@ CREATE TABLE IF NOT EXISTS `logs` (
   `agent` varchar(100) NOT NULL,
   `comment` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=181 DEFAULT CHARSET=gb2312;
+) ENGINE=InnoDB AUTO_INCREMENT=189 DEFAULT CHARSET=gb2312;
 
--- Dumping data for table tp_news.logs: ~67 rows (approximately)
+-- Dumping data for table tp_news.logs: ~83 rows (approximately)
 /*!40000 ALTER TABLE `logs` DISABLE KEYS */;
 INSERT INTO `logs` (`id`, `username`, `ip`, `createtime`, `agent`, `comment`) VALUES
 	(1, 'admin', '127.0.0.1', '2013-08-07 14:30:22', 'Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1500.95 Safari/537.3', 'Login'),
@@ -77,9 +77,9 @@ CREATE TABLE IF NOT EXISTS `modules` (
   `mrid` int(10) NOT NULL DEFAULT '0',
   `sort` int(10) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=gb2312 COMMENT='模块表';
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=gb2312 COMMENT='模块表';
 
--- Dumping data for table tp_news.modules: ~8 rows (approximately)
+-- Dumping data for table tp_news.modules: ~9 rows (approximately)
 /*!40000 ALTER TABLE `modules` DISABLE KEYS */;
 INSERT INTO `modules` (`id`, `modulename`, `moduleurl`, `createtime`, `mrid`, `sort`) VALUES
 	(1, '用户管理', '__APP__/admin/users/lists', '2013-08-15 11:13:49', 4, 1),
@@ -88,7 +88,9 @@ INSERT INTO `modules` (`id`, `modulename`, `moduleurl`, `createtime`, `mrid`, `s
 	(4, '系统管理', NULL, '2013-08-15 11:13:55', 0, 2),
 	(5, '站点管理', NULL, '2013-08-15 11:13:57', 0, 1),
 	(6, '页面管理', '__APP__/admin/pages/lists', '2013-08-15 11:14:00', 5, 1),
-	(7, '企业信息', '/index.php/admin/enterprise/lists', '2013-08-15 11:14:00', 5, 2);
+	(7, '企业信息', '/index.php/admin/enterprise/lists', '2013-08-15 11:14:00', 5, 2),
+	(8, '媒体管理', '/index.php/index.php/admin/medias/lists', NULL, 5, 3),
+	(9, '新闻管理', '/index.php/index.php/admin/news/lists', NULL, 5, 4);
 /*!40000 ALTER TABLE `modules` ENABLE KEYS */;
 
 
@@ -132,7 +134,7 @@ CREATE TABLE IF NOT EXISTS `roles` (
 -- Dumping data for table tp_news.roles: ~4 rows (approximately)
 /*!40000 ALTER TABLE `roles` DISABLE KEYS */;
 INSERT INTO `roles` (`id`, `rolename`, `comment`, `mid`) VALUES
-	(2, '超级管理员', '最高权限管理员', '4,1,2,3,5,6,7'),
+	(2, '超级管理员', '最高权限管理员', '4,1,2,3,5,6,7,8,9'),
 	(9, '管理员', '管理员', '1'),
 	(10, '来宾', '来宾', '1,2'),
 	(11, '测试员', '测试员', '');

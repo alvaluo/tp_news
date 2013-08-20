@@ -1,6 +1,4 @@
-<form id="pagerForm" method="post" action="__APP__/Admin/Users/lists">
-	<input type="hidden" name="username" value="{$username}">
-	<input type="hidden" name="createtime" value="{$createtime}" />
+<form id="pagerForm" method="post" action="__APP__/Admin/Enterprise/lists">
 	<input type="hidden" name="pageNum" value="1" />
 	<input type="hidden" name="numPerPage" value="{$numPerPage}" />
 </form>
@@ -24,9 +22,9 @@
 	<div class="pageContent">
 		<div class="panelBar">
 			<ul class="toolBar">
-				<li><a class="add" href="__APP__/Admin/Users/edit" target="dialog" rel="dlg_Add" mask="true"><span>添加</span></a></li>
-				<li><a class="delete" href="__APP__/Admin/Users/delete/id/{sid_userid}" target="ajaxTodo" title="确定要删除吗?"><span>删除</span></a></li>
-				<li><a class="edit" href="__APP__/Admin/Users/edit/id/{sid_userid}" target="dialog"  rel="dlg_Add" mask="true"><span>修改</span></a></li>
+				<li><a class="add" href="__APP__/Admin/Enterprise/edit" target="navTab" rel="editEnterprise"><span>添加企业</span></a></li>
+				<li><a class="delete" href="__APP__/Admin/Enterprise/delete/id/{sid_enterpriseid}" target="ajaxTodo" title="确定要删除吗?"><span>删除企业</span></a></li>
+				<li><a class="edit" href="__APP__/Admin/Enterprise/edit/id/{sid_enterpriseid}" target="navTab" rel="editEnterprise"><span>修改企业</span></a></li>
 			</ul>
 		</div>
 		<table class="table" layouth="112" >
@@ -44,7 +42,7 @@
 			</thead>
 			<tbody>
 				<volist name="data" id="enterprise" mod="5">
-				<tr target="sid_userid" rel="{$enterprise.id}">
+				<tr target="sid_enterpriseid" rel="{$enterprise.id}">
 					<td>{$i}</td>
 					<td>{$enterprise.companyname}</td>
 					<td>{$enterprise.englishname}</td>

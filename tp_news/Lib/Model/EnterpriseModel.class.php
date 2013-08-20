@@ -7,7 +7,7 @@ class  EnterpriseModel extends Model {
 	
 	//数据模型
 	protected $fields = array(
-			'id', 'companyname', 'englishname', 'companynature ','companytype','address','regname','phone'
+			'id', 'companyname', 'englishname', 'companynature ','companytype' , 'introduction','address','regname','companypic','logo','phone','fax','mobile','email','qq','createtime','type',
 	);
 	
 	// 自动验证设置

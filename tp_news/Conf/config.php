@@ -37,6 +37,7 @@ return array (
 		'DEFAULT_ACTION' => 'index',
 		                             
 		TMPL_PARSE_STRING => array(
+			'__REMOTEURL__' => getRemoteURL(),
 			'__PUBLIC__' => getRemoteURL().'/Public',
 			'__DWZ__' => getRemoteURL().'/Public/dwz'
 	 	) 
