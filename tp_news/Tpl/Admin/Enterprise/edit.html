@@ -30,9 +30,9 @@
 			</p>
 			<p>
 				<label>发布站点：</label>
-				<select name="type" class="required combox">
-					<option value="0">是</option>
-					<option value="1" selected>否</option>
+				<select id="type" name="type" class="required combox">
+                                    <option value="0" <if condition="($data.type eq 0)">selected='selected'</if> >编辑</option>
+                                    <option value="1" <if condition="($data.type eq 1)">selected='selected'</if> >发布</option>
 				</select>
 			</p>
 			<p style="width: 100%;">
