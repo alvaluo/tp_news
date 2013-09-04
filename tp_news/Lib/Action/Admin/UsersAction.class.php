@@ -67,7 +67,7 @@ class UsersAction extends Action{
     	$list = $Users->delete($id);
     	if ($list !== false) {
     		$MessageArray['statusCode'] = 200;
-    		$MessageArray['message'] = "鎿嶄綔鎴愬姛!";
+    		$MessageArray['message'] = "操作成功!";
     	}
     	
     	$json_string = json_encode($MessageArray);
@@ -88,21 +88,11 @@ class UsersAction extends Action{
     			$list = $Users->add();
     			if ($list !== false) {
     				$MessageArray['statusCode'] = 200;
-    				$MessageArray['message'] = "鎿嶄綔鎴愬姛!";
+    				$MessageArray['message'] = "操作成功!";
     				$MessageArray['callbackType'] = "closeCurrent";
     			}
     		}
     	}else{
-    		/* $data = $Users->create();
-    		if($data) {
-    			$result = $Users->save($data);
-    			if($result) {
-    				$MessageArray['statusCode'] = 200;
-    				$MessageArray['message'] = "鎿嶄綔鎴愬姛!";
-    				$MessageArray['callbackType'] = "closeCurrent";
-    				$MessageArray['navTabId'] = "userList";
-    			}
-    		} */
     		$data['id'] = $_POST["id"];
     		$data['username'] = $_POST["username"];
 			if(!empty($_POST["password"])){
@@ -115,7 +105,7 @@ class UsersAction extends Action{
     		$result = $Users -> save($data);
     		if($result) {
     			$MessageArray['statusCode'] = 200;
-    			$MessageArray['message'] = "鎿嶄綔鎴愬姛!";
+    			$MessageArray['message'] = "操作成功!";
     			$MessageArray['callbackType'] = "closeCurrent";
     		}
     	}

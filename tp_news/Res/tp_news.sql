@@ -165,3 +165,23 @@ INSERT INTO `users` (`id`, `username`, `password`, `realname`, `createtime`, `la
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+
+-- Dumping structure for table tp_news.media
+DROP TABLE IF EXISTS `media`;
+CREATE TABLE IF NOT EXISTS `media` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `url` varchar(100) NOT NULL,
+  `type` int(2) NOT NULL,
+  `comment` varchar(100) NOT NULL,
+  `createtime` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=gb2312;
+
+-- Dumping data for table tp_news.media: ~0 rows (approximately)
+/*!40000 ALTER TABLE `media` DISABLE KEYS */;
+INSERT INTO `media` (`id`, `url`, `type`, `comment`, `createtime`) VALUES
+	(1, 'www.baidu.com', 1, '说明', '2013-09-04 16:17:23');
+/*!40000 ALTER TABLE `media` ENABLE KEYS */;
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
