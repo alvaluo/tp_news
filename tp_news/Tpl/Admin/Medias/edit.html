@@ -23,34 +23,43 @@
 
 
 <div class="pageContent">
-    
+    <!-- <form method="post" action="" enctype="multipart/form-data"> -->
         <div class="pageFormContent" style="padding: 5px 5px;" layoutH="45">
-            <p style="width: 100%;padding: 5px 0;">
-                            <label>类型：</label>
-                            <select class="combox" name="status">
-<!--                                    <option value="0">文字</option>-->
-                                    <option value="1">图片</option>
-                                    <option value="2">音频</option>
-                                    <option value="3">视频</option>
-                            </select>
+            <p style="padding: 5px 0;">
+                 <label>类型：</label>
+                 <select class="combox" name="status">
+<!--                 <option value="0">文字</option>-->
+	                 <option value="1">图片</option>
+	                 <option value="2">音频</option>
+	                 <option value="3">视频</option>
+                 </select>
+            </p>
+            <p style="padding: 5px 0;">
+                 <label>来源：</label>
+                 <select class="combox" name="status">
+                 	<option value="2">内部</option>
+                 	<option value="1">外部</option>
+                 </select>
             </p>
             
             <div class="divider"></div>
-        
-            <input id="testFileInput2" type="file" name="image2" 
+            
+            <input id="testFileInput2" type="file" name="image" 
                     uploaderOption="{
                             swf:'__DWZ__/uploadify/scripts/uploadify.swf',
-                            uploader:'demo/common/ajaxDone.html',
+                            uploader:'__APP__/admin/medias/upload',
                             formData:{PHPSESSID:'xxx', ajax:1},
                             queueID:'fileQueue',
                             buttonImage:'__DWZ__/uploadify/img/add.jpg',
                             buttonClass:'my-uploadify-button',
                             width:102,
-                            auto:false
+                            auto:false,
+							multi:true,
+							onQueueComplete:uploadifyQueueComplete
                     }"
             />
 
-            <div id="fileQueue" class="fileQueue"></div>
+            <div id="fileQueue" class="fileQueue" style="width: 500px;height: 250px;"></div>
 
             <input type="image" src="__DWZ__/uploadify/img/upload.jpg" onclick="$('#testFileInput2').uploadify('upload', '*');"/>
             <input type="image" src="__DWZ__/uploadify/img/cancel.jpg" onclick="$('#testFileInput2').uploadify('cancel', '*');"/>
@@ -58,11 +67,11 @@
         </div>
         <div class="formBar">
                 <ul>
-                        <!--<li><a class="buttonActive" href="javascript:;"><span>保存</span></a></li>-->
                         <li><div class="buttonActive"><div class="buttonContent"><button type="submit">保存</button></div></div></li>
                         <li>
                                 <div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div>
                         </li>
                 </ul>
         </div>
+    <!-- </form> -->
 </div>

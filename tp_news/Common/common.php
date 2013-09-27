@@ -88,3 +88,7 @@ function msubstr($str, $start=0, $length, $charset="utf-8", $suffix=true)
 	if($suffix) return $slice."…";
 	return $slice;
 }
+function getRemoteURL1(){
+	$url = 'http://'.$_SERVER['HTTP_HOST'];
+	return $url;
+}

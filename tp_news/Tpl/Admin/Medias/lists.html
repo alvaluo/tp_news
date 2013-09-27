@@ -1,4 +1,4 @@
-<form id="pagerForm" method="post" action="__APP__/Admin/Pages/lists">
+<form id="pagerForm" method="post" action="__APP__/Admin/Medias/lists">
 	<input type="hidden" name="pageNum" value="1" />
 	<input type="hidden" name="numPerPage" value="{$numPerPage}" />
 </form>
@@ -6,9 +6,9 @@
 	<div class="pageContent">
 		<div class="panelBar">
 			<ul class="toolBar">
-				<li><a class="add" href="__APP__/Admin/Media/edit" target="navTab" rel="editMedia"><span>添加媒体</span></a></li>
-				<li><a class="delete" href="__APP__/Admin/Users/delete/id/{sid_userid}" target="ajaxTodo" title="确定要删除吗?"><span>删除</span></a></li>
-				<li><a class="edit" href="__APP__/Admin/Users/edit/id/{sid_userid}" target="dialog"  rel="dlg_Add" mask="true" width="520" height="320"><span>修改</span></a></li>
+				<li><a class="add" href="__APP__/admin/medias/edit" target="navTab" rel="editMedias"><span>添加媒体</span></a></li>
+				<li><a class="delete" href="__APP__/admin/medias/delete/id/{sid_mediaid}" target="ajaxTodo" title="确定要删除吗?"><span>删除媒体</span></a></li>
+				<li><a class="edit" href="__APP__/admin/Users/edit/id/{sid_userid}" target="dialog"  rel="dlg_Add" mask="true" width="520" height="320"><span>修改媒体</span></a></li>
 			</ul>
 		</div>
 		<table class="table" width="100%" layouth="75">
@@ -16,17 +16,18 @@
 				<tr>
 					<th width="50"></th>
 					<th>链接</th>
-                                        <th width="120">说明</th>
+                    <th width="120">说明</th>
 					<th width="50">类型</th>
 					<th width="150">上传时间</th>
 				</tr>
 			</thead>
 			<tbody>
 				<volist name="data" id="vo" mod="5">
-				<tr target="sid_pageid" rel="{$vo.id}">
+				<tr target="sid_mediaid" rel="{$vo.id}">
 					<td>{$i}</td>
-					<td>{$vo.url}</td>
-                                        <td>{$vo.comment}</td>
+					<td><a href="__APP__/Admin/Medias/view" target="dialog" rel="dlg_page12" mask="true">{$vo.url}</a></td>
+					<!-- <td>{$vo.url}</td> -->
+                    <td>{$vo.comment}</td>
 					<td>{$vo.type}</td>
 					<td>{$vo.createtime}</td>
 				</tr>

@@ -1,5 +1,5 @@
 <?php
-class MediaAction extends Action{
+class MediasAction extends Action{
 	
   public function lists() {
         $map = null;
@@ -8,8 +8,8 @@ class MediaAction extends Action{
     		$this->companyname = $companyname;
     		$map['companyname'] = array('like','%'.$companyname.'%');
     	}
-    	$Media = M('Media');
-    	$count = $Media->where($map) -> count();
+    	$Medias = M('Medias');
+    	$count = $Medias->where($map) -> count();
     	
     	//import default page size
     	import("@.ORG.Constant");
@@ -23,7 +23,7 @@ class MediaAction extends Action{
     	$pageNum = isset($_POST['pageNum'])?$_POST['pageNum']:1;
     	$this->pageNum = $pageNum;
     	
-    	$data = $Media->where($map) -> order('createtime desc') -> page($pageNum.','.$Page->listRows) -> select();
+    	$data = $Medias->where($map) -> order('createtime desc') -> page($pageNum.','.$Page->listRows) -> select();
 
     	$this->totalRows = $Page->totalRows;
     	$this->totalPages = $Page->totalPages;
@@ -34,8 +34,8 @@ class MediaAction extends Action{
     public function edit() {
     	$id = $_GET['id'];
     	if(!empty($id)){
-    		$Media = M('Media');
-    		$data =   $Media->find($id);
+    		$Medias = M('Medias');
+    		$data =   $Medias->find($id);
     		if($data) {
     			$this->data = $data;
     		}
@@ -43,54 +43,65 @@ class MediaAction extends Action{
     	$this->display();
     }
     
-    public function update() {
-    	//import result class
+    public function upload() {
+    	
+		import ( "@.ORG.UploadFile" );
+		$upload = new UploadFile ();
+		$upload->maxSize = 3292200;
+		$upload->allowExts = explode ( ',', 'jpg,gif,png,jpeg' );
+		$upload->savePath = './Uploads/';
+		$upload->imageClassPath = '@.ORG.Image';
+		$upload->saveRule = 'uniqid';
+		$upload->thumbRemoveOrigin = false;
+		if (! $upload->upload ()) {
+			$this->error ( $upload->getErrorMsg () );
+		} else {
+			$uploadList = $upload->getUploadFileInfo ();
+			import ( "@.ORG.Image" );
+			$_POST ['image'] = $uploadList [0] ['savename'];
+		}
+    	
     	import("@.ORG.Results");
     	$MessageArray = Results::$MessageArray;
-    	$id = $_POST['id'];
     	 
-    	$Enterprise = D('Enterprise');
-    	if(empty($id)){
-    		if ($vo = $Enterprise->create()) {
-    			$list = $Enterprise->add();
-    			if ($list !== false) {
-    				$MessageArray['statusCode'] = 200;
-    				$MessageArray['message'] = "操作成功!";
-    				$MessageArray['callbackType'] = "closeCurrent";
-    			}
-    		}
-    	}else{
-    		$data = $Enterprise->create();
-			if($data) {
-				$result = $Enterprise->save($data);
-				if($result) {
-					$MessageArray['statusCode'] = 200;
-					$MessageArray['message'] = "操作成功!";
-					$MessageArray['callbackType'] = "closeCurrent";
-				}
-			}
+    	$Medias = D('Medias');
+    	$data = $Medias->create();
+    	
+    	$data['url'] = getRemoteURL1().'/Uploads/'.$_POST['image'];
+    	$data['type'] = "1";
+    	$data['comment'] = "1111";
+    	
+    	$result = $Medias->add($data);
+    	if($result) {
+    		$MessageArray['statusCode'] = 200;
+    		$MessageArray['message'] = "操作成功!";
     	}
-    	 
+    	
     	$json_string = json_encode($MessageArray);
     	echo $json_string;
+
     }
     
     public function delete() {
     	//import result class
     	import("@.ORG.Results");
     	$MessageArray = Results::$MessageArray;
-    	 
+    
     	$id = $_GET['id'];
-    	 
-    	$Enterprise = M('Enterprise');
-    	$list = $Enterprise->delete($id);
+    
+    	$Medias = M('Medias');
+    	$list = $Medias->delete($id);
     	if ($list !== false) {
     		$MessageArray['statusCode'] = 200;
     		$MessageArray['message'] = "操作成功!";
     	}
-    	 
+    
     	$json_string = json_encode($MessageArray);
     	echo $json_string;
+    }
+    
+    public function view() {
+    	$this->display();
     }
 	
 }
