@@ -88,9 +88,9 @@ INSERT INTO `modules` (`id`, `modulename`, `moduleurl`, `createtime`, `mrid`, `s
 	(4, '系统管理', NULL, '2013-08-15 11:13:55', 0, 2),
 	(5, '站点管理', NULL, '2013-08-15 11:13:57', 0, 1),
 	(6, '页面管理', '__APP__/admin/pages/lists', '2013-08-15 11:14:00', 5, 1),
-	(7, '企业信息', '/index.php/admin/enterprise/lists', '2013-08-15 11:14:00', 5, 2),
-	(8, '媒体管理', '/index.php/index.php/admin/medias/lists', NULL, 5, 3),
-	(9, '新闻管理', '/index.php/index.php/admin/news/lists', NULL, 5, 4);
+	(7, '企业信息', '_APP__/admin/enterprise/lists', '2013-08-15 11:14:00', 5, 2),
+	(8, '媒体管理', '_APP__/admin/medias/lists', NULL, 5, 3),
+	(9, '新闻管理', '_APP__/admin/news/lists', NULL, 5, 4);
 /*!40000 ALTER TABLE `modules` ENABLE KEYS */;
 
 
@@ -167,8 +167,8 @@ INSERT INTO `users` (`id`, `username`, `password`, `realname`, `createtime`, `la
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 
 -- Dumping structure for table tp_news.media
-DROP TABLE IF EXISTS `media`;
-CREATE TABLE IF NOT EXISTS `media` (
+DROP TABLE IF EXISTS `medias`;
+CREATE TABLE IF NOT EXISTS `medias` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `url` varchar(100) NOT NULL,
   `type` int(2) NOT NULL,
@@ -179,7 +179,7 @@ CREATE TABLE IF NOT EXISTS `media` (
 
 -- Dumping data for table tp_news.media: ~0 rows (approximately)
 /*!40000 ALTER TABLE `media` DISABLE KEYS */;
-INSERT INTO `media` (`id`, `url`, `type`, `comment`, `createtime`) VALUES
+INSERT INTO `medias` (`id`, `url`, `type`, `comment`, `createtime`) VALUES
 	(1, 'www.baidu.com', 1, '说明', '2013-09-04 16:17:23');
 /*!40000 ALTER TABLE `media` ENABLE KEYS */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

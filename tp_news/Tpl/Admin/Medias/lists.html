@@ -25,8 +25,7 @@
 				<volist name="data" id="vo" mod="5">
 				<tr target="sid_mediaid" rel="{$vo.id}">
 					<td>{$i}</td>
-					<td><a href="__APP__/Admin/Medias/view" target="dialog" rel="dlg_page12" mask="true">{$vo.url}</a></td>
-					<!-- <td>{$vo.url}</td> -->
+					<td><a href="__APP__/Admin/Medias/view/id/{$vo.id}" target="dialog" rel="dlg_page12" mask="true" maxable="false" minable="false" resizable="false" width="600" height="400">{$vo.url}</a></td>
                     <td>{$vo.comment}</td>
 					<td>{$vo.type}</td>
 					<td>{$vo.createtime}</td>

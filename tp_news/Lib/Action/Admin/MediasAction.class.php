@@ -90,7 +90,12 @@ class MediasAction extends Action{
     	$id = $_GET['id'];
     
     	$Medias = M('Medias');
+    	$data = $Medias->find($id);
     	$list = $Medias->delete($id);
+    	$deletefle = str_replace(getRemoteURL1(), ".", $data['url']);
+    	if (file_exists($deletefle)) {
+    		unlink ($deletefle);
+    	}
     	if ($list !== false) {
     		$MessageArray['statusCode'] = 200;
     		$MessageArray['message'] = "操作成功!";
@@ -101,6 +106,14 @@ class MediasAction extends Action{
     }
     
     public function view() {
+    	$id = $_GET['id'];
+    	if(!empty($id)){
+    		$Medias = M('Medias');
+    		$data =   $Medias->find($id);
+    		if($data) {
+    			$this->data = $data;
+    		}
+    	}
     	$this->display();
     }
 	
