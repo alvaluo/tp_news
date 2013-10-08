@@ -18,6 +18,8 @@
 	border: 1px solid #E5E5E5;
 	margin-bottom: 10px;
 }
+p { width: 300px; }
+
 </style>
 
 
@@ -36,21 +38,22 @@
                  <label style="width:auto;">文件上传之后，您可以为它添加标题和描述。</label>
             </p>
             <div id="tttlest" class="divider"></div>
-            <!-- <div id="fileQueue" class="fileQueue" style="width: 650px;height: 50px;border: 0px solid #E5E5E5;"></div> -->
+            <div id="fileQueue" class="fileQueue" style="width: 650px;height: 50px;border: 0px solid #E5E5E5;"></div>
             
-            <table cellpadding="0" cellspacing="0" width="90%" style="border: 1px solid #E5E5E5;">
+            <!-- 
+            <table cellpadding="0" cellspacing="0" width="70%" style="border: 1px solid #E5E5E5;">
             	<tr>
-            		<td><img width="40" height="40" class="pinkynail toggle" src="http://localhost/Uploads/5247df4a358c4.jpg" alt="" style="margin-top: 3px; display: inline;"></td>
-            		<td width="80%">@C3TRTV2KVL_AFGUD}VS8KN</td>
-            		<td><a class="toggle describe-toggle-on" href="#" style="display: block;">显示</a></td>
+            		<td><img width="40" height="40" src="http://localhost/Uploads/5253aad45b061.jpg" alt="" style="margin-left: 0px; display: inline;"></td>
+            		<td>@C3TRTV2KVL_AFGUD}VS8KN</td>
+            		<td><a id="describe-toggle-on" href="#" style="display: block;">显示</a></td>
             	</tr>
-            	<tr>
+            	<tr id="fullTr" style="display: none;">
             		<td colspan="3" style="border-top: 1px solid #E5E5E5;padding-left: 10px;">
             			<table style="display: table;">
 							<thead class="media-item-info" id="media-head-64">
 								<tr valign="top" style="height: 170px;">
 									<td class="A1B1" id="thumbnail-head-64">
-									<p><a href="http://alvanews.sourceforge.net/?attachment_id=64" target="_blank"><img class="thumbnail" src="http://localhost/Uploads/5247df4a358c4.jpg" height="150" width="150" alt="" style="margin-top: 3px"></a></p>
+									<p style="width: 250px;"><a href="http://alvanews.sourceforge.net/?attachment_id=64" target="_blank"><img class="thumbnail" src="http://localhost/Uploads/5253aad45b061.jpg" height="150" width="150" alt="" style="margin-top: 3px"></a></p>
 									</td>
 									<td>
 									<p style="height: 5px"></p>
@@ -86,7 +89,7 @@
             		</td>
             	</tr>
             </table>
-            
+             -->
             <!-- <div style="width: 650px;height: 50px;">
             	<img width="40" height="40" class="pinkynail toggle" src="http://alvanews.sourceforge.net/wp-content/uploads/2013/09/@C3TRTV2KVL_AFGUDVS8KN2-150x150.jpg" alt="" style="margin-top: 3px; display: inline;">	
             	<div class="filename new" style="line-height: 36px;overflow: hidden;"><span class="title">@C3TRTV2KVL_AFGUD}VS8KN</span></div>
@@ -143,12 +146,33 @@ $(document).ready(function(){
         width:102,
         auto:true,
 		multi:true,
-		onQueueComplete:uploadifyQueueComplete1,
+		onUploadSuccess : function(file, data, response) {
+			//$("#fileQueue").hide();
+			var dataObj = jQuery.parseJSON(data);
+			onUploadSuccess(file, dataObj, response);
+        },
+		//onQueueComplete:uploadifyQueueComplete1,
 		onSelect:initDiv
     });
-    function uploadifyQueueComplete1(){
+    function onUploadSuccess(file, data, response){
+    	var templeate = "<table cellpadding='0' cellspacing='0' width='70%' style='border: 1px solid #E5E5E5;'>"
+    		+"<tr>"
+    		+"<td><img width='40' height='40' src='"+data.url+"' alt='' style='margin-left: 0px; display: inline;'></td>"
+    		+"<td>"+data.name+"</td>"
+    		+"<td><a id='describe-toggle-on' href='#' style='display: block;'>显示</a></td>"
+    		+"</tr>"
+    		+"</table>";
+    	$("#fileQueue").after(templeate);
     }
     function initDiv(){
     }
+    $("#describe-toggle-on").toggle(
+	  function(){
+	  	$("#fullTr").show();
+	  },
+	  function(){
+	  	$("#fullTr").hide();
+	  }
+	);
 });  
 </script>

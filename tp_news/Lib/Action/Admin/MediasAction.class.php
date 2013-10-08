@@ -61,8 +61,7 @@ class MediasAction extends Action{
 			$_POST ['image'] = $uploadList [0] ['savename'];
 		}
     	
-    	import("@.ORG.Results");
-    	$MessageArray = Results::$MessageArray;
+
     	 
     	$Medias = D('Medias');
     	$data = $Medias->create();
@@ -72,10 +71,16 @@ class MediasAction extends Action{
     	$data['comment'] = "1111";
     	
     	$result = $Medias->add($data);
+    	
+    	import("@.ORG.Results");
+    	$MessageArray = Results::$MessageArray;
     	if($result) {
     		$MessageArray['statusCode'] = 200;
     		$MessageArray['message'] = "操作成功!";
     	}
+    	
+    	$MessageArray['url'] = $data['url'];
+    	$MessageArray['name'] = $_POST['image'];
     	
     	$json_string = json_encode($MessageArray);
     	echo $json_string;
