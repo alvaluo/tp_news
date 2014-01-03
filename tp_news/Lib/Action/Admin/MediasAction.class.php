@@ -49,7 +49,7 @@ class MediasAction extends Action{
 		$upload = new UploadFile ();
 		$upload->maxSize = 3292200;
 		$upload->allowExts = explode ( ',', 'jpg,gif,png,jpeg' );
-		$upload->savePath = './Uploads/';
+		$upload->savePath = './Uploads/images/temp/';
 		$upload->imageClassPath = '@.ORG.Image';
 		$upload->saveRule = 'uniqid';
 		$upload->thumbRemoveOrigin = false;
@@ -61,16 +61,16 @@ class MediasAction extends Action{
 			$_POST ['image'] = $uploadList [0] ['savename'];
 		}
     	
-
+		//$this->thumbnails = getRemoteURL1().'/Uploads/images/temp/'.$_POST['image'];
     	 
-    	$Medias = D('Medias');
+    	/* $Medias = D('Medias');
     	$data = $Medias->create();
     	
     	$data['url'] = getRemoteURL1().'/Uploads/'.$_POST['image'];
     	$data['type'] = "1";
     	$data['comment'] = "1111";
     	
-    	$result = $Medias->add($data);
+    	$result = $Medias->add($data); */
     	
     	import("@.ORG.Results");
     	$MessageArray = Results::$MessageArray;
@@ -79,7 +79,7 @@ class MediasAction extends Action{
     		$MessageArray['message'] = "操作成功!";
     	}
     	
-    	$MessageArray['url'] = $data['url'];
+    	$MessageArray['url'] = getRemoteURL1().'/Uploads/images/temp/'.$_POST['image'];
     	$MessageArray['name'] = $_POST['image'];
     	
     	$json_string = json_encode($MessageArray);

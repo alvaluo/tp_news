@@ -38,14 +38,16 @@ p { width: 300px; }
                  <label style="width:auto;">文件上传之后，您可以为它添加标题和描述。</label>
             </p>
             <div id="tttlest" class="divider"></div>
-            <div id="fileQueue" class="fileQueue" style="width: 650px;height: 50px;border: 0px solid #E5E5E5;"></div>
             
-            <!-- 
-            <table cellpadding="0" cellspacing="0" width="70%" style="border: 1px solid #E5E5E5;">
+            
+            <div id="fileQueue" class="fileQueue" style="width: 650px;height: 50px;border: 0px solid #E5E5E5;display: none;"></div>
+            
+             
+            <table id="templeate" cellpadding="0" cellspacing="0" width="70%" style="border: 1px solid #E5E5E5;display: none;">
             	<tr>
-            		<td><img width="40" height="40" src="http://localhost/Uploads/5253aad45b061.jpg" alt="" style="margin-left: 0px; display: inline;"></td>
-            		<td>@C3TRTV2KVL_AFGUD}VS8KN</td>
-            		<td><a id="describe-toggle-on" href="#" style="display: block;">显示</a></td>
+            		<td width="20%"><img width="40" height="40" src="" alt="" style="margin-left: 0px; display: inline;"></td>
+            		<td id="name"></td>
+            		<td width="15%" align="center"><a id="describe-toggle-on" href="#" style="display: block;">显示</a></td>
             	</tr>
             	<tr id="fullTr" style="display: none;">
             		<td colspan="3" style="border-top: 1px solid #E5E5E5;padding-left: 10px;">
@@ -89,50 +91,7 @@ p { width: 300px; }
             		</td>
             	</tr>
             </table>
-             -->
-            <!-- <div style="width: 650px;height: 50px;">
-            	<img width="40" height="40" class="pinkynail toggle" src="http://alvanews.sourceforge.net/wp-content/uploads/2013/09/@C3TRTV2KVL_AFGUDVS8KN2-150x150.jpg" alt="" style="margin-top: 3px; display: inline;">	
-            	<div class="filename new" style="line-height: 36px;overflow: hidden;"><span class="title">@C3TRTV2KVL_AFGUD}VS8KN</span></div>
-            </div> -->
-            
-            <!-- <div id="fileQueue" class="fileQueue" style="width: 650px;height: 50px;"></div> -->
-            <!-- <div id="fileQueue" class="fileQueue" style="width: 500px;height: 50px;"></div> -->
 		</div>
-        <!-- <div class="pageFormContent" style="padding: 5px 5px;" layoutH="45">
-            <p style="padding: 5px 0;">
-                 <label>类型：</label>
-                 <select class="combox" name="status">
-	                 <option value="1">图片</option>
-	                 <option value="2">音频</option>
-	                 <option value="3">视频</option>
-                 </select>
-            </p>
-            <p style="padding: 5px 0;">
-                 <label>来源：</label>
-                 <select class="combox" name="status">
-                 	<option value="2">内部</option>
-                 	<option value="1">外部</option>
-                 </select>
-            </p>
-            
-            <div class="divider"></div>
-            
-            <input id="testFileInput2" type="file" name="image"/>
-
-            <div id="fileQueue" class="fileQueue" style="width: 500px;height: 250px;"></div>
-
-            <input type="image" src="__DWZ__/uploadify/img/upload.jpg" onclick="$('#testFileInput2').uploadify('upload', '*');"/>
-            <input type="image" src="__DWZ__/uploadify/img/cancel.jpg" onclick="$('#testFileInput2').uploadify('cancel', '*');"/>
-
-        </div>
-        <div class="formBar">
-	        <ul>
-	            <li><div class="buttonActive"><div class="buttonContent"><button type="submit">保存</button></div></div></li>
-	            <li>
-	                    <div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div>
-	            </li>
-	        </ul>
-        </div> -->
 </div>
 <script type="text/javascript">
 $(document).ready(function(){
@@ -147,32 +106,35 @@ $(document).ready(function(){
         auto:true,
 		multi:true,
 		onUploadSuccess : function(file, data, response) {
-			//$("#fileQueue").hide();
 			var dataObj = jQuery.parseJSON(data);
+			if(dataObj.status == 0){
+				alertMsg.info(dataObj.info);
+				return;
+			}
 			onUploadSuccess(file, dataObj, response);
         },
 		//onQueueComplete:uploadifyQueueComplete1,
 		onSelect:initDiv
     });
     function onUploadSuccess(file, data, response){
-    	var templeate = "<table cellpadding='0' cellspacing='0' width='70%' style='border: 1px solid #E5E5E5;'>"
-    		+"<tr>"
-    		+"<td><img width='40' height='40' src='"+data.url+"' alt='' style='margin-left: 0px; display: inline;'></td>"
-    		+"<td>"+data.name+"</td>"
-    		+"<td><a id='describe-toggle-on' href='#' style='display: block;'>显示</a></td>"
-    		+"</tr>"
+    	var name = data.name.split(".")[0];
+    	var templeate = "<table id='"+name+"' cellpadding='0' cellspacing='0' width='70%' style='border: 1px solid #E5E5E5;'>"
+    		+ $("#templeate").html()
     		+"</table>";
-    	$("#fileQueue").after(templeate);
+    	$("#tttlest").after(templeate);
+    	$("#"+name+" img").attr("src",data.url);
+    	$("#"+name+" #name").html(name);
+    	$("#describe-toggle-on").toggle(
+		  function(){
+		  	$("#fullTr").show();
+		  },
+		  function(){
+		  	$("#fullTr").hide();
+		  }
+		);
+    	
     }
     function initDiv(){
     }
-    $("#describe-toggle-on").toggle(
-	  function(){
-	  	$("#fullTr").show();
-	  },
-	  function(){
-	  	$("#fullTr").hide();
-	  }
-	);
 });  
 </script>
