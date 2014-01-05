@@ -92,3 +92,9 @@ function getRemoteURL1(){
 	$url = 'http://'.$_SERVER['HTTP_HOST'];
 	return $url;
 }
+function generateFolderPath($path){
+	if(!file_exists($path)){
+		mkdir($path);
+	}
+	return $path;
+}

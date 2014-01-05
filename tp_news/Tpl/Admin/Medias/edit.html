@@ -55,20 +55,21 @@ p { width: 300px; }
 							<thead class="media-item-info" id="media-head-64">
 								<tr valign="top" style="height: 170px;">
 									<td class="A1B1" id="thumbnail-head-64">
-									<p style="width: 250px;"><a href="http://alvanews.sourceforge.net/?attachment_id=64" target="_blank"><img class="thumbnail" src="http://localhost/Uploads/5253aad45b061.jpg" height="150" width="150" alt="" style="margin-top: 3px"></a></p>
+									<p style="width: 250px;"><a href="" target="_blank"><img class="thumbnail" src="" height="150" width="150" alt="" style="margin-top: 3px"></a></p>
 									</td>
 									<td>
 									<p style="height: 5px"></p>
-									<p><strong>文件名：</strong> @C3TRTV2KVL_AFGUDVS8KN2.jpg</p>
-									<p><strong>文件类型：</strong> image/jpeg</p>
-									<p><strong>上传日期：</strong> 2013 年 9 月 29 日</p><p><strong>尺寸：</strong> <span id="media-dims-64">1000&nbsp;×&nbsp;817</span> </p>
+									<p id="filename"><strong>文件名：</strong> <span></span></p>
+									<p id="filetype"><strong>文件类型：</strong> <span></span></p>
+									<p id="filetime"><strong>上传日期：</strong> <span></span></p>
+									<p id="filesize"><strong>尺寸：</strong> <span></span></p>
 								</td></tr>
 							</thead>
 							<tbody>
 								<tr><td colspan="2" class="imgedit-response" id="imgedit-response-64"></td></tr>
 								<tr class="post_title form-required">
 									<th valign="top" scope="row" class="label" style="height: 30px;"><label for="attachments[64][post_title]"><span class="alignleft">标题</span><span class="alignright"><abbr title="required" class="required">*</abbr></span><br class="clear"></label></th>
-									<td class="field"><input type="text" class="text" id="attachments[64][post_title]" name="attachments[64][post_title]" value="@C3TRTV2KVL_AFGUD}VS8KN" aria-required="true" style="width: 460px;"></td>
+									<td class="field"><input type="text" class="text" id="attachments[64][post_title]" name="attachments[64][post_title]" value="" aria-required="true" style="width: 460px;"></td>
 								</tr>
 								<tr class="image_alt">
 									<th valign="top" scope="row" class="label"><label for="attachments[64][image_alt]"><span class="alignleft">替代文本</span><br class="clear"></label></th>
@@ -84,7 +85,7 @@ p { width: 300px; }
 								</tr>
 								<tr class="image_url">
 									<th valign="top" scope="row" class="label"><label for="attachments[64][image_url]"><span class="alignleft">文件 URL</span><br class="clear"></label></th>
-									<td class="field"><input type="text" class="text urlfield" readonly="readonly" name="attachments[64][url]" value="http://alvanews.sourceforge.net/wp-content/uploads/2013/09/@C3TRTV2KVL_AFGUDVS8KN2.jpg" style="width: 460px;"><br><p class="help">上传文件的位置。<a href="#" class="del-link" onclick="document.getElementById('del_attachment_64').style.display='block';return false;">删除</a></td></p>
+									<td class="field"><input type="text" class="text urlfield" readonly="readonly" name="attachments[64][url]" value="" style="width: 460px;"><br><p class="help">上传文件的位置。<a href="#" class="del-link" onclick="document.getElementById('del_attachment_64').style.display='block';return false;">删除</a></td></p>
 								</tr>
 							</tbody>
 						</table>
@@ -117,13 +118,19 @@ $(document).ready(function(){
 		onSelect:initDiv
     });
     function onUploadSuccess(file, data, response){
-    	var name = data.name.split(".")[0];
+    	var name = data.filename.split(".")[0];
     	var templeate = "<table id='"+name+"' cellpadding='0' cellspacing='0' width='70%' style='border: 1px solid #E5E5E5;'>"
     		+ $("#templeate").html()
     		+"</table>";
     	$("#tttlest").after(templeate);
-    	$("#"+name+" img").attr("src",data.url);
-    	$("#"+name+" #name").html(name);
+    	$("#"+name+" img").attr("src",data.fileurl);
+    	$("#"+name+" #name").html(data.filename);
+    	$("#"+name+" #filename span").html(data.filename);
+    	$("#"+name+" #filetype span").html(data.filetype);
+    	$("#"+name+" #filetime span").html(data.filetime);
+    	$("#"+name+" #filesize span").html(data.filesize);
+    	$("#"+name+" .post_title input").val(data.filetitle);
+    	$("#"+name+" .image_url input").val(data.fileurl);
     	$("#describe-toggle-on").toggle(
 		  function(){
 		  	$("#fullTr").show();

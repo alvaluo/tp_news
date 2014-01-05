@@ -46,10 +46,13 @@ class MediasAction extends Action{
     public function upload() {
     	
 		import ( "@.ORG.UploadFile" );
+		import("@.ORG.Constant");
+		import("@.ORG.Results");
+		
 		$upload = new UploadFile ();
 		$upload->maxSize = 3292200;
 		$upload->allowExts = explode ( ',', 'jpg,gif,png,jpeg' );
-		$upload->savePath = './Uploads/images/temp/';
+		$upload->savePath = generateFolderPath(Constant::$DEFAULT_UPLOADFILE_IMG_TEMPDIR);
 		$upload->imageClassPath = '@.ORG.Image';
 		$upload->saveRule = 'uniqid';
 		$upload->thumbRemoveOrigin = false;
@@ -59,6 +62,9 @@ class MediasAction extends Action{
 			$uploadList = $upload->getUploadFileInfo ();
 			import ( "@.ORG.Image" );
 			$_POST ['image'] = $uploadList [0] ['savename'];
+			$_POST ['filetype'] = $uploadList [0] ['extension'];
+			$_POST ['filetitle'] = $uploadList [0] ['name'];
+			//var_dump($uploadList);
 		}
     	
 		//$this->thumbnails = getRemoteURL1().'/Uploads/images/temp/'.$_POST['image'];
@@ -72,15 +78,22 @@ class MediasAction extends Action{
     	
     	$result = $Medias->add($data); */
     	
-    	import("@.ORG.Results");
+    	
     	$MessageArray = Results::$MessageArray;
     	if($result) {
     		$MessageArray['statusCode'] = 200;
     		$MessageArray['message'] = "操作成功!";
     	}
     	
-    	$MessageArray['url'] = getRemoteURL1().'/Uploads/images/temp/'.$_POST['image'];
-    	$MessageArray['name'] = $_POST['image'];
+    	$MessageArray['fileurl'] = getRemoteURL1().'/Uploads/images/temp/'.$_POST['image'];
+    	$MessageArray['filename'] = $_POST['image'];
+    	$MessageArray['filetype'] = "image/".$_POST ['filetype'];
+    	$MessageArray['filetime'] = date("Y年m月d日",time());
+    	list($width, $height, $type, $attr) = getimagesize('./Uploads/images/temp/'.$_POST['image']);
+    	$MessageArray['filesize'] = $width."&nbsp;×&nbsp;".$height;
+    	list($filetitle, $filejp) = split("[.]", $_POST['filetitle']); 
+    	$MessageArray['filetitle'] = $filetitle;
+    	
     	
     	$json_string = json_encode($MessageArray);
     	echo $json_string;
