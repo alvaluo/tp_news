@@ -45,14 +45,14 @@ class MediasAction extends Action{
     
     public function upload() {
     	
-		import ( "@.ORG.UploadFile" );
+		import("@.ORG.UploadFile");
 		import("@.ORG.Constant");
 		import("@.ORG.Results");
 		
 		$upload = new UploadFile ();
 		$upload->maxSize = 3292200;
 		$upload->allowExts = explode ( ',', 'jpg,gif,png,jpeg' );
-		$upload->savePath = generateFolderPath(Constant::$DEFAULT_UPLOADFILE_IMG_TEMPDIR);
+		$upload->savePath = generateFolderPath(Constant::$DEFAULT_UPLOADFILE_TEMPDIR);
 		$upload->imageClassPath = '@.ORG.Image';
 		$upload->saveRule = 'uniqid';
 		$upload->thumbRemoveOrigin = false;
@@ -60,36 +60,35 @@ class MediasAction extends Action{
 			$this->error ( $upload->getErrorMsg () );
 		} else {
 			$uploadList = $upload->getUploadFileInfo ();
-			import ( "@.ORG.Image" );
+			import("@.ORG.Image");
 			$_POST ['image'] = $uploadList [0] ['savename'];
 			$_POST ['filetype'] = $uploadList [0] ['extension'];
 			$_POST ['filetitle'] = $uploadList [0] ['name'];
-			//var_dump($uploadList);
 		}
     	
 		//$this->thumbnails = getRemoteURL1().'/Uploads/images/temp/'.$_POST['image'];
     	 
-    	/* $Medias = D('Medias');
+    	/*$Medias = D('Medias');
     	$data = $Medias->create();
     	
     	$data['url'] = getRemoteURL1().'/Uploads/'.$_POST['image'];
     	$data['type'] = "1";
     	$data['comment'] = "1111";
     	
-    	$result = $Medias->add($data); */
+    	$result = $Medias->add($data);*/
     	
     	
     	$MessageArray = Results::$MessageArray;
     	if($result) {
-    		$MessageArray['statusCode'] = 200;
-    		$MessageArray['message'] = "操作成功!";
+    		$MessageArray['statusCode'] = Results::$STATUSCODE_OK;
+    		$MessageArray['message'] = Results::$MESSAGE_OK;
     	}
     	
-    	$MessageArray['fileurl'] = getRemoteURL1().'/Uploads/images/temp/'.$_POST['image'];
+    	$MessageArray['fileurl'] = getRemoteURL1().Constant::$DEFAULT_UPLOADFILE_TEMPDIR_URL.$_POST['image'];
     	$MessageArray['filename'] = $_POST['image'];
     	$MessageArray['filetype'] = "image/".$_POST ['filetype'];
     	$MessageArray['filetime'] = date("Y年m月d日",time());
-    	list($width, $height, $type, $attr) = getimagesize('./Uploads/images/temp/'.$_POST['image']);
+    	list($width, $height, $type, $attr) = getimagesize(Constant::$DEFAULT_UPLOADFILE_TEMPDIR.$_POST['image']);
     	$MessageArray['filesize'] = $width."&nbsp;×&nbsp;".$height;
     	list($filetitle, $filejp) = split("[.]", $_POST['filetitle']); 
     	$MessageArray['filetitle'] = $filetitle;
@@ -100,8 +99,43 @@ class MediasAction extends Action{
 
     }
     
+    public function deleteUpload(){
+    	import("@.ORG.Results");
+    	$MessageArray = Results::$MessageArray;
+    	
+    	$fileUrl = $_POST['fileUrl'];
+    	$deletefle = str_replace(getRemoteURL1(), ".", $fileUrl);
+    	if (file_exists($deletefle)) {
+    		$IS_DELETE = unlink ($deletefle);
+    		if($IS_DELETE){
+    			$MessageArray['statusCode'] = Results::$STATUSCODE_OK;
+    			$MessageArray['message'] = Results::$MESSAGE_OK;
+    			$filename = current(explode('.',substr($fileUrl,strripos($fileUrl,"/")+1)));
+    			$MessageArray['filename'] = $filename;
+    		}
+    	}
+    	$json_string = json_encode($MessageArray);
+    	echo $json_string;
+    }
+    
+    public function saveUpload(){
+    	import("@.ORG.Constant");
+    	import("@.ORG.Results");
+    	$MessageArray = Results::$MessageArray;
+    	
+    	$fileList = $_POST['fileList'];
+    	$array = split('[/,]', $fileList);
+    	foreach($array as $arr){
+    		rename(Constant::$DEFAULT_UPLOADFILE_TEMPDIR.$arr,Constant::$DEFAULT_UPLOADFILE_DIR.$arr);
+    	}
+    	$MessageArray['statusCode'] = Results::$STATUSCODE_OK;
+    	$MessageArray['message'] = Results::$MESSAGE_OK;
+    	
+    	$json_string = json_encode($MessageArray);
+    	echo $json_string;
+    }
+    
     public function delete() {
-    	//import result class
     	import("@.ORG.Results");
     	$MessageArray = Results::$MessageArray;
     
@@ -115,8 +149,8 @@ class MediasAction extends Action{
     		unlink ($deletefle);
     	}
     	if ($list !== false) {
-    		$MessageArray['statusCode'] = 200;
-    		$MessageArray['message'] = "操作成功!";
+    		$MessageArray['statusCode'] = Results::$STATUSCODE_OK;
+    		$MessageArray['message'] = Results::$MESSAGE_OK;
     	}
     
     	$json_string = json_encode($MessageArray);

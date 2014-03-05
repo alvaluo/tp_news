@@ -35,6 +35,9 @@ return array (
 		'DEFAULT_GROUP' => 'Home',
 		'DEFAULT_MODULE' => 'Index',
 		'DEFAULT_ACTION' => 'index',
+		
+		'SESSION_TYPE' => 'Db',
+		'SESSION_EXPIRE' => 60 ,
 		                             
 		TMPL_PARSE_STRING => array(
 			'__REMOTEURL__' => getRemoteURL(),

@@ -15,6 +15,11 @@ class Results extends Think {
 		'closeCurrent'=>"",
 		'forwardUrl'=>"",
 	);
+	
+	public static $MESSAGE_NO = "操作失败!";
+	public static $MESSAGE_OK = "操作成功!";
+	public static $STATUSCODE_NO = "300";
+	public static $STATUSCODE_OK = "200";
   
 }
 ?>

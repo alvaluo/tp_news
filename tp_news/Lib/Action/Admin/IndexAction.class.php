@@ -2,8 +2,12 @@
 class IndexAction extends Action {
 	
     public function index(){
-//     	import('ORG.Util.Session');
+    	import('ORG.Util.Session');
 //     	if(Session::is_set('CURRENT_USER')){
+		if(Session::isExpired()){
+			$this->display('login');
+			return;
+		}
 		if(session('?CURRENT_USER')){
     		$this->display();
     		return;
@@ -36,6 +40,8 @@ class IndexAction extends Action {
     				$current_user['user'] = $data;
     				$current_user['ruleTag'] = $ruleTag;
 //     				Session::set('CURRENT_USER',$current_user);
+    				//$lifeTime = 00.1 * 3600;   
+    				//session_set_cookie_params($lifeTime);
     				session('CURRENT_USER',$current_user);
     				$this->display();
     				return;

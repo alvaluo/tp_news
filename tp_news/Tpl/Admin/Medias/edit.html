@@ -22,6 +22,11 @@ p { width: 300px; }
 
 </style>
 
+<form id="mediaForm" method="post" action="" class="pageForm required-validate" 
+	onsubmit="return validateCallback(this, navTabAjaxDone1);">
+	<input type="hidden" name="fileUrl" value="">
+	<input type="hidden" name="fileList" value="">
+</form>
 
 
 <div class="pageContent">
@@ -46,10 +51,10 @@ p { width: 300px; }
             <table id="templeate" cellpadding="0" cellspacing="0" width="70%" style="border: 1px solid #E5E5E5;display: none;">
             	<tr>
             		<td width="20%"><img width="40" height="40" src="" alt="" style="margin-left: 0px; display: inline;"></td>
-            		<td id="name"></td>
-            		<td width="15%" align="center"><a id="describe-toggle-on" href="#" style="display: block;">显示</a></td>
+            		<td class="name"></td>
+            		<td width="15%" align="center"><a class="describe-toggle-on" href="#" style="display: block;">显示</a></td>
             	</tr>
-            	<tr id="fullTr" style="display: none;">
+            	<tr class="fullTr" style="display: none;">
             		<td colspan="3" style="border-top: 1px solid #E5E5E5;padding-left: 10px;">
             			<table style="display: table;">
 							<thead class="media-item-info" id="media-head-64">
@@ -59,10 +64,10 @@ p { width: 300px; }
 									</td>
 									<td>
 									<p style="height: 5px"></p>
-									<p id="filename"><strong>文件名：</strong> <span></span></p>
-									<p id="filetype"><strong>文件类型：</strong> <span></span></p>
-									<p id="filetime"><strong>上传日期：</strong> <span></span></p>
-									<p id="filesize"><strong>尺寸：</strong> <span></span></p>
+									<p class="filename"><strong>文件名：</strong> <span></span></p>
+									<p class="filetype"><strong>文件类型：</strong> <span></span></p>
+									<p class="filetime"><strong>上传日期：</strong> <span></span></p>
+									<p class="filesize"><strong>尺寸：</strong> <span></span></p>
 								</td></tr>
 							</thead>
 							<tbody>
@@ -85,7 +90,11 @@ p { width: 300px; }
 								</tr>
 								<tr class="image_url">
 									<th valign="top" scope="row" class="label"><label for="attachments[64][image_url]"><span class="alignleft">文件 URL</span><br class="clear"></label></th>
-									<td class="field"><input type="text" class="text urlfield" readonly="readonly" name="attachments[64][url]" value="" style="width: 460px;"><br><p class="help">上传文件的位置。<a href="#" class="del-link" onclick="document.getElementById('del_attachment_64').style.display='block';return false;">删除</a></td></p>
+									<td class="field">
+										<input type="text" class="text urlfield" readonly="readonly" name="image_url" value="" style="width: 460px;">
+										<!-- <br><p class="help">上传文件的位置。<a href="__APP__/admin/medias/deleteUpload" target="ajaxTodo" class="del-link">删除</a></p> -->
+										<br><p class="help">上传文件的位置。<a href="javascript:void(0)" class="del-link" onclick="deleteUpload(this)">删除</a></p>
+									</td>
 								</tr>
 							</tbody>
 						</table>
@@ -93,6 +102,13 @@ p { width: 300px; }
             	</tr>
             </table>
 		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="button" onclick="saveUpload();">提交</button></div></div></li>
+				<li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
+			</ul>
+		</div>
+	</div>
 </div>
 <script type="text/javascript">
 $(document).ready(function(){
@@ -124,24 +140,55 @@ $(document).ready(function(){
     		+"</table>";
     	$("#tttlest").after(templeate);
     	$("#"+name+" img").attr("src",data.fileurl);
-    	$("#"+name+" #name").html(data.filename);
-    	$("#"+name+" #filename span").html(data.filename);
-    	$("#"+name+" #filetype span").html(data.filetype);
-    	$("#"+name+" #filetime span").html(data.filetime);
-    	$("#"+name+" #filesize span").html(data.filesize);
+    	$("#"+name+" .name").html(data.filename);
+    	$("#"+name+" .filename span").html(data.filename);
+    	$("#"+name+" .filetype span").html(data.filetype);
+    	$("#"+name+" .filetime span").html(data.filetime);
+    	$("#"+name+" .filesize span").html(data.filesize);
     	$("#"+name+" .post_title input").val(data.filetitle);
     	$("#"+name+" .image_url input").val(data.fileurl);
-    	$("#describe-toggle-on").toggle(
+    	$("#"+name+" .describe-toggle-on").toggle(
 		  function(){
-		  	$("#fullTr").show();
+		  	$("#"+name+" .fullTr").show();
 		  },
 		  function(){
-		  	$("#fullTr").hide();
+		  	$("#"+name+" .fullTr").hide();
 		  }
 		);
-    	
+    	$("#"+name+" a[target='ajaxTodo']").ajaxTodo();
     }
     function initDiv(){
     }
+    
 });  
+function deleteUpload(thiz){
+	var actionURL = "__APP__/admin/medias/deleteUpload";
+	var image_url = $(thiz).parent().prev().prev();
+	var mediaForm = $("#mediaForm");
+	mediaForm.attr("action", actionURL);
+	mediaForm.find("[name='fileUrl']").val(image_url.val());
+	mediaForm.submit();
+}
+function saveUpload(){
+	var actionURL = "__APP__/admin/medias/saveUpload";
+	var mediaForm = $("#mediaForm");
+	mediaForm.attr("action", actionURL);
+	var fileVal = "";
+	$(".name").each(function(index){
+		var thizVal = $(this).html();
+		if(thizVal != ""){
+			fileVal += thizVal+",";
+		}
+	});
+	mediaForm.find("[name='fileList']").val(fileVal);
+	mediaForm.submit();
+}
+function navTabAjaxDone1(json){
+	if(json.statusCode == 200){
+		$("#"+json.filename).remove();
+	}
+    DWZ.ajaxDone(json);
+}
+
+
 </script>
