@@ -44,6 +44,8 @@ p { width: 300px; }
             </p>
             <div id="tttlest" class="divider"></div>
             
+            <div id="tableList"></div>
+            
             
             <div id="fileQueue" class="fileQueue" style="width: 650px;height: 50px;border: 0px solid #E5E5E5;display: none;"></div>
             
@@ -56,6 +58,7 @@ p { width: 300px; }
             	</tr>
             	<tr class="fullTr" style="display: none;">
             		<td colspan="3" style="border-top: 1px solid #E5E5E5;padding-left: 10px;">
+            			<form method="post" action="__APP__/admin/medias/saveUpload">
             			<table style="display: table;">
 							<thead class="media-item-info" id="media-head-64">
 								<tr valign="top" style="height: 170px;">
@@ -64,40 +67,40 @@ p { width: 300px; }
 									</td>
 									<td>
 									<p style="height: 5px"></p>
-									<p class="filename"><strong>文件名：</strong> <span></span></p>
-									<p class="filetype"><strong>文件类型：</strong> <span></span></p>
+									<p class="filename"><strong>文件名：</strong> <span></span><input name="filename" value="" type="hidden"/></p>
+									<p class="filetype"><strong>文件类型：</strong> <span></span><input name="filetype" value="" type="hidden"/></p>
 									<p class="filetime"><strong>上传日期：</strong> <span></span></p>
-									<p class="filesize"><strong>尺寸：</strong> <span></span></p>
+									<p class="filesize"><strong>尺寸：</strong> <span></span><input name="filesize" value="" type="hidden"/></p>
 								</td></tr>
 							</thead>
 							<tbody>
 								<tr><td colspan="2" class="imgedit-response" id="imgedit-response-64"></td></tr>
 								<tr class="post_title form-required">
-									<th valign="top" scope="row" class="label" style="height: 30px;"><label for="attachments[64][post_title]"><span class="alignleft">标题</span><span class="alignright"><abbr title="required" class="required">*</abbr></span><br class="clear"></label></th>
-									<td class="field"><input type="text" class="text" id="attachments[64][post_title]" name="attachments[64][post_title]" value="" aria-required="true" style="width: 460px;"></td>
+									<th valign="top" scope="row" class="label" style="height: 30px;"><label><span class="alignleft">标题</span><span class="alignright"><abbr title="required" class="required">*</abbr></span><br class="clear"></label></th>
+									<td class="field"><input type="text" class="text" name="title" value="" aria-required="true" style="width: 460px;"></td>
 								</tr>
 								<tr class="image_alt">
-									<th valign="top" scope="row" class="label"><label for="attachments[64][image_alt]"><span class="alignleft">替代文本</span><br class="clear"></label></th>
-									<td class="field"><input type="text" class="text" id="attachments[64][image_alt]" name="attachments[64][image_alt]" value="" style="width: 460px;"><p class="help">图像的替代文本，例如“蒙娜丽莎”</p></td>
+									<th valign="top" scope="row" class="label"><label><span class="alignleft">替代文本</span><br class="clear"></label></th>
+									<td class="field"><input type="text" class="text" name="rentext" value="" style="width: 460px;"><p class="help">图像的替代文本，例如“蒙娜丽莎”</p></td>
 								</tr>
 								<tr class="post_excerpt">
-									<th valign="top" scope="row" class="label" style="height: 30px;"><label for="attachments[64][post_excerpt]"><span class="alignleft">说明</span><br class="clear"></label></th>
-									<td class="field"><input type="text" class="text" id="attachments[64][post_excerpt]" name="attachments[64][post_excerpt]" value="" style="width: 460px;"></td>
+									<th valign="top" scope="row" class="label" style="height: 30px;"><label><span class="alignleft">说明</span><br class="clear"></label></th>
+									<td class="field"><input type="text" class="text" name="explain" value="" style="width: 460px;"></td>
 								</tr>
 								<tr class="post_content">
-									<th valign="top" scope="row" class="label" style="height: 50px;"><label for="attachments[64][post_content]"><span class="alignleft">描述</span><br class="clear"></label></th>
-									<td class="field"><textarea id="attachments[64][post_content]" name="attachments[64][post_content]" style="width: 460px;"></textarea></td>
+									<th valign="top" scope="row" class="label" style="height: 50px;"><label><span class="alignleft">描述</span><br class="clear"></label></th>
+									<td class="field"><textarea name="description" style="width: 460px;"></textarea></td>
 								</tr>
 								<tr class="image_url">
-									<th valign="top" scope="row" class="label"><label for="attachments[64][image_url]"><span class="alignleft">文件 URL</span><br class="clear"></label></th>
+									<th valign="top" scope="row" class="label"><label><span class="alignleft">文件 URL</span><br class="clear"></label></th>
 									<td class="field">
-										<input type="text" class="text urlfield" readonly="readonly" name="image_url" value="" style="width: 460px;">
-										<!-- <br><p class="help">上传文件的位置。<a href="__APP__/admin/medias/deleteUpload" target="ajaxTodo" class="del-link">删除</a></p> -->
+										<input type="text" class="text urlfield" readonly="readonly" name="url" value="" style="width: 460px;">
 										<br><p class="help">上传文件的位置。<a href="javascript:void(0)" class="del-link" onclick="deleteUpload(this)">删除</a></p>
 									</td>
 								</tr>
 							</tbody>
 						</table>
+						</form>
             		</td>
             	</tr>
             </table>
@@ -138,13 +141,17 @@ $(document).ready(function(){
     	var templeate = "<table id='"+name+"' cellpadding='0' cellspacing='0' width='70%' style='border: 1px solid #E5E5E5;'>"
     		+ $("#templeate").html()
     		+"</table>";
-    	$("#tttlest").after(templeate);
+    	//$("#tttlest").after(templeate);
+    	$("#tableList").append(templeate);
     	$("#"+name+" img").attr("src",data.fileurl);
     	$("#"+name+" .name").html(data.filename);
     	$("#"+name+" .filename span").html(data.filename);
+    	$("#"+name+" .filename input").val(data.filename);
     	$("#"+name+" .filetype span").html(data.filetype);
+    	$("#"+name+" .filetype input").val(data.filetype);
     	$("#"+name+" .filetime span").html(data.filetime);
     	$("#"+name+" .filesize span").html(data.filesize);
+    	$("#"+name+" .filesize input").val(data.filesize);
     	$("#"+name+" .post_title input").val(data.filetitle);
     	$("#"+name+" .image_url input").val(data.fileurl);
     	$("#"+name+" .describe-toggle-on").toggle(
@@ -170,18 +177,17 @@ function deleteUpload(thiz){
 	mediaForm.submit();
 }
 function saveUpload(){
-	var actionURL = "__APP__/admin/medias/saveUpload";
-	var mediaForm = $("#mediaForm");
-	mediaForm.attr("action", actionURL);
-	var fileVal = "";
-	$(".name").each(function(index){
-		var thizVal = $(this).html();
-		if(thizVal != ""){
-			fileVal += thizVal+",";
-		}
+	var forms = $("#tableList").find("form");
+	forms.each(function(index){
+		$(this).ajaxSubmit(function(returnData) {  
+			returnData = eval('('+returnData+')');
+			if(returnData.status){
+				navTab.reloadFlag("{$_GET['navtab']}");
+				$("#"+returnData.resultId).remove();
+			}
+	    });
 	});
-	mediaForm.find("[name='fileList']").val(fileVal);
-	mediaForm.submit();
+	
 }
 function navTabAjaxDone1(json){
 	if(json.statusCode == 200){

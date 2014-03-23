@@ -27,7 +27,7 @@ function getIndexModules($mid){
 			$node = $dataNodeModules[$dataParentModules1['id']];
 			$treeHtml .= "<div class='accordionContent'><ul class='tree treeFolder'>";
 			foreach ($node as $node1){
-				$treeHtml .= "<li><a href='".$node1['moduleurl']."' target='navTab' rel='".$node1['id']."'>".$node1['modulename']."</a></li>";
+				$treeHtml .= "<li><a href='".$node1['moduleurl']."/navtab/".$node1['id']."' target='navTab' rel='".$node1['id']."'>".$node1['modulename']."</a></li>";
 			}
 			$treeHtml .= "</ul>";
 			$treeHtml .= "</div>";

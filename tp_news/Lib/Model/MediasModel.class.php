@@ -7,7 +7,7 @@ class  MediasModel extends Model {
 	
 	//数据模型
 	protected $fields = array(
-			'id', 'url','type','createtime','comment',
+			'id', 'filename','filetype','filesize','url','title','rentext','explain','description','createtime',
 	);
 	
 	// 自动验证设置

@@ -89,7 +89,7 @@ class MediasAction extends Action{
     	$MessageArray['filetype'] = "image/".$_POST ['filetype'];
     	$MessageArray['filetime'] = date("Y年m月d日",time());
     	list($width, $height, $type, $attr) = getimagesize(Constant::$DEFAULT_UPLOADFILE_TEMPDIR.$_POST['image']);
-    	$MessageArray['filesize'] = $width."&nbsp;×&nbsp;".$height;
+    	$MessageArray['filesize'] = $width."×".$height;
     	list($filetitle, $filejp) = split("[.]", $_POST['filetitle']); 
     	$MessageArray['filetitle'] = $filetitle;
     	
@@ -104,7 +104,8 @@ class MediasAction extends Action{
     	$MessageArray = Results::$MessageArray;
     	
     	$fileUrl = $_POST['fileUrl'];
-    	$deletefle = str_replace(getRemoteURL1(), ".", $fileUrl);
+    	$deletefle = str_replace(getRemoteURL(), ".", $fileUrl);
+    	echo $deletefle;
     	if (file_exists($deletefle)) {
     		$IS_DELETE = unlink ($deletefle);
     		if($IS_DELETE){
@@ -123,14 +124,27 @@ class MediasAction extends Action{
     	import("@.ORG.Results");
     	$MessageArray = Results::$MessageArray;
     	
-    	$fileList = $_POST['fileList'];
-    	$array = split('[/,]', $fileList);
-    	foreach($array as $arr){
-    		rename(Constant::$DEFAULT_UPLOADFILE_TEMPDIR.$arr,Constant::$DEFAULT_UPLOADFILE_DIR.$arr);
-    	}
-    	$MessageArray['statusCode'] = Results::$STATUSCODE_OK;
-    	$MessageArray['message'] = Results::$MESSAGE_OK;
+    	$MessageArray['status'] = false;
+    	$MessageArray['resultId'] = '';
     	
+    	$filename = $_POST['filename'];
+    	if(!empty($filename)){
+    		$IS_RENAME = rename(Constant::$DEFAULT_UPLOADFILE_TEMPDIR.$filename,Constant::$DEFAULT_UPLOADFILE_DIR.$filename);
+    		if($IS_RENAME){
+    			$Medias = D('Medias');
+    			$data = $Medias->create();
+    			$data['url'] = getRemoteURL().Constant::$DEFAULT_UPLOADFILE.$filename;
+    			if($data){
+    				$result = $Medias->add($data);
+    				$MessageArray['resultId'] = reset(explode(".",$filename));
+    				if($result){
+    					$MessageArray['status'] = true;
+    				}
+    			}
+    		}
+    	}
+    	
+    	$MessageArray['navTabId'] = 8;
     	$json_string = json_encode($MessageArray);
     	echo $json_string;
     }
@@ -144,7 +158,7 @@ class MediasAction extends Action{
     	$Medias = M('Medias');
     	$data = $Medias->find($id);
     	$list = $Medias->delete($id);
-    	$deletefle = str_replace(getRemoteURL1(), ".", $data['url']);
+    	$deletefle = str_replace(getRemoteURL(), ".", $data['url']);
     	if (file_exists($deletefle)) {
     		unlink ($deletefle);
     	}
