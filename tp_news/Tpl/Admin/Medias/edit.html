@@ -1,200 +1,236 @@
 <style type="text/css" media="screen">
-.my-uploadify-button {
-	background:none;
-	border: none;
-	text-shadow: none;
-	border-radius:0;
-}
+    .my-uploadify-button {
+        background:none;
+        border: none;
+        text-shadow: none;
+        border-radius:0;
+    }
 
-.uploadify:hover .my-uploadify-button {
-	background:none;
-	border: none;
-}
+    .uploadify:hover .my-uploadify-button {
+        background:none;
+        border: none;
+    }
 
-.fileQueue {
-	width: 400px;
-	height: 150px;
-	overflow: auto;
-	border: 1px solid #E5E5E5;
-	margin-bottom: 10px;
-}
-p { width: 300px; }
+    .fileQueue {
+        width: 400px;
+        height: 150px;
+        overflow: auto;
+        border: 1px solid #E5E5E5;
+        margin-bottom: 10px;
+    }
+    p { width: 300px; }
 
 </style>
 
 <form id="mediaForm" method="post" action="" class="pageForm required-validate" 
-	onsubmit="return validateCallback(this, navTabAjaxDone1);">
-	<input type="hidden" name="fileUrl" value="">
-	<input type="hidden" name="fileList" value="">
+      onsubmit="return validateCallback(this, navTabAjaxDone1);">
+    <input type="hidden" name="fileUrl" value="">
+    <input type="hidden" name="fileList" value="">
 </form>
 
 
 <div class="pageContent">
-		<div class="pageFormContent" style="padding: 5px 5px;" layoutH="45">
-			<p style="padding: 5px 0;height: 25px;">
-                 <label>选择要上传的文件：</label>
-                 <label><input id="testFileInput2" type="file" name="image"/></label>
-            </p>
-            <p style="padding: 5px 0;width: 100%;">
-                 <label>上传文件最大尺寸：</label>
-                 <label>32MB</label>
-            </p>
-            <p style="padding: 5px 0;width: 100%;">
-                 <label style="width:auto;">文件上传之后，您可以为它添加标题和描述。</label>
-            </p>
-            <div id="tttlest" class="divider"></div>
-            
-            <div id="tableList"></div>
-            
-            
-            <div id="fileQueue" class="fileQueue" style="width: 650px;height: 50px;border: 0px solid #E5E5E5;display: none;"></div>
-            
-             
-            <table id="templeate" cellpadding="0" cellspacing="0" width="70%" style="border: 1px solid #E5E5E5;display: none;">
-            	<tr>
-            		<td width="20%"><img width="40" height="40" src="" alt="" style="margin-left: 0px; display: inline;"></td>
-            		<td class="name"></td>
-            		<td width="15%" align="center"><a class="describe-toggle-on" href="#" style="display: block;">显示</a></td>
-            	</tr>
-            	<tr class="fullTr" style="display: none;">
-            		<td colspan="3" style="border-top: 1px solid #E5E5E5;padding-left: 10px;">
-            			<form method="post" action="__APP__/admin/medias/saveUpload">
-            			<table style="display: table;">
-							<thead class="media-item-info" id="media-head-64">
-								<tr valign="top" style="height: 170px;">
-									<td class="A1B1" id="thumbnail-head-64">
-									<p style="width: 250px;"><a href="" target="_blank"><img class="thumbnail" src="" height="150" width="150" alt="" style="margin-top: 3px"></a></p>
-									</td>
-									<td>
-									<p style="height: 5px"></p>
-									<p class="filename"><strong>文件名：</strong> <span></span><input name="filename" value="" type="hidden"/></p>
-									<p class="filetype"><strong>文件类型：</strong> <span></span><input name="filetype" value="" type="hidden"/></p>
-									<p class="filetime"><strong>上传日期：</strong> <span></span></p>
-									<p class="filesize"><strong>尺寸：</strong> <span></span><input name="filesize" value="" type="hidden"/></p>
-								</td></tr>
-							</thead>
-							<tbody>
-								<tr><td colspan="2" class="imgedit-response" id="imgedit-response-64"></td></tr>
-								<tr class="post_title form-required">
-									<th valign="top" scope="row" class="label" style="height: 30px;"><label><span class="alignleft">标题</span><span class="alignright"><abbr title="required" class="required">*</abbr></span><br class="clear"></label></th>
-									<td class="field"><input type="text" class="text" name="title" value="" aria-required="true" style="width: 460px;"></td>
-								</tr>
-								<tr class="image_alt">
-									<th valign="top" scope="row" class="label"><label><span class="alignleft">替代文本</span><br class="clear"></label></th>
-									<td class="field"><input type="text" class="text" name="rentext" value="" style="width: 460px;"><p class="help">图像的替代文本，例如“蒙娜丽莎”</p></td>
-								</tr>
-								<tr class="post_excerpt">
-									<th valign="top" scope="row" class="label" style="height: 30px;"><label><span class="alignleft">说明</span><br class="clear"></label></th>
-									<td class="field"><input type="text" class="text" name="explain" value="" style="width: 460px;"></td>
-								</tr>
-								<tr class="post_content">
-									<th valign="top" scope="row" class="label" style="height: 50px;"><label><span class="alignleft">描述</span><br class="clear"></label></th>
-									<td class="field"><textarea name="description" style="width: 460px;"></textarea></td>
-								</tr>
-								<tr class="image_url">
-									<th valign="top" scope="row" class="label"><label><span class="alignleft">文件 URL</span><br class="clear"></label></th>
-									<td class="field">
-										<input type="text" class="text urlfield" readonly="readonly" name="url" value="" style="width: 460px;">
-										<br><p class="help">上传文件的位置。<a href="javascript:void(0)" class="del-link" onclick="deleteUpload(this)">删除</a></p>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-						</form>
-            		</td>
-            	</tr>
-            </table>
-		</div>
-		<div class="formBar">
-			<ul>
-				<li><div class="buttonActive"><div class="buttonContent"><button type="button" onclick="saveUpload();">提交</button></div></div></li>
-				<li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
-			</ul>
-		</div>
-	</div>
+    <div class="pageFormContent" style="padding: 5px 5px;" layoutH="45">
+        <p style="padding: 5px 0;height: 25px;">
+            <label>选择要上传的文件：</label>
+            <label><input id="testFileInput2" type="file" name="image"/></label>
+        </p>
+        <p style="padding: 5px 0;width: 100%;">
+            <label>上传文件最大尺寸：</label>
+            <label>32MB</label>
+        </p>
+        <p style="padding: 5px 0;width: 100%;">
+            <label style="width:auto;">支持（jpg,gif,png,jpeg,mp3,wma,swf,flv）文件上传。文件上传之后，您可以为它添加标题和描述。</label>
+        </p>
+        <div id="tttlest" class="divider"></div>
+
+        <div id="tableList"></div>
+
+        <div id="jpTempleate" style="display:none;">
+        <div id="jquery_jplayer_1" class="cp-jplayer"></div>
+        <div id="cp_container_1" class="cp-container">
+                <div class="cp-buffer-holder"> 
+                        <div class="cp-buffer-1"></div>
+                        <div class="cp-buffer-2"></div>
+                </div>
+                <div class="cp-progress-holder">
+                        <div class="cp-progress-1"></div>
+                        <div class="cp-progress-2"></div>
+                </div>
+                <div class="cp-circle-control"></div>
+                <ul class="cp-controls">
+                        <li><a class="cp-play" tabindex="1">play</a></li>
+                        <li><a class="cp-pause" style="display:none;" tabindex="1">pause</a></li>
+                </ul>
+        </div>
+        </div>
+
+        <div id="fileQueue" class="fileQueue" style="width: 650px;height: 50px;border: 0px solid #E5E5E5;display: none;"></div>
+
+
+        <table id="templeate" cellpadding="0" cellspacing="0" width="70%" style="border: 1px solid #E5E5E5;display: none;">
+            <tr>
+                <td width="20%"><img width="40" height="40" src="" alt="" style="margin-left: 0px; display: inline;"></td>
+                <td class="name"></td>
+                <td width="15%" align="center"><a class="describe-toggle-on" href="#" style="display: block;">显示</a></td>
+            </tr>
+            <tr class="fullTr" style="display: none;">
+                <td colspan="3" style="border-top: 1px solid #E5E5E5;padding-left: 10px;">
+                    <form method="post" action="__APP__/admin/medias/saveUpload">
+                        <table style="display: table;">
+                            <thead class="media-item-info" id="media-head-64">
+                                <tr valign="top" style="height: 215px;">
+                                    <td class="A1B1" id="thumbnail-head-64">
+                                        <p style="width: 250px;" class="fileplay"></p>
+                                    </td>
+                                    <td>
+                                        <p style="height: 5px"></p>
+                                        <p class="filename"><strong>文件名：</strong> <span></span><input name="filename" value="" type="hidden"/></p>
+                                        <p class="filetype"><strong>文件类型：</strong> <span></span><input name="filetype" value="" type="hidden"/></p>
+                                        <p class="filetime"><strong>上传日期：</strong> <span></span></p>
+                                        <p class="filesize"><strong>大小：</strong> <span></span><input name="filesize" value="" type="hidden"/></p>
+                                    </td></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td colspan="2" class="imgedit-response" id="imgedit-response-64"></td></tr>
+                                <tr class="post_title form-required">
+                                    <th valign="top" scope="row" class="label" style="height: 30px;"><label><span class="alignleft">标题</span><span class="alignright"><abbr title="required" class="required">*</abbr></span><br class="clear"></label></th>
+                                    <td class="field"><input type="text" class="text" name="title" value="" aria-required="true" style="width: 460px;"></td>
+                                </tr>
+                                <tr class="image_alt">
+                                    <th valign="top" scope="row" class="label"><label><span class="alignleft">替代文本</span><br class="clear"></label></th>
+                                    <td class="field"><input type="text" class="text" name="rentext" value="" style="width: 460px;"><p class="help">图像的替代文本，例如“蒙娜丽莎”</p></td>
+                                </tr>
+                                <tr class="post_excerpt">
+                                    <th valign="top" scope="row" class="label" style="height: 30px;"><label><span class="alignleft">说明</span><br class="clear"></label></th>
+                                    <td class="field"><input type="text" class="text" name="explain" value="" style="width: 460px;"></td>
+                                </tr>
+                                <tr class="post_content">
+                                    <th valign="top" scope="row" class="label" style="height: 50px;"><label><span class="alignleft">描述</span><br class="clear"></label></th>
+                                    <td class="field"><textarea name="description" style="width: 460px;"></textarea></td>
+                                </tr>
+                                <tr class="image_url">
+                                    <th valign="top" scope="row" class="label"><label><span class="alignleft">文件 URL</span><br class="clear"></label></th>
+                                    <td class="field">
+                                        <input type="text" class="text urlfield" readonly="readonly" name="url" value="" style="width: 460px;">
+                                        <br><p class="help">上传文件的位置。<a href="javascript:void(0)" class="del-link" onclick="deleteUpload(this)">删除</a></p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </form>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="formBar">
+        <ul>
+            <li><div class="buttonActive"><div class="buttonContent"><button type="button" onclick="saveUpload();">提交</button></div></div></li>
+            <li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
+        </ul>
+    </div>
+</div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){
-    $("#testFileInput2").uploadify({
-    	swf:'__DWZ__/uploadify/scripts/uploadify.swf',
-        uploader:'__APP__/admin/medias/upload',
-        formData:{PHPSESSID:'xxx', ajax:1},
-        queueID:'fileQueue',
-        buttonImage:'__DWZ__/uploadify/img/add.jpg',
-        buttonClass:'my-uploadify-button',
-        width:102,
-        auto:true,
-		multi:true,
-		onUploadSuccess : function(file, data, response) {
-			var dataObj = jQuery.parseJSON(data);
-			if(dataObj.status == 0){
-				alertMsg.info(dataObj.info);
-				return;
-			}
-			onUploadSuccess(file, dataObj, response);
-        },
-		//onQueueComplete:uploadifyQueueComplete1,
-		onSelect:initDiv
+    $(document).ready(function() {
+        
+        $("#testFileInput2").uploadify({
+            swf: '__DWZ__/uploadify/scripts/uploadify.swf',
+            uploader: '__APP__/admin/medias/upload',
+            formData: {PHPSESSID: 'xxx', ajax: 1},
+            queueID: 'fileQueue',
+            buttonImage: '__DWZ__/uploadify/img/add.jpg',
+            buttonClass: 'my-uploadify-button',
+            width: 102,
+            auto: true,
+            multi: true,
+            onUploadSuccess: function(file, data, response) {
+                var dataObj = jQuery.parseJSON(data);
+                if (dataObj.status == 0) {
+                    alertMsg.info(dataObj.info);
+                    return;
+                }
+                onUploadSuccess(file, dataObj, response);
+            },
+            //onQueueComplete:uploadifyQueueComplete1,
+            onSelect: initDiv
+        });
+        function onUploadSuccess(file, data, response) {
+            var name = data.filename.split(".")[0];
+            var templeate = "<table id='" + name + "' cellpadding='0' cellspacing='0' width='70%' style='border: 1px solid #E5E5E5;'>"
+                    + $("#templeate").html()
+                    + "</table>";
+            //$("#tttlest").after(templeate);
+            $("#tableList").append(templeate);
+            var imgurl = data.fileurl;
+            if(data.filetype == "mp3" || data.filetype =="wma" || data.filetype =="swf"){
+                imgurl = "__PUBLIC__/images/mp3.jpg";
+                $("#" + name + " .fileplay").append($("#jpTempleate").html());
+                var myCirclePlayer = new CirclePlayer("#" + name + " .cp-jplayer",
+                {
+                        m4a: data.fileurl,
+                }, {
+                        cssSelectorAncestor: "#" + name + " .cp-container",
+                        swfPath: "js",
+                        wmode: "window",
+                        keyEnabled: true
+                });
+            }else{
+                 $("#" + name + " .fileplay").append('<img class="thumbnail" src="'+imgurl+'" height="200" width="200" alt="" style="margin-top: 3px">');
+                 
+            }
+            $("#" + name + " img:first").attr("src", imgurl);
+            $("#" + name + " .name").html(data.filename);
+            $("#" + name + " .filename span").html(data.filename);
+            $("#" + name + " .filename input").val(data.filename);
+            $("#" + name + " .filetype span").html(data.filetype);
+            $("#" + name + " .filetype input").val(data.filetype);
+            $("#" + name + " .filetime span").html(data.filetime);
+            $("#" + name + " .filesize span").html(data.filesize);
+            $("#" + name + " .filesize input").val(data.filesize);
+            $("#" + name + " .post_title input").val(data.filetitle);
+            $("#" + name + " .image_url input").val(data.fileurl);
+            $("#" + name + " .describe-toggle-on").toggle(
+                    function() {
+                        $("#" + name + " .fullTr").show();
+                    },
+                    function() {
+                        $("#" + name + " .fullTr").hide();
+                    }
+            );
+            $("#" + name + " a[target='ajaxTodo']").ajaxTodo();
+        }
+        function initDiv() {
+        }
+
     });
-    function onUploadSuccess(file, data, response){
-    	var name = data.filename.split(".")[0];
-    	var templeate = "<table id='"+name+"' cellpadding='0' cellspacing='0' width='70%' style='border: 1px solid #E5E5E5;'>"
-    		+ $("#templeate").html()
-    		+"</table>";
-    	//$("#tttlest").after(templeate);
-    	$("#tableList").append(templeate);
-    	$("#"+name+" img").attr("src",data.fileurl);
-    	$("#"+name+" .name").html(data.filename);
-    	$("#"+name+" .filename span").html(data.filename);
-    	$("#"+name+" .filename input").val(data.filename);
-    	$("#"+name+" .filetype span").html(data.filetype);
-    	$("#"+name+" .filetype input").val(data.filetype);
-    	$("#"+name+" .filetime span").html(data.filetime);
-    	$("#"+name+" .filesize span").html(data.filesize);
-    	$("#"+name+" .filesize input").val(data.filesize);
-    	$("#"+name+" .post_title input").val(data.filetitle);
-    	$("#"+name+" .image_url input").val(data.fileurl);
-    	$("#"+name+" .describe-toggle-on").toggle(
-		  function(){
-		  	$("#"+name+" .fullTr").show();
-		  },
-		  function(){
-		  	$("#"+name+" .fullTr").hide();
-		  }
-		);
-    	$("#"+name+" a[target='ajaxTodo']").ajaxTodo();
+    function deleteUpload(thiz) {
+        var actionURL = "__APP__/admin/medias/deleteUpload";
+        var image_url = $(thiz).parent().prev().prev();
+        var mediaForm = $("#mediaForm");
+        mediaForm.attr("action", actionURL);
+        mediaForm.find("[name='fileUrl']").val(image_url.val());
+        mediaForm.submit();
     }
-    function initDiv(){
+    function saveUpload() {
+        var forms = $("#tableList").find("form");
+        forms.each(function(index) {
+            $(this).ajaxSubmit(function(returnData) {
+                returnData = eval('(' + returnData + ')');
+                if (returnData.status) {
+                    navTab.reloadFlag("{$_GET['navtab']}");
+                    $("#" + returnData.resultId).remove();
+                }
+            });
+        });
+
     }
-    
-});  
-function deleteUpload(thiz){
-	var actionURL = "__APP__/admin/medias/deleteUpload";
-	var image_url = $(thiz).parent().prev().prev();
-	var mediaForm = $("#mediaForm");
-	mediaForm.attr("action", actionURL);
-	mediaForm.find("[name='fileUrl']").val(image_url.val());
-	mediaForm.submit();
-}
-function saveUpload(){
-	var forms = $("#tableList").find("form");
-	forms.each(function(index){
-		$(this).ajaxSubmit(function(returnData) {  
-			returnData = eval('('+returnData+')');
-			if(returnData.status){
-				navTab.reloadFlag("{$_GET['navtab']}");
-				$("#"+returnData.resultId).remove();
-			}
-	    });
-	});
-	
-}
-function navTabAjaxDone1(json){
-	if(json.statusCode == 200){
-		$("#"+json.filename).remove();
-	}
-    DWZ.ajaxDone(json);
-}
+    function navTabAjaxDone1(json) {
+        if (json.statusCode == 200) {
+            $("#" + json.filename).remove();
+        }
+        DWZ.ajaxDone(json);
+    }
 
 
 </script>

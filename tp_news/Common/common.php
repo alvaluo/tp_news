@@ -98,3 +98,16 @@ function generateFolderPath($path){
 	}
 	return $path;
 }
+function mkdirs($dir)
+{
+    if(!is_dir($dir))
+    {
+        if(!mkdirs(dirname($dir))){
+            return false;
+        }
+        if(!mkdir($dir,0777)){
+            return false;
+        }
+    }
+    return true;
+}
