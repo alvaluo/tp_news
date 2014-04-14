@@ -49,12 +49,15 @@ class MediasAction extends Action {
         import("@.ORG.UploadFile");
         import("@.ORG.Constant");
         import("@.ORG.Results");
+        import("@.ORG.Image");
+        $MessageArray = Results::$MessageArray;
 
         $upload = new UploadFile ();
         $upload->maxSize = 3292200;
         $upload->allowExts = explode(',', 'jpg,gif,png,jpeg,mp3,wma,swf,flv');
-        mkdirs(Constant::$DEFAULT_UPLOADFILE_TEMPDIR);
-        $upload->savePath = Constant::$DEFAULT_UPLOADFILE_TEMPDIR;
+        $UPLOAD_PATH_TYPE_T = Constant::$UPLOAD_PATH.Constant::$PATH_X.Constant::$UPLOAD_TYPE_T.Constant::$PATH_X;
+        mkdirs(Constant::$PATH_D.$UPLOAD_PATH_TYPE_T);
+        $upload->savePath = Constant::$PATH_D.$UPLOAD_PATH_TYPE_T;
         $upload->imageClassPath = '@.ORG.Image';
         $upload->saveRule = 'uniqid';
         $upload->thumbRemoveOrigin = false;
@@ -62,34 +65,28 @@ class MediasAction extends Action {
             $this->error($upload->getErrorMsg());
         } else {
             $uploadList = $upload->getUploadFileInfo();
-            import("@.ORG.Image");
-            $_POST ['filename'] = $uploadList [0] ['savename'];
-            $_POST ['filetype'] = $uploadList [0] ['extension'];
-            $_POST ['filetitle'] = $uploadList [0] ['name'];
-        }
+            $savename = $uploadList [0] ['savename'];
+            $extension = $uploadList [0] ['extension'];
+            $name = $uploadList [0] ['name'];
 
-        $MessageArray = Results::$MessageArray;
-        if ($result) {
+            $MessageArray['fileurl'] = getRemoteURL1() . $UPLOAD_PATH_TYPE_T . $savename;
+            $MessageArray['filename'] = $savename;
+            $MessageArray['filetype'] = $extension;
+            $MessageArray['filetime'] = date("Y年m月d日", time());
+            if($extension == "mp3" || $extension == "wma"){
+                $filesize=abs(filesize($UPLOAD_PATH_TYPE_T . $savename));
+                $MessageArray['filesize'] = $filesize."KB";
+            }else{
+                list($width, $height, $type, $attr) = getimagesize(Constant::$PATH_D.$UPLOAD_PATH_TYPE_T . $savename);
+                $MessageArray['filesize'] = $width . "×" . $height;
+            }
+            list($filetitle, $filejp) = split("[.]",$name);
+            $MessageArray['filetitle'] = $filetitle;
+
             $MessageArray['statusCode'] = Results::$STATUSCODE_OK;
             $MessageArray['message'] = Results::$MESSAGE_OK;
+
         }
-
-        $filetype = $_POST ['filetype'];
-        $MessageArray['fileurl'] = getRemoteURL1() . Constant::$DEFAULT_UPLOADFILE_TEMPDIR_URL . $_POST['filename'];
-        $MessageArray['filename'] = $_POST['filename'];
-        $MessageArray['filetype'] = $filetype;
-        $MessageArray['filetime'] = date("Y年m月d日", time());
-        if($filetype == "mp3" || $filetype == "wma"){
-            $filesize=abs(filesize(Constant::$DEFAULT_UPLOADFILE_TEMPDIR . $_POST['filename']));
-            $MessageArray['filesize'] = $filesize."KB";
-        }else{
-            list($width, $height, $type, $attr) = getimagesize(Constant::$DEFAULT_UPLOADFILE_TEMPDIR . $_POST['filename']);
-             $MessageArray['filesize'] = $width . "×" . $height;
-        }
-        list($filetitle, $filejp) = split("[.]", $_POST['filetitle']);
-        $MessageArray['filetitle'] = $filetitle;
-
-
         $json_string = json_encode($MessageArray);
         echo $json_string;
     }
@@ -99,7 +96,7 @@ class MediasAction extends Action {
         $MessageArray = Results::$MessageArray;
 
         $fileUrl = $_POST['fileUrl'];
-        $deletefle = str_replace(getRemoteURL(), ".", $fileUrl);
+        $deletefle = str_replace(getRemoteURL1(), ".", $fileUrl);
         if (file_exists($deletefle)) {
             $IS_DELETE = unlink($deletefle);
             if ($IS_DELETE) {
@@ -124,26 +121,29 @@ class MediasAction extends Action {
         $filename = $_POST['filename'];
         $filetype = $_POST['filetype'];
         if (!empty($filename)) {
-            $savePath = Constant::$DEFAULT_UPLOADFILE_DIR;
-            $urlPath = Constant::$DEFAULT_UPLOADFILE;
-            if($filetype == "mp3" || $filetype == "wma"){
-                $savePath = Constant::$DEFAULT_UPLOADFILE_AUDIO_DIR;
-                $urlPath = Constant::$DEFAULT_UPLOADFILE_AUDIO;
+            if($filetype == "jpg" || $filetype == "gif" || $filetype == "png" || $filetype == "jpeg"){
+                $UPLOAD_TYPE = Constant::$UPLOAD_TYPE_I;
+            }else if($filetype == "mp3" || $filetype == "wma"){
+                $UPLOAD_TYPE = Constant::$UPLOAD_TYPE_A;
             }else if($filetype == "swf" || $filetype == "flv"){
-                $savePath = Constant::$DEFAULT_UPLOADFILE_VIEDO_DIR;
-                $urlPath = Constant::$DEFAULT_UPLOADFILE_VIEDO;
+                $UPLOAD_TYPE = Constant::$UPLOAD_TYPE_M;
             }
-            mkdirs($savePath);
-            $IS_RENAME = rename(Constant::$DEFAULT_UPLOADFILE_TEMPDIR . $filename, $savePath . $filename);
-            if ($IS_RENAME) {
-                $Medias = D('Medias');
-                $data = $Medias->create();
-                $data['url'] = getRemoteURL() . $urlPath. $filename;
-                if ($data) {
-                    $result = $Medias->add($data);
-                    $MessageArray['resultId'] = reset(explode(".", $filename));
-                    if ($result) {
-                        $MessageArray['status'] = true;
+            if(!empty($UPLOAD_TYPE)){
+                $UPLOAD_PATH_TYPE_T = Constant::$PATH_D.Constant::$UPLOAD_PATH.Constant::$PATH_X.Constant::$UPLOAD_TYPE_T.Constant::$PATH_X;
+                $savePath =Constant::$UPLOAD_PATH.Constant::$PATH_X.$UPLOAD_TYPE.Constant::$PATH_X;
+                $urlPath = $savePath;
+                mkdirs(Constant::$PATH_D.$savePath);
+                $IS_RENAME = rename($UPLOAD_PATH_TYPE_T . $filename,  Constant::$PATH_D.$savePath . $filename);
+                if ($IS_RENAME) {
+                    $Medias = D('Medias');
+                    $data = $Medias->create();
+                    $data['url'] = getRemoteURL() . $urlPath. $filename;
+                    if ($data) {
+                        $result = $Medias->add($data);
+                        $MessageArray['resultId'] = reset(explode(".", $filename));
+                        if ($result) {
+                            $MessageArray['status'] = true;
+                        }
                     }
                 }
             }
@@ -170,6 +170,34 @@ class MediasAction extends Action {
             $MessageArray['statusCode'] = Results::$STATUSCODE_OK;
             $MessageArray['message'] = Results::$MESSAGE_OK;
         }
+
+        $json_string = json_encode($MessageArray);
+        echo $json_string;
+    }
+
+    public function deleteAll(){
+        import("@.ORG.Results");
+        $MessageArray = Results::$MessageArray;
+
+        $selectIdx =  $this->_post("selectIdx");
+        foreach($selectIdx as $id){
+            $Medias = M('Medias');
+            $data = $Medias->find($id);
+            if ($data) {
+                $list = $Medias->delete($id);
+                $deletefle = str_replace(getRemoteURL(), ".", $data['url']);
+                if (file_exists($deletefle)) {
+                    unlink($deletefle);
+                }
+                /*if ($list !== false) {
+                    $MessageArray['statusCode'] = Results::$STATUSCODE_OK;
+                    $MessageArray['message'] = Results::$MESSAGE_OK;
+                }*/
+            }
+        }
+
+        $MessageArray['statusCode'] = Results::$STATUSCODE_OK;
+        $MessageArray['message'] = Results::$MESSAGE_OK;
 
         $json_string = json_encode($MessageArray);
         echo $json_string;
