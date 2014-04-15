@@ -383,7 +383,7 @@ label.alt {display:block; overflow:hidden; position:absolute;line-height:20px}
 .nowrap span.error{position: static;}
 
 /* Button */
-.button, .buttonActive, .buttonDisabled { float:left; display:block; overflow:hidden; height:25px; padding-left:5px;}
+.button, .buttonActive, .buttonDisabled { /* float:left; */ display:block; overflow:hidden; height:25px; padding-left:5px;}
 
 .button span, .buttonDisabled span, .buttonActive span,
 .button .buttonContent, .buttonHover, .buttonHover .buttonContent,
