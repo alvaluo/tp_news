@@ -4,7 +4,7 @@ class CategoryModel extends Model {
 
     protected $trueTableName = 'category';
     protected $fields = array(
-        'id', 'pid', 'name', 'open ','status','createtime'
+        'id', 'pid', 'name', 'open','status','createtime'
     );
     protected $_validate = array(
     );

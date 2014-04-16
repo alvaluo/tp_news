@@ -97,7 +97,9 @@ class NewsAction extends Action{
     public function editCategory(){
         $Category = M('Category');
     	$data = $Category->where()->select();
+    	$maxId = $Category->max('id');
         $this->data = $data;
+        $this->maxId = $maxId;
         $this->display();
     }
     
@@ -106,16 +108,18 @@ class NewsAction extends Action{
     	$MessageArray = Results::$MessageArray;
         
         $line_data = $this->_request("line_data");
-        $Category = M('Category');
+        $Category = D('Category');
         foreach($line_data as $line){
-            $ld = split("[_]",$line);
-            $data['id'] =  $ld[0];
-            $data['pid'] = $ld[1];
-            $data['status'] = $ld[2];
-            $data['open'] = $ld[3];
-            $data['name'] = $ld[4];
-            $data['date'] = date("Y-m-d H:i:s", time());
-            $IS_TRUE = $Category->find($data['id']);
+        	$ld = split("[_]",$line);
+        	$data['id'] =  $ld[0];
+        	$IS_TRUE = $Category->find($data['id']);
+        	if(!$IS_TRUE){
+        		$data = $Category->create();
+        	}
+        	$data['pid'] = $ld[1];
+        	$data['status'] = $ld[2];
+        	$data['open'] = $ld[3];
+        	$data['name'] = $ld[4];
             if($IS_TRUE){
                 $result = $Category->save($data);
             }else{
