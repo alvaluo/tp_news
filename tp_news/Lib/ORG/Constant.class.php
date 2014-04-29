@@ -10,6 +10,14 @@ class Constant extends Think {
 	public static  $DEFAULT_UPLOADFILE_AUDIO_DIR = "./Uploads/audio/";
         public static  $DEFAULT_UPLOADFILE_VIEDO = "/Uploads/viedo/";
 	public static  $DEFAULT_UPLOADFILE_VIEDO_DIR = "./Uploads/viedo/";
+
+    public static $PATH_D = ".";
+    public static $PATH_X = "/";
+    public static $UPLOAD_PATH = "/Uploads";
+    public static $UPLOAD_TYPE_T = "T";
+    public static $UPLOAD_TYPE_I = "I";
+    public static $UPLOAD_TYPE_M = "M";
+    public static $UPLOAD_TYPE_A = "A";
   
 }
 ?>

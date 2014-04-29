@@ -111,3 +111,9 @@ function mkdirs($dir)
     }
     return true;
 }
+function getMediaTypePath($type,$filename){
+    import("@.ORG.Constant");
+    if($type == "jpg" || $type == "gif" || $type == "png" || $type == "jpeg"){
+        Constant::$DEFAULT_UPLOADFILE_TEMPDIR;
+    }
+}

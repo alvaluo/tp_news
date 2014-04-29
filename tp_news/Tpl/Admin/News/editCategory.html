@@ -1,0 +1,110 @@
+<div class="pageContent">
+	<form id="cateoryForm" method="post" action="__APP__/Admin/News/updateCateory" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone);">
+        </form>
+	<div class="pageFormContent" layoutH="58">
+                <ul id="ztreeCategory" class="ztree"></ul>
+	</div>
+	<div class="formBar">
+		<ul>
+                    <li><div class="buttonActive"><div class="buttonContent"><button type="button" onclick="subEditCategory();">保存</button></div></div></li>
+			<li><div class="button"><div class="buttonContent"><button class="close" type="button">关闭</button></div></div></li>
+		</ul>
+	</div>
+</div>
+<script type="text/javascript">
+var setting = {
+    view: {
+            addHoverDom: addHoverDom,
+            removeHoverDom: removeHoverDom,
+            selectedMulti: false
+    },
+    edit: {
+            enable: true,
+            editNameSelectAll: true,
+            showRemoveBtn: true,
+            showRenameBtn: true
+    },
+    check: {
+            enable: true
+    },
+    data: {
+            simpleData: {
+                    enable: true
+            }
+    },
+    callback: {
+            beforeRemove: beforeRemove,
+            beforeRename: beforeRename
+    }
+};
+var zNodes = [];
+zNodes.push({ id:0, pId:0, name:"默认分类", open:true, iconSkin:"pIcon01"});
+<volist name="data" id="dataNodes" mod="5">
+zNodes.push({
+    id:"{$dataNodes.id}",
+    pId:"{$dataNodes.pid}", 
+    name:"{$dataNodes.name}", 
+    checked:<if condition="($dataNodes.status eq 1)">true<else />false</if>,
+    open:<if condition="($dataNodes.open eq 1)">true<else />false</if>
+});
+</volist>
+var log, className = "dark";
+function beforeRemove(treeId, treeNode) {
+        className = (className === "dark" ? "":"dark");
+        var zTree = $.fn.zTree.getZTreeObj("ztreeCategory");
+        zTree.selectNode(treeNode);
+        return confirm("确认删除分类【" + treeNode.name + "】 吗？");
+}
+function beforeRename(treeId, treeNode, newName, isCancel) {
+        className = (className === "dark" ? "":"dark");
+        if (newName.length == 0) {
+                alert("节点名称不能为空.");
+                var zTree = $.fn.zTree.getZTreeObj("ztreeCategory");
+                setTimeout(function(){zTree.editName(treeNode)}, 10);
+                return false;
+        }
+        return true;
+}
+var newCount = "{$maxId}";
+function addHoverDom(treeId, treeNode) {
+        var sObj = $("#" + treeNode.tId + "_span");
+        if (treeNode.editNameFlag || $("#addBtn_"+treeNode.tId).length>0) return;
+        var addStr = "<span class='button add' id='addBtn_" + treeNode.tId
+                + "' title='add node' onfocus='this.blur();'></span>";
+        sObj.after(addStr);
+        var btn = $("#addBtn_"+treeNode.tId);
+        if (btn) btn.bind("click", function(){
+                var zTree = $.fn.zTree.getZTreeObj("ztreeCategory");
+                zTree.addNodes(treeNode, {id:(1 + newCount), pId:treeNode.id, name:"新分类" + (newCount++)});
+                return false;
+        });
+};
+function removeHoverDom(treeId, treeNode) {
+	$("#addBtn_"+treeNode.tId).unbind().remove();
+};
+function subEditCategory(){
+    var treeObj = $.fn.zTree.getZTreeObj("ztreeCategory");
+    var nodes = treeObj.transformToArray(treeObj.getNodes());
+    var form = $('<form></form>');
+    form.attr('action', '__APP__/Admin/News/updateCateory');
+    form.attr('method', 'post');
+    $.each(nodes,function(idx){
+    	var id = nodes[idx].id;
+    	if(id != 0){
+    		var pid = nodes[idx].pId == null ? 0 : nodes[idx].pId;
+            var checked = nodes[idx].checked ? 1 : 0;
+            var open = nodes[idx].open ? 1 : 0;
+            var data_val = id+"_"+pid+"_"+checked+"_"+open+"_"+nodes[idx].name;
+            var my_input = $('<input type="text" name="line_data[]" value="'+data_val+'" />');
+            form.append(my_input);
+    	}
+    })
+    $(form).ajaxSubmit(function(returnData) {
+    });
+    return false;
+}
+
+$(document).ready(function(){
+        $.fn.zTree.init($("#ztreeCategory"), setting, zNodes);
+});
+</script>

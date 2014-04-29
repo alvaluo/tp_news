@@ -3,11 +3,13 @@
     <input type="hidden" name="numPerPage" value="{$numPerPage}" />
 </form>
 <div class="page">
-    <div class="pageContent">
+    <div class="pageContent" id="mediasList">
+        <form id="mediaListForm" method="post" action="__APP__/admin/medias/deleteAll">
         <div class="panelBar">
             <ul class="toolBar">
                 <li><a class="add" href="__APP__/admin/medias/edit/navtab/{$_GET['navtab']}" target="navTab" rel="editMedias"><span>添加媒体</span></a></li>
-                <li><a class="delete" href="__APP__/admin/medias/delete/id/{sid_mediaid}" target="ajaxTodo" title="确定要删除吗?"><span>删除媒体</span></a></li>
+                <!--<li><a class="delete" href="__APP__/admin/medias/delete/id/{sid_mediaid}" target="ajaxTodo" title="确定要删除吗?"><span>删除媒体</span></a></li>-->
+                <li><a class="delete" href="javascript:deleteAll();"><span>删除媒体</span></a></li>
                 <li><a class="edit" href="__APP__/admin/Users/edit/id/{sid_userid}" target="dialog"  rel="dlg_Add" mask="true" width="520" height="320"><span>修改媒体</span></a></li>
             </ul>
         </div>
@@ -15,6 +17,7 @@
             <thead>
                 <tr>
                     <th width="50"></th>
+                    <th width="30"><input type="checkbox" onclick="selectIdxFun(this);"/></th>
                     <th width="150">名称</th>
                     <th width="120">标题</th>
                     <th >说明</th>
@@ -26,6 +29,7 @@
             <volist name="data" id="vo" mod="5">
                 <tr target="sid_mediaid" rel="{$vo.id}">
                     <td>{$i}</td>
+                    <td><input type="checkbox" name="selectIdx[]" value="{$vo.id}"/></td>
                     <td><a href="__APP__/Admin/Medias/view/id/{$vo.id}" target="dialog" rel="dlg_page12" mask="true" maxable="false" minable="false" resizable="false" width="600" height="400">{$vo.filename}</a></td>
                     <td>{$vo.title}</td>
                     <td>{$vo.explain}</td>
@@ -51,8 +55,21 @@
             <div class="pagination" targetType="navTab" totalCount="{$totalPages}" numPerPage="1" pageNumShown="10" currentPage="{$pageNum}"></div>
 
         </div>
+        </form>
     </div>
 </div>
 <script type="text/javascript">
-    $("#numPerPage option[value='{$numPerPage}']").attr("selected", true);
+$("#numPerPage option[value='{$numPerPage}']").attr("selected", true);
+function deleteAll(){
+    alertMsg.confirm("确定要删除吗?", {
+        okCall: function(){
+            $("#mediaListForm").ajaxSubmit(function(returnData) {
+                navTab.reloadFlag("{$_GET['navtab']}");
+            });
+        }
+    });
+}
+function selectIdxFun(thiz){
+    $("#mediasList input[type='checkbox']").attr("checked",thiz.checked);
+}
 </script>
