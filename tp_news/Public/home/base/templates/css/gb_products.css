@@ -1,0 +1,248 @@
+@charset "utf-8";
+
+/*
+ * @Project: goubuy - GBproducts
+ * @Version: 1.0
+ * @Last time: 2012-05-16
+ * @Author: goubuy - zhou
+ */
+
+/* 全局CSS定义 */
+body{background:url(../images/products/top_bg.gif) repeat-x top; font-family: Verdana, Arial, Helvetica, sans-serif; font-size:12px; margin:0px; padding:0px; border:0;}
+div,p,form,img,ul,ol,li,dl,dt,dd {margin:0px; padding:0px; border:0; }
+h1,h2,h3,h4,h5,h6 {margin:0; padding:0; font-size:12px; font-weight:normal;}
+li { list-style-type:none;}
+
+.content{ width:960px; margin:auto;}
+.wrap { width:960px; margin:auto}
+.clear { clear:both}
+
+/*　空白间距 */
+.blank10{ height:10px; font-size:1px; width:100%; overflow:hidden;}
+.blank15{ height:15px; font-size:1px; width:100%; overflow:hidden;}
+
+/* 链接颜色 */
+a:link {color: #000000; text-decoration:none;}
+a:visited {color: #000000;text-decoration:none;}
+a:hover {color: #ff6600; text-decoration:underline; }
+
+/* 字体大小 */
+.font12{ font-size:12px;}
+.font14{ font-size:14px;}
+.B_font14{ font-size:14px; font-weight:bold;}
+.font16{ font-size:16px;}
+
+/* 颜色 */
+.cBlack { color:#000000;}
+.cBlack a:link{ color:#000000;}
+.cBlack a:visited{color:#000000;}
+
+.cDred { color:#993300;}
+.cDred a:link{ color:#993300;}
+.cDred a:visited{color:#993300;}
+
+
+
+/* 页头 */
+.top{ width:960px; height:97px;}
+.top_logo{ float:left; width:300px; text-align:left;}
+.top_right{ float:right; width:300px; text-align:right; padding:10px;}
+.top_right p{ padding:10px;}
+
+
+
+/* 导航 */
+.navigation { height:54px;}
+.navigation li { float:left; }
+.nav_Text{ font-size:14px; line-height:38px; color:#000; width:85px; text-align:center; height:54px;}
+.nav_Text a:link {color: #000; text-decoration:none;}
+.nav_Text a:visited {color: #000;text-decoration:none;}
+.nav_Text a:hover {color: #000; text-decoration:none;}
+.navigation .nav_yes { background:url(../images/products/nav_yes.gif) no-repeat; font-size:14px; font-weight:bold; line-height:38px; width:85px; color:#005ab7;text-align:center; }
+.navigation .nav_yes a:link {color:#005ab7; text-decoration:none;}
+.navigation .nav_yes a:visited {color:#005ab7;text-decoration:none;}
+.navigation .nav_yes a:hover {color:#005ab7; text-decoration:none;}
+
+.nav_Blank{ width:17px; height:54px;}
+
+
+
+/*内容页结构*/
+.Lbox{ float:left; width:246px; text-align:center;}
+.Rbox{ float:right; width:695px; text-align:center;}
+
+/*子菜单*/
+.subNav{}
+.subNav li{ border:#eeeeee 1px solid; border-top:none; text-align:left; line-height:42px; padding-left:25px; font-size:14px;}
+
+/*服务热线*/
+.serviceHotline{}
+.serviceHoline_box{ border:#eeeeee 1px solid; border-top:none; padding:5px 10px;}
+.serviceHotline_UL{ padding:5px 0px;}
+.serviceHotline_UL li{ float:left; text-align:left; width:105px; line-height:30px;}
+
+
+
+
+/*内容页主题标题*/
+.title{ background:url(../images/products/title_bg.gif) repeat-x; width:695px; height:70px;}
+.title_L{ float:left; width:180px; text-align:left;}
+.title_R{ float:right; width:250px; text-align:right; padding-top:45px;}
+
+/*页脚*/
+.footer{ background:url(../images/products/footer_bg.gif) repeat-x; border:1px solid #e4e4e4; margin:10px auto; height:36px; line-height:36px; color:#999999; text-align:center;}
+
+
+
+
+
+/* -------------- 首页 -------------*/
+
+
+/*滚动图片*/
+.ScrollImage{ background:url(../images/products/gundong.gif) no-repeat; padding:12px 0px 0px 0px; width:960px; height:162px;}
+#demo {overflow:hidden; width: 885px; margin:0px auto;}
+#indemo { float: left; width: 800%; margin-left:18px;}
+#demo1 {float: left;}
+#demo1 img{ margin-left:18px;}
+#demo2 {float: left;}
+#demo2  img{ margin-left:18px;}
+
+/*公司简介*/
+.I_companyProfile{ float:left; width:357px;}
+.I_companyProfile_box{ padding:10px;}
+.I_companyProfile_box p{ line-height:24px; text-align:left;}
+
+/*解决方案*/
+.I_solution{ float:left; width:358px;}
+.I_solution ul{ padding:10px;}
+.I_solution  ul li{ background:url(../images/products/icon.gif) no-repeat 10px 8px; text-indent:30px; line-height:24px;}
+.I_solution p{ text-align:center; margin:10px auto;}
+
+/*联系我们*/
+.I_contactUs{ float:right; width:245px;}
+.I_contactUs p{ padding-top:5px;}
+.I_contactUs_UL{ padding:5px 10px; background:#f1f1f1;}
+.I_contactUs_UL li{ float:left; text-align:left; width:105px; line-height:30px;}
+
+
+
+
+/* 公司简介 */
+.companyProfile_box{ padding:10px 5px; text-align:left; font-size:14px; line-height:26px; }
+
+
+/* 企业资质 */
+.qualification_box{ padding:10px;}
+.qualification_box li{ float:left; margin-left:13px; font-size:14px; margin-bottom:10px;}
+.qualification_box li p{ line-height:40px;}
+.qualification_box li img{ padding:10px; border:1px solid #CCC; }
+
+
+/* 联系我们 */
+.contactUs_box{ padding:10px; text-align:left; font-size:14px; line-height:30px; }
+.contactUs_box h1{ font-weight:bold; font-size:14px; line-height:36px; }
+
+
+/* 硬件产品 */
+.hardware_box{ padding:10px;}
+.hardware_box li{ float:left; padding:10px 8px;font-size:14px;}
+.hardware_box li p{ line-height:36px;}
+.hardware_box li img{ padding:10px; border:1px solid #CCC; }
+
+
+/* 硬件产品详细页 */
+.hardwareInfo_box{ padding:10px;text-align:left}
+.hardwareInfo_box h1{ font-size:14px; text-align:left; line-height:30px;}
+.hardwareInfo_box h1 span{ font-weight:bold;}
+.caseInfo_box .casetitle {font-width:bold; font-size:24px; line-height:30px; text-align:center}
+.productImage{ margin:5px auto; width:538px; height:348px;}
+.hardwareInfo_box dl{ text-align:left; margin-top:15px;}
+.hardwareInfo_box dl dt{ font-size:14px; font-weight:bold; line-height:26px;}
+.hardwareInfo_box dl dd{ line-height:24px;}
+
+
+/* 资料下载 */
+.dataDownLoad_box{}
+.dataDownLoad_dl{ background:url(../images/products/DateDownload.png) no-repeat; width:695px; height:72px; margin:8px auto; }
+.dataDownLoad_Left{ float:left; width:450px; text-align:left; padding:8px 20px;}
+.dataDownLoad_Left h1{ font-size:14px; line-height:26px;}
+.dataDownLoad_Left p{ color:#666666; line-height:24px;}
+.dataDownLoad_right{ float:right; width:140px; text-align:left; padding:8px 20px;}
+.dataDownLoad_right h1{ font-size:14px; line-height:26px;}
+.dataDownLoad_right p{ color:#666666; line-height:24px;}
+
+
+/* 工程案例 */
+.case_box{ padding:10px;}
+.case_box li{ float:left;  padding:10px 8px; font-size:14px; }
+.case_box li p{ line-height:36px;}
+.case_box li img{ padding:10px; border:1px solid #CCC; }
+
+
+/* 工程案例详细 */
+.caseInfo_box{ padding:15px 20px;}
+.caseInfo_box img{ margin-bottom:15px;}
+.caseInfo_box h1{ font-size:14px; text-align:left; line-height:30px;}
+.caseInfo_box h1 span{ font-weight:bold;}
+.caseInfo_box p{ text-align:left; line-height:24px;}
+
+
+/* GPS解决方案 */
+.GPSsolution_box{ padding:10px;}
+.GPSsolution_box li{ float:left; font-size:14px; padding:10px 8px;}
+.GPSsolution_box li p{ line-height:36px;}
+.GPSsolution_box li img{ padding:10px; border:1px solid #CCC; }
+
+
+/* GPS解决方案详细 */
+.GPSsolutionInfo_box{ padding:10px;}
+.GPSsolutionInfo_box h1{font-size:14px; text-align:left; line-height:30px;}
+.GPSsolutionInfo_box h1 span{ font-weight:bold;}
+.GPSsolutionInfo_box p{ margin:10px auto;}
+
+
+/* 招商加盟 */
+.Join_box{ padding:10px; text-align:left; font-size:14px; line-height:30px; }
+.Join_box h1{ font-weight:bold; font-size:14px; line-height:36px; }
+
+
+
+
+
+
+
+
+
+
+
+
+/*banner*/
+body,h1,h2,h3,h4,h5,h6,p,ul,ol,li,form,img,dl,dt,dd,table,th,td,blockquote,fieldset,div,strong,label,em{margin:0;padding:0;border:0;}
+ul,ol,li{list-style:none;}
+input,button{margin:0;font-size:12px;vertical-align:middle;}
+body{font-size:12px;font-family:Arial, Helvetica, sans-serif; margin:0 auto;}
+
+a{color:#333;text-decoration:none;}
+a:hover{color:#ef9b11; text-decoration:underline;}
+
+.contentbox {MARGIN: 0px auto; WIDTH: 960px}
+.contentbox h4{ font-size:18px; font-weight:normal; text-align:center; padding:20px 0;}
+
+.ban {BACKGROUND: #e6e6e6; WIDTH: 960px; HEIGHT: 280px}
+.banajax {PADDING-RIGHT: 0px; PADDING-LEFT: 464px; PADDING-BOTTOM: 0px; MARGIN: 0px auto; PADDING-TOP: 124px}
+.ban1 {BORDER-TOP: #fff 1px solid; BACKGROUND: #e6e6e6; HEIGHT: 72px}
+.bansmall {PADDING-RIGHT: 10px; PADDING-LEFT: 0px; Z-INDEX: 2; PADDING-BOTTOM: 7px; MARGIN-LEFT: 10px; WIDTH: 930px; PADDING-TOP: 7px; POSITION: relative}
+.bansmall UL {Z-INDEX: 1; WIDTH: 940px; POSITION: relative; HEIGHT: 52px}
+.bansmall UL LI {FLOAT: left}
+.mainimg1 {BACKGROUND:url(../images/products/bangrey.jpg) no-repeat left 50%}
+.mainimg2 {BACKGROUND: url(../images/products/banblue.jpg) no-repeat left 50%}
+.mainimg2 A {COLOR: #fff}
+.bansmall UL LI A {PADDING-RIGHT: 5px; DISPLAY: block; PADDING-LEFT: 5px; PADDING-BOTTOM: 0px; WIDTH: 225px; PADDING-TOP: 0px; HEIGHT: 52px}
+.bansmall IMG {PADDING-RIGHT: 8px; PADDING-LEFT: 0px; FLOAT: left; PADDING-BOTTOM: 0px; PADDING-TOP: 6px}
+.bansmall SPAN {FLOAT: left; PADDING-TOP: 10px}
+.banscroll {BACKGROUND: url(../images/products/banscroll1.jpg) no-repeat center 50%; MARGIN: 0px auto; OVERFLOW: hidden; WIDTH: 956px; POSITION: relative}
+.bar {Z-INDEX: 1000; POSITION: relative}
+
+
+

@@ -11,7 +11,7 @@ return array (
 		'DB_HOST'   => 'localhost',
 		'DB_NAME'   => 'tp_news',
 		'DB_USER'   => 'root',
-		'DB_PWD'    => 'rootadmin',
+		'DB_PWD'    => 'Nathan168',
 		'DB_PORT'   => 3306,
 		'DB_PREFIX' => '',
 		

@@ -1,21 +1,10 @@
-
-
-
 //页面显示预设置
-
 $(document).ready(function() {
-
-
 	//当存在可溢出层时重新定义这些层的高度
-
 	var getObj = $('div.pdv_class');
 	getObj.each(function(id) {
-		
 		var obj = this.id;
-		
 		if($("#s"+obj)[0].style.overflow=="visible"){
-			
-			
 			//设置可溢出层的高度
 			$("#"+obj)[0].style.height=$("#s"+obj)[0].offsetHeight +"px"; 
 			
