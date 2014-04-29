@@ -32,7 +32,6 @@ class PagesAction extends Action{
 	
 	
 	public function edit() {
-		
 		$Pages = M('Pages');
 		$parentDataPage = $Pages -> where(array("parent"=>"0")) -> select();
 		$this -> parentDataPage = $parentDataPage;
@@ -43,8 +42,10 @@ class PagesAction extends Action{
 			if($data) {
 				$this->data = $data;
 			}
+		}else{
+			$data['url'] = getRemoteURL()."/index.php";
+			$this->data = $data;
 		}
-		
 		$this->display();
 	}
 	
