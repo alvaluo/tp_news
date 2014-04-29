@@ -8,7 +8,7 @@ class IndexAction extends Action {
 			$this->display('login');
 			return;
 		}
-		if(session('?CURRENT_USER')){
+		if(session('?__USERCONF')){
     		$this->display();
     		return;
     	}
@@ -42,7 +42,7 @@ class IndexAction extends Action {
 //     				Session::set('CURRENT_USER',$current_user);
     				//$lifeTime = 00.1 * 3600;   
     				//session_set_cookie_params($lifeTime);
-    				session('CURRENT_USER',$current_user);
+    				session('__USERCONF',$current_user);
     				$this->display();
     				return;
     			}
@@ -60,7 +60,7 @@ class IndexAction extends Action {
     
     public function exits() {
     	import('ORG.Util.Session');
-    	Session::clear ('CURRENT_USER');
+    	Session::clear ('__USERCONF');
     	$this->redirect('login');
     }
     

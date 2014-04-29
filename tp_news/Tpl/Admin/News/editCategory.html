@@ -15,6 +15,7 @@
 var setting = {
     view: {
             addHoverDom: addHoverDom,
+            removeHoverDom: removeHoverDom,
             selectedMulti: false
     },
     edit: {
@@ -56,7 +57,6 @@ function beforeRemove(treeId, treeNode) {
 }
 function beforeRename(treeId, treeNode, newName, isCancel) {
         className = (className === "dark" ? "":"dark");
-        showLog((isCancel ? "<span style='color:red'>":"") + "[ "+getTime()+" beforeRename ]&nbsp;&nbsp;&nbsp;&nbsp; " + treeNode.name + (isCancel ? "</span>":""));
         if (newName.length == 0) {
                 alert("节点名称不能为空.");
                 var zTree = $.fn.zTree.getZTreeObj("ztreeCategory");
@@ -78,6 +78,9 @@ function addHoverDom(treeId, treeNode) {
                 zTree.addNodes(treeNode, {id:(1 + newCount), pId:treeNode.id, name:"新分类" + (newCount++)});
                 return false;
         });
+};
+function removeHoverDom(treeId, treeNode) {
+	$("#addBtn_"+treeNode.tId).unbind().remove();
 };
 function subEditCategory(){
     var treeObj = $.fn.zTree.getZTreeObj("ztreeCategory");

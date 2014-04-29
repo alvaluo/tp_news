@@ -1,10 +1,10 @@
-<form id="pagerForm" method="post" action="__APP__/Admin/Enterprise/lists">
+<form id="pagerForm" method="post" action="__APP__/Admin/News/lists">
     <input type="hidden" name="pageNum" value="1" />
     <input type="hidden" name="numPerPage" value="{$numPerPage}" />
 </form>
 <div class="page">
     <div class="pageHeader">
-        <form onsubmit="return navTabSearch(this);" action="__APP__/Admin/Enterprise/lists" method="post">
+        <form onsubmit="return navTabSearch(this);" action="__APP__/Admin/News/lists" method="post">
             <div class="searchBar">
                 <table class="searchContent">
                     <tr>
@@ -25,40 +25,35 @@
     <div class="pageContent">
         <div class="panelBar">
             <ul class="toolBar">
-                <li><a class="add" href="__APP__/Admin/Enterprise/edit" target="navTab" rel="editEnterprise"><span>添加新闻</span></a></li>
-                <li><a class="delete" href="__APP__/Admin/Enterprise/delete/id/{sid_enterpriseid}" target="ajaxTodo" title="确定要删除吗?"><span>删除新闻</span></a></li>
-                <li><a class="edit" href="__APP__/Admin/Enterprise/edit/id/{sid_enterpriseid}" target="navTab" rel="editEnterprise"><span>修改新闻</span></a></li>
+                <li><a class="add" href="__APP__/Admin/News/edit/navtab/{$_GET['navtab']}" target="navTab" rel="editEnterprise"><span>添加新闻</span></a></li>
+                <li><a class="delete" href="__APP__/Admin/News/delete/id/{sid_newsid}" target="ajaxTodo" title="确定要删除吗?"><span>删除新闻</span></a></li>
+                <li><a class="edit" href="__APP__/Admin/News/edit/navtab/{$_GET['navtab']}/id/{sid_newsid}" target="navTab" rel="editEnterprise"><span>修改新闻</span></a></li>
                 <li class="line">line</li>
                 <li><a class="add" href="__APP__/Admin/News/editCategory" target="dialog" width="350" height="400" mixable="false" minable="false" resizable="false" mask="true"><span>编辑分类</span></a></li>
-<!--                <li><a class="add" href="__APP__/Admin/Rules/editModule" target="dialog" width="520" height="230" mixable="false" minable="false" resizable="false" mask="true"><span>添加分类</span></a></li>
-                <li><a class="delete" href="__APP__/Admin/Rules/deleteModule/id/{sid_moduleid}" target="ajaxTodo" title="确定要删除吗?"><span>删除分类</span></a></li>
-                <li><a class="edit" href="__APP__/Admin/Rules/editModule/id/{sid_moduleid}"  target="dialog" width="520" height="230" mixable="false" minable="false" resizable="false" mask="true"><span>修改分类</span></a></li>-->
+                <li class="line">line</li>
+                <li><a class="add" href="__APP__/Admin/News/edit" target="navTab" rel="editEnterprise"><span>预览</span></a></li>
             </ul>
         </div>
-        <table class="table" layouth="112" >
+        <table class="table" width="100%" layouth="112" >
             <thead>
                 <tr>
                     <th width="80">序列</th>
-                    <th width="120">企业名称</th>
-                    <th width="150">英文名称</th>
-                    <th width="150">企业性质</th>
-                    <th width="150">企业类别</th>
-                    <th width="150">通信地址</th>
-                    <th width="150">法人代表</th>
-                    <th width="150">联系电话</th>
+                    <th >新闻标题</th>
+                    <th width="100">状态</th>
+                    <th width="100">分类</th>
+                    <th width="120">创建者</th>
+                    <th width="150">创建时间</th>
                 </tr>
             </thead>
             <tbody>
-            <volist name="data" id="enterprise" mod="5">
-                <tr target="sid_enterpriseid" rel="{$enterprise.id}">
+            <volist name="data" id="news" mod="5">
+                <tr target="sid_newsid" rel="{$news.id}">
                     <td>{$i}</td>
-                    <td>{$enterprise.companyname}</td>
-                    <td>{$enterprise.englishname}</td>
-                    <td>{$enterprise.companynature}</td>
-                    <td>{$enterprise.companytype}</td>
-                    <td>{$enterprise.address}</td>
-                    <td>{$enterprise.regname}</td>
-                    <td>{$enterprise.phone}</td>
+                    <td>{$news.title}</td>
+                    <td><if condition="($news.status eq 0)">编辑<else />发布</if></td>
+                    <td>{$news.categoryname}</td>
+                    <td>{$news.author}</td>
+                    <td>{$news.createtime}</td>
                 </tr>
             </volist>
             </tbody>

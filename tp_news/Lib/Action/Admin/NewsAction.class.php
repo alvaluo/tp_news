@@ -8,8 +8,8 @@ class NewsAction extends Action{
     		$this->companyname = $companyname;
     		$map['companyname'] = array('like','%'.$companyname.'%');
     	}
-    	$Enterprise = M('Enterprise');
-    	$count = $Enterprise->where($map) -> count();
+    	$News = M('News');
+    	$count = $News->where($map) -> count();
     	
     	//import default page size
     	import("@.ORG.Constant");
@@ -23,7 +23,9 @@ class NewsAction extends Action{
     	$pageNum = isset($_POST['pageNum'])?$_POST['pageNum']:1;
     	$this->pageNum = $pageNum;
     	
-    	$data = $Enterprise->where($map) -> order('createtime desc') -> page($pageNum.','.$Page->listRows) -> select();
+    	$data = $News ->field('ns.*,cat.name as categoryname')
+    	-> table('news ns left join category cat on cat.id = ns.categoryid')
+    	->where($map) -> order('createtime desc') -> page($pageNum.','.$Page->listRows) -> select();
 
     	$this->totalRows = $Page->totalRows;
     	$this->totalPages = $Page->totalPages;
@@ -32,14 +34,19 @@ class NewsAction extends Action{
     }
     
     public function edit() {
+    	$Category = M('Category');
+    	$CategoryData = $Category->where()->select();
+    	$this->CategoryData = $CategoryData;
+    	
     	$id = $_GET['id'];
+    	$News = M('News');
     	if(!empty($id)){
-    		$Enterprise = M('Enterprise');
-    		$data =   $Enterprise->find($id);
+    		$data =   $News->find($id);
     		if($data) {
     			$this->data = $data;
     		}
     	}
+    	
     	$this->display();
     }
     
@@ -49,24 +56,26 @@ class NewsAction extends Action{
     	$MessageArray = Results::$MessageArray;
     	$id = $_POST['id'];
     	 
-    	$Enterprise = D('Enterprise');
+    	$News = D('News');
     	if(empty($id)){
-    		if ($vo = $Enterprise->create()) {
-    			$list = $Enterprise->add();
+    		if ($vo = $News->create()) {
+    			$list = $News->add();
     			if ($list !== false) {
-    				$MessageArray['statusCode'] = 200;
-    				$MessageArray['message'] = "操作成功!";
+    				$MessageArray['statusCode'] = Results::$STATUSCODE_OK;
+    				$MessageArray['message'] = Results::$MESSAGE_OK;
     				$MessageArray['callbackType'] = "closeCurrent";
+    				$MessageArray['navTabId'] = $_REQUEST['navtab'];
     			}
     		}
     	}else{
-    		$data = $Enterprise->create();
+    		$data = $News->create();
 			if($data) {
-				$result = $Enterprise->save($data);
+				$result = $News->save($data);
 				if($result) {
-					$MessageArray['statusCode'] = 200;
-					$MessageArray['message'] = "操作成功!";
+					$MessageArray['statusCode'] = Results::$STATUSCODE_OK;
+            		$MessageArray['message'] = Results::$MESSAGE_OK;
 					$MessageArray['callbackType'] = "closeCurrent";
+					$MessageArray['navTabId'] = $_REQUEST['navtab'];
 				}
 			}
     	}
@@ -82,11 +91,11 @@ class NewsAction extends Action{
     	 
     	$id = $_GET['id'];
     	 
-    	$Enterprise = M('Enterprise');
-    	$list = $Enterprise->delete($id);
+    	$News = M('News');
+    	$list = $News->delete($id);
     	if ($list !== false) {
-    		$MessageArray['statusCode'] = 200;
-    		$MessageArray['message'] = "操作成功!";
+    		$MessageArray['statusCode'] = Results::$STATUSCODE_OK;
+            $MessageArray['message'] = Results::$MESSAGE_OK;
     	}
     	 
     	$json_string = json_encode($MessageArray);
