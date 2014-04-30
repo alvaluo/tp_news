@@ -3,13 +3,18 @@ class NewsAction extends Action{
 	
   public function lists() {
     	$map = null;
-    	$companyname = $_POST['companyname'];
-    	if(!empty($companyname)){
-    		$this->companyname = $companyname;
-    		$map['companyname'] = array('like','%'.$companyname.'%');
+    	$title = $_POST['title'];
+    	if(!empty($title)){
+    		$this->title = $title;
+    		$map['ns.title'] = array('like','%'.$title.'%');
+    	}
+    	$createtime = $_POST['createtime'];
+    	if(!empty($createtime)){
+    		$this->createtime = $createtime;
+    		$map['ns.createtime'] = array('like',$createtime.'%');
     	}
     	$News = M('News');
-    	$count = $News->where($map) -> count();
+    	$count = $News->field('ns.*')->where($map) -> count();
     	
     	//import default page size
     	import("@.ORG.Constant");
@@ -26,7 +31,7 @@ class NewsAction extends Action{
     	$data = $News ->field('ns.*,cat.name as categoryname')
     	-> table('news ns left join category cat on cat.id = ns.categoryid')
     	->where($map) -> order('createtime desc') -> page($pageNum.','.$Page->listRows) -> select();
-
+    	
     	$this->totalRows = $Page->totalRows;
     	$this->totalPages = $Page->totalPages;
     	$this->data = $data;

@@ -53,7 +53,11 @@ function webInfo($field){
 	$Enterprise = M('Enterprise');
 	$data = $Enterprise -> where(array("type"=>1)) -> select();
 	$field = $data[0][$field];
-// 	$field = msubstr($field, 0,180);
+	return $field;
+}
+function webInfoSplit($field,$start,$end){
+	$field = webInfo($field);
+	$field = msubstr($field, $start,$end);
 	return $field;
 }
 /**
