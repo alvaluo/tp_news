@@ -3,66 +3,63 @@ class IndexAction extends Action {
 	
     public function index(){
     	import('ORG.Util.Session');
-//     	if(Session::is_set('CURRENT_USER')){
-		if(Session::isExpired()){
-			$this->display('login');
-			return;
-		}
-		if(session('?__USERCONF')){
+    	if(session('?__USERCONF')){
     		$this->display();
+    		return;
+    	}
+    	$CK_USER = cookie('user');
+    	if(!empty($CK_USER)){
+    		$log = $CK_USER['username'];
+    		$pwd = $CK_USER['password'];
+    		$userData = getUser($log, $pwd);
+    		$ruleTag = getIndexModules($userData['mid']);
+    		setDataForSession($userData, $ruleTag);
+    		$this->display();
+    		return;
+    	}
+    	$this->redirect('login');
+    }
+    
+    public function login(){
+    	import('ORG.Util.Session');
+    	if(session('?__USERCONF')){
+    		$this->redirect('index');
+    		return;
+    	}
+    	$CK_USER = cookie('user');
+    	if(!empty($CK_USER)){
+    		$this->redirect('index');
     		return;
     	}
     	$log = $_POST['log'];
     	$pwd = $_POST['pwd'];
-    	if(!empty($log) && !empty($pwd)){
-    		$msg = L('LOGIN_NULL_LOG_PWD');
-    		$Users = M('Users');
-    		$map['username']  = $log;
-    		$data = $Users ->field('u.*,r.rolename,r.mid')
-    			-> table('users u')->join('roles r on u.roleid = r.id')
-    			-> where($map) -> find();
-    		if($data && strcmp(md5($pwd),$data['password'])==0) {
-    			if($data['locked'] == 0){
-    				$this->login_msg = L('LOGIN_LOCKED_LOG_PWD');
-    			}else{
-    				//Save db logs
-    				$Logs = D('Logs');
-    				$dataLog = $Logs->create();
-    				$dataLog['username'] = $log;
-    				$dataLog['ip'] = get_client_ip();
-    				$dataLog['agent']= $_SERVER['HTTP_USER_AGENT'];
-    				$dataLog['comment']= 'Login';
-    				$Logs->add($dataLog);
-    				//Rule
-    				$mid = $data['mid'];
-    				$ruleTag = getIndexModules($mid);
-    				//Save to session
-    				$current_user['user'] = $data;
-    				$current_user['ruleTag'] = $ruleTag;
-//     				Session::set('CURRENT_USER',$current_user);
-    				//$lifeTime = 00.1 * 3600;   
-    				//session_set_cookie_params($lifeTime);
-    				session('__USERCONF',$current_user);
-    				$this->display();
-    				return;
-    			}
+    	$rememberLogin = $_POST['rememberLogin'];
+    	$userData = getUser($log, md5($pwd));
+    	if(!empty($userData)){
+    		if($userData['locked'] == 0){
+    			$this->login_msg = L('LOGIN_LOCKED_LOG_PWD');
     		}else{
-    			$this->login_msg = $msg;
+    			setLog($log, 'Login');
+    			$ruleTag = getIndexModules($userData['mid']);
+    			setDataForSession($userData, $ruleTag);
+    			if(!empty($rememberLogin)){
+    				cookie('user',$userData,7*24*60*60);
+    			}
+    			$this->redirect('index');
+    			return;
     		}
-    		
+    	}else if(!empty($log) && !empty($pwd)){
+    		$this->login_msg = L('LOGIN_NULL_LOG_PWD');
     	}
-    	$this->display('login');
-    }
-    
-    public function login(){
     	$this->display();
     }
     
     public function exits() {
     	import('ORG.Util.Session');
     	Session::clear ('__USERCONF');
+    	cookie('user',null);
+    	cookie(null);
     	$this->redirect('login');
     }
-    
 
 }

@@ -1,17 +1,14 @@
 <?php
 /**
- * Admin section to generate
+ * Admin - section to generate
  * @param unknown $mid
  * @return string
  */
 function getIndexModules($mid){
 	if(!empty($mid)){
 		$Modules = M('Modules');
-		//select * from modules where id in(1,2) or id in(select mrid from modules where id in(1,2))
-// 		$dataModules = $Modules -> where(array('id' => array('in', $mid))) -> select();
 		$dataModules = $Modules -> where('id in('.$mid.') or id in(select mrid from modules where id in('.$mid.'))')
 				-> order('sort,mrid asc') -> select();
-// 		dump($Modules->getLastSql());
 		
 		$dataParentModules = null;
 		$dataNodeModules = null;
@@ -35,6 +32,34 @@ function getIndexModules($mid){
 	}
     return $treeHtml;
 }
+function getUser($log,$pwd){
+	if(!empty($log) && !empty($pwd)){
+		$Users = M('Users');
+		$map['username']  = $log;
+		$data = $Users ->field('u.*,r.rolename,r.mid')-> table('users u')->join('roles r on u.roleid = r.id')-> where($map) -> find();
+		if($data && strcmp($pwd,$data['password'])==0) {
+			return $data;
+		}
+	}
+	return null;
+}
+function setLog($log,$comment){
+	$Logs = D('Logs');
+	$dataLog = $Logs->create();
+	$dataLog['username'] = $log;
+	$dataLog['ip'] = get_client_ip();
+	$dataLog['agent']= $_SERVER['HTTP_USER_AGENT'];
+	$dataLog['comment']= $comment;
+	$Logs->add($dataLog);
+}
+function setDataForSession($userData,$userRuleTag){
+	$current_user['user'] = $userData;
+	$current_user['ruleTag'] = $userRuleTag;
+	session('__USERCONF',$current_user);
+}
+
+
+
 /**
  * 前台
  * 获取页面
